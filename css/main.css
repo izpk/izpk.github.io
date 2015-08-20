@@ -772,7 +772,6 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  min-height: 50px;
 }
 .footer-inner {
   margin: 20px auto;
@@ -1055,7 +1054,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffddd0;
+  background: #54a1ff;
 }
 .sidebar-nav {
   margin: 0;
