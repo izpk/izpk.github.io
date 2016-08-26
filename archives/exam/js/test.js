@@ -91,7 +91,6 @@
 					_this.resultData.examId = id;
 					test.questionAjax(function(data){
 						_this.times = data.times;
-						_this.times = 3;
 						var newData = test.filterQuestionData(data,["checkbox","radio","blank","question"]);
 						_this.initQuestionDom(data);
 						_this.list.hide();
@@ -116,6 +115,9 @@
 			});
 		},
 		startEvent : function(){
+			document.querySelector('body').addEventListener('touchstart', function (event) {
+			    event.preventDefault();
+			});
 			var _this = this;
 			Handlebars.registerHelper("compare",function(v1,v2,options){
 	        return v1[v2]
