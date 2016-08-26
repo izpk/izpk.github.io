@@ -115,7 +115,7 @@
 			});
 		},
 		startEvent : function(){
-			document.querySelector('body').addEventListener('touchstart', function (event) {
+			$('body').on('touchmove touchstart', function (event) {
 			    event.preventDefault();
 			});
 			var _this = this;
