@@ -241,7 +241,7 @@
 			})
 
 			
-			container.on("click","#put",function(){
+			$('body').on("click","#put",function(){
 				_this.resultData.data = _this.getPutData();
 				_this.answerAjax(function(data){
 					_this.resultDom(data);
