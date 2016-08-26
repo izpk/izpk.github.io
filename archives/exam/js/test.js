@@ -79,9 +79,9 @@
 			})
 		},
 		start : function(){
-			$('body').on('touchmove touchstart', function (event) {
-			    event.preventDefault();
-			});
+			document.ontouchstart = function(e){ 
+			  e.preventDefault(); 
+			}
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
