@@ -82,9 +82,9 @@
 			// document.ontouchstart = function(e){ 
 			//   e.preventDefault(); 
 			// }
-			$('body').on('touchmove', function (event) {
-    event.preventDefault();
-});
+			document.body.addEventListener("touchmove", function() {
+				event.preventDefault();
+			});
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
