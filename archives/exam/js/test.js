@@ -79,6 +79,9 @@
 			})
 		},
 		start : function(){
+			$('body').on('touchmove touchstart', function (event) {
+			    event.preventDefault();
+			});
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
@@ -115,9 +118,7 @@
 			});
 		},
 		startEvent : function(){
-			$('body').on('touchmove touchstart', function (event) {
-			    event.preventDefault();
-			});
+
 			var _this = this;
 			Handlebars.registerHelper("compare",function(v1,v2,options){
 	        return v1[v2]
