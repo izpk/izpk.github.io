@@ -79,7 +79,9 @@
 			})
 		},
 		start : function(){
-			
+			document.ontouchstart = function(e){ 
+			  e.stopPropagation(); 
+			}
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
