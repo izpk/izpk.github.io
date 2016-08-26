@@ -65,7 +65,7 @@ html,body{
 	position: relative;
 	width:100%;
 	height: 100%;
-	overflow-y: scroll;
+	
 	padding-top: 99px;
 	padding-bottom: 44px;
 }
@@ -99,6 +99,7 @@ html,body{
 	z-index: 9;
 	width: 100%;
 	height: 100%;
+	overflow-y: auto;
 	background-color: #fff;
 	margin-top: 1px;
 }
