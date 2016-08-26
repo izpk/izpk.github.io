@@ -82,9 +82,7 @@
 			// document.ontouchstart = function(e){ 
 			//   e.preventDefault(); 
 			// }
-			document.body.addEventListener("touchmove", function() {
-				event.preventDefault();
-			});
+
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
@@ -252,6 +250,9 @@
 
 				});
 			})
+			document.body.addEventListener("touchmove", function() {
+				event.preventDefault();
+			});
 		},
 		initQuestionDom : function(data){
 			var _this = this;
