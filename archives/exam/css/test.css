@@ -50,7 +50,7 @@ html,body{
 
 .question-list-title{
 	font-size:14px;
-	padding: 5px 20px;
+	padding: 10px;
 	border-bottom:1px solid #ccc;
 	line-height: 20px;
 }
@@ -70,28 +70,30 @@ html,body{
 	padding-bottom: 44px;
 }
 .container .test .test_header{
-	width:100%;
-	height:44px;
-	border-bottom:1px solid #ccc;
 	position:fixed;
-	background-color: #fff;
 	top:0;
+	z-index: 9;
+	width:100%;
+	height:55px;
+	border-bottom:1px solid #ccc;
+	background-color: #fff;
+	overflow: hidden;
 }
-.container .test .test_header .test_time{
-	position: absolute;
-	top:10px;
-	left:10px;
-	font-size: 16px;
+.test_time{
+	float: left;
+	margin: 15px 10px;
+	font-size: 18px;
 }
-.container .test .test_header .test_time i{
+.test_time i{
 	padding-right: 5px;
 }
-.container .test .test_header .test_btn{
-	position: absolute;
-	top:4px;
-	right:10px;
+.test_btn{
+	float: right;
+	margin: 10px;
+	font-size: 12px;
 }
-.container .test .test_header .test_btn button{
+.test_btn .btn{
+	margin-left: 10px;
 	outline: none;
 }
 .test_main{
@@ -106,7 +108,8 @@ html,body{
 .test_card{
 	width: 100%;
 	position: fixed;
-	top:44px;
+	top:55px;
+	z-index: 9;
 	border-bottom: 1px solid #ccc;
 	background-color:#fff;
 }
@@ -153,12 +156,13 @@ html,body{
 .test_questions_list{
 	overflow-y:scroll; 
 }
-.test_questions_list h4,.result_questions_list h4{
-	font-size: 20px;
-	line-height: 26px;
-
+.test-question-title{
+	font-size: 16px;
+  line-height: 1.5em;
+  font-weight: bold;
 }
-.test_questions_list h4 span,.result_questions_list h4 span{
+.test-question-option{
+	font-size: 14px;
 	padding:0 5px 0 0;
 }
 .test_questions_list label,.result_questions_list label{
@@ -310,9 +314,6 @@ html,body{
 	transform: translate(-50%, -50%);
 }
 #myModal .tan .btn,#myModal2 .tan .btn{
-	/*margin:0 auto;
-	background-color: #00f;
-	color: #fff;*/
 }
 #myModal2 .tan .btn{
 	margin:8px auto;
@@ -325,8 +326,8 @@ html,body{
 	font-weight: bold;
 }
 #myModal .tan .glyphicon-time{
-	float: left;
-	font-size: 16px;
+	margin-right: 10px;
+	font-size: 14px;
 	vertical-align: middle;
 }
 .modal-footer{
@@ -351,7 +352,7 @@ html,body{
 
 
 .test-answer-main{
-	
+	font-size: 12px;
 	border-top: 1px solid #cec8c8;
 	
 }
@@ -380,6 +381,8 @@ html,body{
 	float: right;
 }
 .test-answer-content{
+	font-size: 14px;
+	text-indent: 2em;
 	padding: 10px;
 	background-color: #fcf2f1;
 	border-bottom: 1px solid #cec8c8;

@@ -21,18 +21,9 @@
 </head>
 <body>
 	<div id="container" class="container">
-		<!--试卷列表部分-->
-		<div class="list">
-			
-		</div>
-		<!--试题部分-->
-		<div class="test"  style="display:none">
-		</div>
-		<!--测试结果部分-->
-		<div class="result" style="display:none">
-		</div>
+		<div class="list"></div>
+		<div class="test"  style="display:none"></div>
 	</div>
-	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog tan" role="document">
 	    <div class="modal-content">
@@ -40,13 +31,12 @@
 	        <h2><i class="glyphicon glyphicon-time"></i>休息一会，快点回来...</h2>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success study" data-dismiss="modal">继续学习</button>
+	        <button type="button" class="btn btn-success study" data-dismiss="modal">继续做题</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 
-	<!-- Modal -->
 	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog tan" role="document">
 	    <div class="modal-content">
@@ -104,7 +94,7 @@
 		{{#each context.data}}
 		<div class="test_questions_list" data-id="{{id}}" data-inputtype="{{type}}" data-listActiveSelected="false">
 			<div class="test-question-content">
-				<h4 id="{{id}}">{{index @index}}.{{title}}</h4>
+				<h4 id="{{id}}" class="test-question-title">{{index @index}}.{{title}}</h4>
 				{{#each option}}
 					{{{optionDom @index this}}}
 		    {{/each}}
@@ -178,6 +168,5 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/icheck.min.js"></script>
 <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-
 <script type="text/javascript" src="js/test.js"></script>
 </html>

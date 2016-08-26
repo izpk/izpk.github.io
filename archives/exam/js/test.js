@@ -21,7 +21,7 @@
 		result : $(".result"),
 		testStart : $(".testStart"),
 		pause : $("#pause"),
-		initPadding : 99,
+		initPadding : 110,
 		pageSize : 10,
 		pageCurrent : 1,
 		questionData : {},
@@ -153,10 +153,10 @@
 			Handlebars.registerHelper("optionDom",function(index,options){
 				switch (options.type){
 					case "radio":
-						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'</em><span>'+options.name+'</span></label>'
+						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'</em><span class="test-question-option">'+options.name+'</span></label>'
 						break;
 					case "checkbox":
-						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'</em><span>'+options.name+'</span></label>'
+						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'</em><span class="test-question-option">'+options.name+'</span></label>'
 						break;
 					case "text":
 						return '<label><input class="inputText" type="'+options.type+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"></label>'
@@ -170,7 +170,7 @@
 			this.card = $("#card");
 			var container = $('#container');
 			container.on("click",".quit",function(){
-				_this.test.css("padding-top",88);
+				_this.test.css("padding-top",_this.initPadding);
 				_this.test.hide();
 				_this.result.hide();
 				_this.list.show();
@@ -195,11 +195,15 @@
 				var thatNext = that.next();
 				var thatNextHeight = thatNext.innerHeight()+2;
 				if(that.hasClass('active')){
+					
 					that.removeClass('active');
-					_this.test.stop(true,false).animate({"padding-top":_this.initPadding},400)
+					_this.test.stop(true,false).animate({"padding-top":_this.initPadding},400,function(){
+					})
 				}else{
 					that.addClass('active');
-					_this.test.stop(true,false).animate({"padding-top":_this.initPadding+thatNextHeight},400)
+					_this.test.stop(true,false).animate({"padding-top":_this.initPadding+thatNextHeight},400,function(){
+						
+					})
 				}
 			})
 			
