@@ -80,7 +80,7 @@
 		},
 		start : function(){
 			document.ontouchstart = function(e){ 
-			  e.preventDefault(); 
+			  e.stopPropagation(); 
 			}
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
