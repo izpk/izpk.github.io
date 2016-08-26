@@ -79,10 +79,9 @@
 			})
 		},
 		start : function(){
-			// document.ontouchstart = function(e){ 
-			//   e.preventDefault(); 
-			// }
-
+			document.body.addEventListener("touchmove", function() {
+				event.preventDefault();
+			});
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
@@ -102,7 +101,6 @@
 						clearInterval(_this.time);
 						$(".test_time span").text(_this.showTime(_this.times--));
 						_this.time = setInterval(function(){
-							console.log(_this.times)
 							if(_this.times<=0){
 								clearInterval(_this.time);
 								_this.resultData.data = _this.getPutData();
@@ -200,10 +198,10 @@
 				var thatNextHeight = thatNext.innerHeight();
 				if(that.hasClass('active')){
 					that.removeClass('active');
-					_this.test.animate({"padding-top":_this.initPadding},400)
+					_this.test.stop(true,false).animate({"padding-top":_this.initPadding},400)
 				}else{
 					that.addClass('active');
-					_this.test.animate({"padding-top":_this.initPadding+thatNextHeight},400)
+					_this.test.stop(true,false).animate({"padding-top":_this.initPadding+thatNextHeight},400)
 				}
 			})
 			
@@ -250,9 +248,6 @@
 
 				});
 			})
-			document.body.addEventListener("touchmove", function() {
-				event.preventDefault();
-			});
 		},
 		initQuestionDom : function(data){
 			var _this = this;
