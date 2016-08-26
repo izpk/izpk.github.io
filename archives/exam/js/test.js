@@ -195,7 +195,7 @@
 			container.on("click",".card-slider",function(){
 				var that = $(this);
 				var thatNext = that.next();
-				var thatNextHeight = thatNext.innerHeight();
+				var thatNextHeight = thatNext.innerHeight()+2;
 				if(that.hasClass('active')){
 					that.removeClass('active');
 					_this.test.stop(true,false).animate({"padding-top":_this.initPadding},400)
