@@ -171,7 +171,8 @@
 		  });
 			var _this = this;				
 			this.card = $("#card");
-			$("body").on("click",".quit",function(){
+			var container = $('#container');
+			container.on("click",".quit",function(){
 				_this.test.css("padding-top",88);
 				_this.test.hide();
 				_this.result.hide();
@@ -192,7 +193,7 @@
 			$('#myModal2').on('hidden.bs.modal', function (e) {
 			  _this.flag = false;
 			})
-			$("body").on("click",".card-slider",function(){
+			container.on("click",".card-slider",function(){
 				var that = $(this);
 				var thatNext = that.next();
 				var thatNextHeight = thatNext.innerHeight();
@@ -205,7 +206,7 @@
 				}
 			})
 			
-			$("body").on("click",".test-answer-top",function(){
+			container.on("click",".test-answer-top",function(){
 				var that = $(this);
 				var thatNext = that.next();
 				if(that.hasClass('active')){
@@ -222,7 +223,7 @@
 				that.addClass('active');
 				_this.go(this,null);
 			})
-			$("body").on("click","#next",function(){
+			container.on("click","#next",function(){
 				_this.index++;
 				if(_this.index>=_this.total) _this.index = _this.total-1;
 				var that = $('.test_card_list').find('li').eq(_this.index);
@@ -231,7 +232,7 @@
 				_this.go(null,_this.index);
 			})
 
-			$("body").on("click","#prev",function(){
+			container.on("click","#prev",function(){
 				_this.index--;
 				if(_this.index<=0) _this.index = 0;
 				var that = $('.test_card_list').find('li').eq(_this.index);
@@ -241,7 +242,7 @@
 			})
 
 			
-			$("body").on("click","#put",function(){
+			container.on("click","#put",function(){
 				_this.resultData.data = _this.getPutData();
 				_this.answerAjax(function(data){
 					_this.resultDom(data);
