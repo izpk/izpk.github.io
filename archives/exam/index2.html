@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- 宽度为设备宽度，初始缩放比例为一，用户最大最小缩放比例为一，不允许用户手动缩放 -->
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+	<!-- 禁止设备将数字作为拨号连接，邮箱自动发送，点击地图跳转 -->
+	<meta name="format-detection" content="telephone=no,email=no，adress=no">
+	<!-- 强制全屏显示 -->
+	<meta name="full-screen" content="yes">
+	<!-- 开启对webapp的支持 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- web app 应用下状态条（屏幕顶部条）的颜色,默认值为 default（白色） -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<!-- 禁止浏览器从的缓存中访问页面内容 -->
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>测试</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/minimal/blue.css">
+	<link rel="stylesheet" href="css/test.css">
+</head>
+<body>
+	<div class="container">
+		<!--试卷列表部分-->
+		<div class="list">
+			
+		</div>
+		<!--试题部分-->
+		<div class="test"  style="display:none">
+		</div>
+		<!--测试结果部分-->
+		<div class="result" style="display:none">
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog tan" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <h2><i class="glyphicon glyphicon-time"></i>休息一会，快点回来...</h2>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success study" data-dismiss="modal">继续学习</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog tan" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <h2>还有<span class="unanswered-num"></span>道题未答完，确定要交卷吗？</h2>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal"  id="put">我要交卷</button>
+	        <button type="button" class="btn btn-default study" data-dismiss="modal">谢谢提醒，继续做</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+<script  id="start-temp" type="text/x-handlebars-template">
+
+	{{#each data}}
+		<div class="question-list">
+		<h6 class="question-list-title">{{name}}</h6>
+		<div class="question-list-button">
+		<button class="btn btn-primary testStart" id="{{id}}">开始练习</button>
+		</div>
+		
+		</div>
+	{{/each}}
+
+</script>
+<script  id="tpl" type="text/x-handlebars-template">
+	<div class="test_header">
+		<div class="test_time"><i class="glyphicon glyphicon-time"></i><span>{{context.times}}</span></div>
+		<div class="test_btn">
+		  <button class="btn btn-default" type="button" id="pause"  data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pause"></i>暂停</button>
+		  <button class="btn btn-default quit" type="button" class="quit">退出</button>
+		  <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal2" id="sub">我要交卷</button>
+		</div>
+	</div>
+	<div class="test_card">
+		<div id="card" class="card-slider">
+			<span class="card-slider-down">展开答题卡</span>
+			<span class="card-slider-up">收起答题卡</span>
+			（<span class="card-num">0</span>/<span id="total">{{context.total}}</span>）
+
+			<i class="glyphicon glyphicon-menu-down card-slider-down"></i>
+			<i class="glyphicon glyphicon-menu-up card-slider-up"></i>
+			</div>
+		<ul class="test_card_list">
+			{{#each context.data}}
+	     		<li class="btn btn-default">{{index @index}}</li>
+	    	{{/each}}
+		</ul>
+	</div>
+	<div class="test_main">	
+	
+	<div class="test_questions">
+		{{#each context.data}}
+		<div class="test_questions_list" data-id="{{id}}" data-inputtype="{{type}}" data-listActiveSelected="false">
+			<div class="test-question-content">
+				<h4 id="{{id}}">{{index @index}}.{{title}}</h4>
+				{{#each option}}
+					{{{optionDom @index this}}}
+		    {{/each}}
+		  </div>
+
+		</div>
+		{{/each}}
+	</div>
+		
+	</div>
+	<div class="test_footer">
+		<p id="prev"><i class="glyphicon glyphicon-menu-left"></i>上一题</p>
+		<p id="next">下一题<i class="glyphicon glyphicon-menu-right"></i></p>
+	</div>
+</script>
+<script id="card-result" type="text/x-handlebars-template">
+	<ul class="test_card_list active" style="margin-top:-1px;">
+		{{#each data}}
+			<li class="btn btn-default {{cardState this}}">{{index @index}}</li>
+		{{/each}}
+	</ul>
+</script>
+<script id="test-answer" type="text/x-handlebars-template">
+	<div class="test-answer-main">
+		<div class="test-answer-top">
+			<span class="test-answer-left">{{resultAnalyze this}}</span>
+			<div class="test-answer-right">
+				<span class="test-answer-up">收起解析</span>
+				<i class="glyphicon glyphicon-menu-up test-answer-up"></i>
+
+				<span class="test-answer-down">展开解析</span>
+				<i class="glyphicon glyphicon-menu-down test-answer-down"></i>
+			</div>
+		</div>
+		<div class="test-answer-content">
+			{{#if analyze}}
+				{{analyze}}
+			{{else}}
+				"暂无解析"
+			{{/if}}
+			
+		</div>
+	</div>
+</script>
+
+<script  id="tpl_result" type="text/x-handlebars-template">
+	<div class="result_header">
+		<div class="result_title"><i class="icon-home icon-white"></i>测试结果</div>
+		<div class="result_btn">
+		  <button class="btn btn-default quit" type="button">退出</button>
+		</div>
+	</div>
+	<div class="result_card">
+		<ul class="result_card_list">
+			{{#each context.data}}
+	       		 <li class="btn btn-default">{{index @index}}</li>
+	    	{{/each}}
+		</ul>
+	</div>
+	<div class="result_questions">
+		<div class="result_questions_list">
+			{{{question}}}
+		</div>
+	</div>
+	<div class="test_footer">
+		<p id="prev"><i class="glyphicon glyphicon-menu-left"></i>上一题</p>
+		<p id="next">下一题<i class="glyphicon glyphicon-menu-right"></i></p>
+	</div>
+</script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/icheck.min.js"></script>
+<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+
+<script type="text/javascript" src="js/test.js"></script>
+</html>
