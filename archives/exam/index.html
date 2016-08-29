@@ -24,7 +24,7 @@
 		<div class="list"></div>
 		<div class="test"  style="display:none"></div>
 	</div>
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade myModal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog tan" role="document">
 	    <div class="modal-content">
 	      <div class="modal-body">
@@ -37,14 +37,27 @@
 	  </div>
 	</div>
 
-	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade myModal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog tan" role="document">
 	    <div class="modal-content">
 	      <div class="modal-body">
 	        <h2>还有<span class="unanswered-num"></span>道题未答完，确定要交卷吗？</h2>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal"  id="put">我要交卷</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal"  id="put">我要交卷</button>
+	        <button type="button" class="btn btn-default study" data-dismiss="modal">谢谢提醒，继续做</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="modal fade myModal" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog tan" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <h2>确定要退出吗？</h2>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal"  id="exit">我要退出</button>
 	        <button type="button" class="btn btn-default study" data-dismiss="modal">谢谢提醒，继续做</button>
 	      </div>
 	    </div>
@@ -69,7 +82,7 @@
 		<div class="test_time"><i class="glyphicon glyphicon-time"></i><span>{{context.times}}</span></div>
 		<div class="test_btn">
 		  <button class="btn btn-default" type="button" id="pause"  data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pause"></i>暂停</button>
-		  <button class="btn btn-default quit" type="button" class="quit">退出</button>
+		  <button class="btn btn-default quit" type="button" class="quit" data-toggle="modal" data-target="#myModal3">退出</button>
 		  <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal2" id="sub">我要交卷</button>
 		</div>
 	</div>
@@ -106,8 +119,15 @@
 		
 	</div>
 	<div class="test_footer">
-		<p id="prev"><i class="glyphicon glyphicon-menu-left"></i>上一题</p>
-		<p id="next">下一题<i class="glyphicon glyphicon-menu-right"></i></p>
+		<a id="prev" class="test_footer_button prev btn btn-default disabled" role="button" href="javascript:;">
+			<i class="glyphicon glyphicon-menu-left"></i>上一题
+		</a>
+		<a id="next" class="test_footer_button btn btn-default" href="javascript:;">
+			下一题<i class="glyphicon glyphicon-menu-right"></i>
+		</a>
+		<a id="ok" class="test_footer_button btn btn-primary" href="javascript:;" data-toggle="modal" data-target="#myModal2">
+			提交<i class="glyphicon glyphicon-ok-circle"></i>
+		</a>
 	</div>
 </script>
 <script id="card-result" type="text/x-handlebars-template">
@@ -168,5 +188,7 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/icheck.min.js"></script>
 <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+<script type="text/javascript" src="js/touch.min.js"></script>
 <script type="text/javascript" src="js/test.js"></script>
+
 </html>

@@ -31,11 +31,10 @@ html,body,.container{
 	height: 100%;
 }
 html,body{
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 .container{
 	padding: 0;
-	overflow-y:scroll;
 }
 .container .list{
 	width:100%;
@@ -70,7 +69,7 @@ html,body{
 	padding-bottom: 44px;
 }
 .container .test .test_header{
-	position:fixed;
+	position:absolute;
 	top:0;
 	z-index: 9;
 	width:100%;
@@ -95,6 +94,8 @@ html,body{
 .test_btn .btn{
 	margin-left: 10px;
 	outline: none;
+	border: none;
+	background-color: #e6e6e6;
 }
 .test_main{
 	position: relative;
@@ -107,7 +108,7 @@ html,body{
 }
 .test_card{
 	width: 100%;
-	position: fixed;
+	position: absolute;
 	top:55px;
 	z-index: 9;
 	border-bottom: 1px solid #ccc;
@@ -186,22 +187,35 @@ html,body{
 .test_footer{
 	width: 100%;
 	height: 44px;
-	position: fixed;
+	position: absolute;
 	left:0;
 	bottom:0;
 	z-index: 9;
-	display:-webkit-box; 
 	border-top: 1px solid #ccc;
 	background: #fff;
 }
-.test_footer p{
-	-webkit-box-flex:1;
+.test_footer_button{
+	float: left;
+	display: inline-block;
+	width: 50%;
+	height: 44px;
+	line-height: 32px;
 	text-align: center;
-	line-height: 44px;
+	outline: none;
+	border: none;
+	border-radius: 0;
+}
+.test_footer_button:hover,.test_footer_button.active{
 	
 }
-#next{
-	border-left: 1px solid #ccc;
+.test_footer_button.disabled{
+	background-color: #eee;
+}
+.prev{
+	border-right: 1px solid #ccc;
+}
+.test_footer_button .glyphicon-ok-circle{
+	margin-left: 10px;
 }
 .container .result{
 	width:100%;
@@ -306,30 +320,31 @@ html,body{
 .modal-dialog{
 	width: 80%;
 }
-#myModal .tan,#myModal2 .tan{
+
+.modal.myModal .modal-dialog{
 	position:absolute;
 	top:50%;
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
-#myModal .tan .btn,#myModal2 .tan .btn{
+.myModal .tan .btn{
 }
-#myModal2 .tan .btn{
+#myModal2 .tan .btn,#myModal3 .tan .btn{
 	margin:8px auto;
 	display: block;
 	min-width: 138px;
 }
-#myModal .tan h2,#myModal2 .tan h2{
+.myModal .tan h2{
 	text-align: center;
 	font-size: 16px;
 	font-weight: bold;
 }
-#myModal .tan .glyphicon-time{
+.myModal .tan .glyphicon-time{
 	margin-right: 10px;
 	font-size: 14px;
-	vertical-align: middle;
 }
+
 .modal-footer{
 	text-align: center;
 }

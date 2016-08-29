@@ -170,11 +170,7 @@
 			this.card = $("#card");
 			var container = $('#container');
 			container.on("click",".quit",function(){
-				_this.test.css("padding-top",_this.initPadding);
-				_this.test.hide();
-				_this.result.hide();
-				_this.list.show();
-				clearInterval(_this.time);
+				_this.flag = true;
 			})
 			$('#myModal').on('show.bs.modal', function (e) {
 			  _this.flag = true;
@@ -189,6 +185,14 @@
 			})
 			$('#myModal2').on('hidden.bs.modal', function (e) {
 			  _this.flag = false;
+			})
+			$('#myModal3').on('show.bs.modal', function (e) {
+			  _this.flag = true;
+			})
+			$('#myModal3').on('hidden.bs.modal', function (e) {
+				_this.flag = false;
+
+			  
 			})
 			container.on("click",".card-slider",function(){
 				var that = $(this);
@@ -218,22 +222,44 @@
 					thatNext.slideUp();
 				}
 			})
-			this.test.on("click",".test_card_list li",function(){
+			container.on("click",".test_card_list li",function(){
 				var that = $(this);
 				that.siblings().removeClass('active');
 				that.addClass('active');
 				_this.go(this,null);
 			})
+
 			container.on("click","#next",function(){
+				var prevBtn = $('#prev');
+				if(prevBtn.hasClass('disabled')){
+					prevBtn.removeClass('disabled');
+				}
 				_this.index++;
-				if(_this.index>=_this.total) _this.index = _this.total-1;
 				var that = $('.test_card_list').find('li').eq(_this.index);
 				that.siblings().removeClass('active');
 				that.addClass('active');
 				_this.go(null,_this.index);
+				if(_this.total-_this.index==1){
+					var nextBtn = $('#next');
+					var okBtn = $('#ok');
+					nextBtn.hide();
+					okBtn.show();
+				}
+				
 			})
 
 			container.on("click","#prev",function(){
+				if(_this.total-_this.index==1){
+					var nextBtn = $('#next');
+					var okBtn = $('#ok');
+					nextBtn.show();
+					okBtn.hide();
+				}else if(_this.index==1){
+					var targer=$(this);
+					if(!targer.hasClass('disabled')){
+						targer.addClass('disabled');
+					}
+				}
 				_this.index--;
 				if(_this.index<=0) _this.index = 0;
 				var that = $('.test_card_list').find('li').eq(_this.index);
@@ -242,13 +268,20 @@
 				_this.go(null,_this.index);
 			})
 
-			
 			$('body').on("click","#put",function(){
 				_this.resultData.data = _this.getPutData();
 				_this.answerAjax(function(data){
 					_this.resultDom(data);
 
 				});
+			})
+			
+			$('body').on("click","#exit",function(){
+				_this.test.css("padding-top",_this.initPadding);
+			  _this.test.hide();
+			  _this.result.hide();
+			  _this.list.show();
+			  clearInterval(_this.time);
 			})
 		},
 		initQuestionDom : function(data){
@@ -335,6 +368,13 @@
       		}
       	}
       })
+      touch.on(".test_main", 'swipeleft swiperight', function(ev) {
+      	if (ev.type == "swipeleft") {
+      		$('#next').trigger('click');
+      	} else if (ev.type == "swiperight") {
+      		$('#prev').trigger('click');
+      	}
+      });
 		},
 		initQuestionData : function(index){
 			this.listIndex = 0;
