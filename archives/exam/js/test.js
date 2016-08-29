@@ -368,13 +368,13 @@
       		}
       	}
       })
-      touch.on(".test_main", 'swipeleft swiperight', function(ev) {
-      	if (ev.type == "swipeleft") {
-      		$('#next').trigger('click');
-      	} else if (ev.type == "swiperight") {
-      		$('#prev').trigger('click');
-      	}
-      });
+      // touch.on(".test_main", 'swipeleft swiperight', function(ev) {
+      // 	if (ev.type == "swipeleft") {
+      // 		$('#next').trigger('click');
+      // 	} else if (ev.type == "swiperight") {
+      // 		$('#prev').trigger('click');
+      // 	}
+      // });
 		},
 		initQuestionData : function(index){
 			this.listIndex = 0;
