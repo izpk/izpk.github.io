@@ -115,7 +115,9 @@
 			});
 		},
 		startEvent : function(){
-
+			document.body.addEventListener("touchmove", function() {
+				event.preventDefault();
+			});
 			var _this = this;
 			Handlebars.registerHelper("compare",function(v1,v2,options){
 	        return v1[v2]
