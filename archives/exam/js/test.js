@@ -22,11 +22,12 @@
 		testStart : $(".testStart"),
 		pause : $("#pause"),
 		initPadding : 110,
-		pageSize : 10,
+		pageSize : 20,
 		pageCurrent : 1,
 		questionData : {},
+		isEnd : false,
 		request : function(args,callback){
-			var host = "http://192.168.10.134/";
+			var host = "http://admin.caicui.com/";
 			$.ajax({
 				url : host + args.url,
 				type : args.type,
@@ -38,7 +39,6 @@
 					if(callback){callback(data)};
 				},
 				error : function(data){
-					// if(callback){callback(data)};
 					console.log(data)
 				}
 			})
@@ -96,28 +96,14 @@
 						_this.initQuestionDom(data);
 						_this.list.hide();
 						_this.test.show();
-						clearInterval(_this.time);
-						$(".test_time span").text(_this.showTime(_this.times--));
-						_this.time = setInterval(function(){
-							if(_this.times<=0){
-								clearInterval(_this.time);
-								_this.resultData.data = _this.getPutData();
-								_this.answerAjax(function(data){
-									_this.resultDom(data);
-								});
-							}
-							if(!_this.flag){
-								$(".test_time span").text(_this.showTime(_this.times--));
-							}
-						},1000)
+						_this.test.find('.test_header').removeClass('active');
+						_this.interval();
 					});			
 				})
 			});
 		},
 		startEvent : function(){
-			document.body.addEventListener("touchmove", function() {
-				event.preventDefault();
-			});
+
 			var _this = this;
 			Handlebars.registerHelper("compare",function(v1,v2,options){
 	        return v1[v2]
@@ -168,7 +154,10 @@
 						break;
 				}
 		  });
-			var _this = this;				
+			var _this = this;
+			var prevBtn = $('#prev');
+			var nextBtn = $('#next');
+			var okBtn = $('#submit');				
 			this.card = $("#card");
 			var container = $('#container');
 			container.on("click",".quit",function(){
@@ -193,21 +182,18 @@
 			})
 			$('#myModal3').on('hidden.bs.modal', function (e) {
 				_this.flag = false;
-
-			  
 			})
 			container.on("click",".card-slider",function(){
 				var that = $(this);
 				var thatNext = that.next();
 				var thatNextHeight = thatNext.innerHeight()+2;
 				if(that.hasClass('active')){
-					
 					that.removeClass('active');
-					_this.test.stop(true,false).animate({"padding-top":_this.initPadding},400,function(){
+					$('.test_body').stop(true,false).animate({"padding-top":55},400,function(){
 					})
 				}else{
 					that.addClass('active');
-					_this.test.stop(true,false).animate({"padding-top":_this.initPadding+thatNextHeight},400,function(){
+					$('.test_body').stop(true,false).animate({"padding-top":55+thatNextHeight},400,function(){
 						
 					})
 				}
@@ -216,70 +202,76 @@
 			container.on("click",".test-answer-top",function(){
 				var that = $(this);
 				var thatNext = that.next();
+				
+				var scrollTop = $('.test_main').scrollTop();
 				if(that.hasClass('active')){
 					that.removeClass('active');
 					thatNext.slideDown();
+					var thatNextHeight = $('.test-answer-content').eq(_this.index).height();
+					$('.test_main').scrollTop(scrollTop+thatNextHeight);
 				}else{
 					that.addClass('active');
 					thatNext.slideUp();
 				}
 			})
+			
+
 			container.on("click",".test_card_list li",function(){
-				var that = $(this);
-				that.siblings().removeClass('active');
-				that.addClass('active');
-				_this.go(this,null);
-			})
-
-			container.on("click","#next",function(){
-				var prevBtn = $('#prev');
-				if(prevBtn.hasClass('disabled')){
-					prevBtn.removeClass('disabled');
-				}
-				_this.index++;
-				var that = $('.test_card_list').find('li').eq(_this.index);
-				that.siblings().removeClass('active');
-				that.addClass('active');
-				_this.go(null,_this.index);
-				if(_this.total-_this.index==1){
-					var nextBtn = $('#next');
-					var okBtn = $('#ok');
-					nextBtn.hide();
-					okBtn.show();
-				}
-				
-			})
-
-			container.on("click","#prev",function(){
-				if(_this.total-_this.index==1){
-					var nextBtn = $('#next');
-					var okBtn = $('#ok');
+				var targer = $(this);
+				var index = targer.index();
+				_this.index = index;
+				if(index==0){
+					if(!prevBtn.hasClass('disabled')){
+						prevBtn.addClass('disabled');
+					}
 					nextBtn.show();
 					okBtn.hide();
-				}else if(_this.index==1){
-					var targer=$(this);
-					if(!targer.hasClass('disabled')){
-						targer.addClass('disabled');
+				}else{
+					if(prevBtn.hasClass('disabled')){
+						prevBtn.removeClass('disabled');
+					}
+					if(index == _this.total-1){
+						nextBtn.hide();
+						okBtn.show();
+						if(_this.isEnd){
+							okBtn.addClass('disabled');
+							okBtn.attr('disabled','disabled')
+						}else{
+							okBtn.removeClass('disabled');
+						}
+					}else{
+						nextBtn.show();
+						okBtn.hide();
 					}
 				}
+				targer.siblings().removeClass('active');
+				targer.addClass('active');
+				$(".test_questions_list").hide();
+				$(".test_questions_list").eq(index).show();
+			})
+
+			nextBtn.on("click",function(){
+				_this.index++;
+				$('.test_card_list').find('li').eq(_this.index).trigger('click');
+			})
+			prevBtn.on("click",function(){
 				_this.index--;
 				if(_this.index<=0) _this.index = 0;
-				var that = $('.test_card_list').find('li').eq(_this.index);
-				that.siblings().removeClass('active');
-				that.addClass('active');
-				_this.go(null,_this.index);
+				if(!prevBtn.hasClass('disabled')){
+					$('.test_card_list').find('li').eq(_this.index).trigger('click');
+				}
 			})
 
 			$('body').on("click","#put",function(){
 				_this.resultData.data = _this.getPutData();
 				_this.answerAjax(function(data){
 					_this.resultDom(data);
-
+					_this.isEnd = true;
 				});
 			})
 			
 			$('body').on("click","#exit",function(){
-				_this.test.css("padding-top",_this.initPadding);
+				//_this.test.css("padding-top",_this.initPadding);
 			  _this.test.hide();
 			  _this.result.hide();
 			  _this.list.show();
@@ -290,8 +282,12 @@
 			var _this = this;
 			this.total = data.total;
 			this.flag = false;
-			this.renderTpl($("#tpl"),data,$(".test"))
-	    
+			this.isEnd = false;
+			var tpl   =  $("#tpl").html();
+			var temp = Handlebars.compile(tpl);
+			var html = temp({"context":data,"arr":this.answerArr});
+			$(".test_body").html(html);
+
 	    this.test_questions_list = $(".test_questions_list");
 			this.test_card_list = $(".test_card_list");
 			this.cardNum = $(".card-num");
@@ -370,21 +366,16 @@
       		}
       	}
       })
-      // touch.on(".test_main", 'swipeleft swiperight', function(ev) {
-      // 	if (ev.type == "swipeleft") {
-      // 		$('#next').trigger('click');
-      // 	} else if (ev.type == "swiperight") {
-      // 		$('#prev').trigger('click');
-      // 	}
-      // });
+      
 		},
 		initQuestionData : function(index){
 			this.listIndex = 0;
+			this.index = 0;
 			this.listActive = this.test_questions_list.eq(index);
 			var cardList = this.test_card_list.find('li');
 			cardList.removeClass('active');
 			this.listCardActive = cardList.eq(index);
-			this.listCardActive.addClass('active')
+			this.listCardActive.addClass('active').trigger('click');
 		},
 		setListTotal : function(){
 			this.cardNum.text(this.listTotal)
@@ -446,18 +437,6 @@
 			}
 			return result;
 		},
-		renderTpl : function(tpl,data,box){
-	    var tpl   =  tpl.html();
-	    var temp = Handlebars.compile(tpl);
-	    var context = data;
-	    var html = temp({"context":context,"arr":this.answerArr});
-	    box.html(html);
-		},
-		go : function(ele,idx){
-			this.index = ele ? $(ele).index() : idx;
-			this.initQuestionData(this.index);
-			this.test_questions_list.eq(this.index).css("display","block").siblings(".test_questions_list").css("display","none");			
-		},
 		filterQuestionData : function(data,arr){
 			var newData = data.data;
 			var types = arr;
@@ -484,11 +463,30 @@
 			if(second<10) second = "0"+second;
 			return hour+":"+minute+":"+second
 		},
+		interval : function(){
+			var _this = this;
+			clearInterval(_this.time);
+			$(".test_time span").text(_this.showTime(_this.times--));
+			_this.time = setInterval(function(){
+				if(_this.times<=0){
+					clearInterval(_this.time);
+					_this.resultData.data = _this.getPutData();
+					_this.answerAjax(function(data){
+						_this.resultDom(data);
+					});
+				}
+				if(!_this.flag){
+					$(".test_time span").text(_this.showTime(_this.times--));
+				}
+			},1000)
+		},
 		resultDom : function(data){
-			this.test.css("padding-top",this.initPadding);
-			$('input').iCheck('disable');
-			$('.test_time').text('测试结果');
-			$('.test_btn').html('<button class="btn btn-default quit" type="button">退出</button>');
+			//this.test.css("padding-top",this.initPadding);
+			this.test.find('.test_header').addClass('active');
+			this.test.find('input').iCheck('disable');
+			// this.test.find('.test_time').text('测试结果');
+			// this.test.find('.js-btn-step2').remove();
+
 			var tpl   =  $('#card-result').html();
 			var temp = Handlebars.compile(tpl);
 			var html = temp(data);
@@ -499,6 +497,7 @@
 				var html = temp(data.data[i]);
 				this.test_questions_list.eq(i).append(html);
 			}
+			this.index = 0;
 			$('.test_card_list').find('li').eq(0).addClass('active').trigger('click')
 			
 		},

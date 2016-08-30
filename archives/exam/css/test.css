@@ -64,8 +64,7 @@ html,body{
 	position: relative;
 	width:100%;
 	height: 100%;
-	
-	padding-top: 99px;
+	padding-top: 55px;
 	padding-bottom: 44px;
 }
 .container .test .test_header{
@@ -78,11 +77,24 @@ html,body{
 	background-color: #fff;
 	overflow: hidden;
 }
-.test_time{
+.test_header .test_time,.test_header .test_endtext{
 	float: left;
 	margin: 15px 10px;
 	font-size: 18px;
 }
+.test_header .test_endtext{
+	display: none;
+}
+.test_header .test_time{
+	display: inline-block;
+}
+.test_header.active .test_endtext{
+	display: inline-block;
+}
+.test_header.active .test_time{
+	display: none;
+}
+
 .test_time i{
 	padding-right: 5px;
 }
@@ -97,6 +109,20 @@ html,body{
 	border: none;
 	background-color: #e6e6e6;
 }
+.test_header .js-btn-step2{
+	display: inline-block;
+}
+.test_header.active .js-btn-step2{
+	display: none;
+}
+.test_body{
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding-top: 55px;
+}
 .test_main{
 	position: relative;
 	z-index: 9;
@@ -109,7 +135,7 @@ html,body{
 .test_card{
 	width: 100%;
 	position: absolute;
-	top:55px;
+	top:0;
 	z-index: 9;
 	border-bottom: 1px solid #ccc;
 	background-color:#fff;
@@ -186,7 +212,7 @@ html,body{
 }
 .test_footer{
 	width: 100%;
-	height: 44px;
+	height: 43px;
 	position: absolute;
 	left:0;
 	bottom:0;
@@ -208,8 +234,8 @@ html,body{
 .test_footer_button:hover,.test_footer_button.active{
 	
 }
-.test_footer_button.disabled{
-	background-color: #eee;
+.prev.disabled{
+	background-color: #ccc;
 }
 .prev{
 	border-right: 1px solid #ccc;
