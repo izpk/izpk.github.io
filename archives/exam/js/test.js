@@ -18,6 +18,7 @@
 		answerArr : ["A","B","C","D","E","F","G","H"],
 		list : $(".list"),
 		test : $(".test"),
+		testBody : '',
 		result : $(".result"),
 		testStart : $(".testStart"),
 		pause : $("#pause"),
@@ -98,6 +99,8 @@
 						_this.test.show();
 						_this.test.find('.test_header').removeClass('active');
 						_this.interval();
+						_this.testBody = $('.test_body');
+
 					});			
 				})
 			});
@@ -249,6 +252,7 @@
 				targer.addClass('active');
 				$(".test_questions_list").hide();
 				$(".test_questions_list").eq(index).show();
+				_this.initQuestionData(index);
 			})
 
 			nextBtn.on("click",function(){
@@ -272,7 +276,7 @@
 			})
 			
 			$('body').on("click","#exit",function(){
-				//_this.test.css("padding-top",_this.initPadding);
+				_this.testBody.css('padding-top',55)
 			  _this.test.hide();
 			  _this.result.hide();
 			  _this.list.show();
@@ -295,7 +299,7 @@
 		  this.test_questions_list.css("display","none").eq(0).css("display","block");
 		  this.listTotal = 0;
 		  this.index = 0;
-		  this.initQuestionData(this.listIndex);
+		  this.initQuestionData(this.index);
       $('input[name="iCheck"]').iCheck({
   	    checkboxClass: 'icheckbox_minimal-blue js-input',
   	    radioClass: 'iradio_minimal-blue js-input',
@@ -370,13 +374,12 @@
       
 		},
 		initQuestionData : function(index){
-			this.listIndex = 0;
-			this.index = 0;
+			//this.listIndex = 0;
 			this.listActive = this.test_questions_list.eq(index);
 			var cardList = this.test_card_list.find('li');
 			cardList.removeClass('active');
 			this.listCardActive = cardList.eq(index);
-			this.listCardActive.addClass('active').trigger('click');
+			this.listCardActive.addClass('active');
 		},
 		setListTotal : function(){
 			this.cardNum.text(this.listTotal)
@@ -487,7 +490,7 @@
 			this.test.find('input').iCheck('disable');
 			// this.test.find('.test_time').text('测试结果');
 			// this.test.find('.js-btn-step2').remove();
-			$('.test_body').css('padding-top',this.initPadding)
+			this.testBody.css('padding-top',this.initPadding)
 			var tpl   =  $('#card-result').html();
 			var temp = Handlebars.compile(tpl);
 			var html = temp(data);
