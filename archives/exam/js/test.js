@@ -21,7 +21,7 @@
 		result : $(".result"),
 		testStart : $(".testStart"),
 		pause : $("#pause"),
-		initPadding : 110,
+		initPadding : 0,
 		pageSize : 20,
 		pageCurrent : 1,
 		questionData : {},
@@ -187,6 +187,7 @@
 				var that = $(this);
 				var thatNext = that.next();
 				var thatNextHeight = thatNext.innerHeight()+2;
+				_this.initPadding = thatNextHeight;
 				if(that.hasClass('active')){
 					that.removeClass('active');
 					$('.test_body').stop(true,false).animate({"padding-top":55},400,function(){
@@ -486,7 +487,7 @@
 			this.test.find('input').iCheck('disable');
 			// this.test.find('.test_time').text('测试结果');
 			// this.test.find('.js-btn-step2').remove();
-
+			$('.test_body').css('padding-top',this.initPadding)
 			var tpl   =  $('#card-result').html();
 			var temp = Handlebars.compile(tpl);
 			var html = temp(data);
