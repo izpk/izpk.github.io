@@ -8,16 +8,32 @@ $(function(){
 		$("body").html("<h1 style='color:#f00;font-size:25px'>挑战赛已经结束</h1>");
 		return;
 	}
-	var test = {
+	window.test = {
+		examUserInfo : {},
+		activityLogData : {
+			token:'',
+			activityName:'',
+			userName:'',
+			mobile:'',
+			email:'',
+			refereeId:'',
+			certificate:'',
+			subject:'',
+			hongbaoName:'',
+			isRandom:0
+		},
 		init : function(){		
 			this.time = null;
 			this.exam = {};
 			this.flag = false;
 			this.total = 0;
 			this.token = "";
+			this.index = 0;
+			this.times = 0;
 			this.index = this.getCookie("qid") ? parseInt(this.getCookie("qid")) : 0;
 			this.times = this.getCookie("qtime") ? parseInt(this.getCookie("qtime")) : 0;
-			if(_this.getCookie("nickname")){
+			this.examUserInfo = this.getCookie("examUserInfo");
+			if(this.examUserInfo){
 				$(".login").hide();	
 				$(".test").show();
 				this.initDom();
@@ -33,20 +49,20 @@ $(function(){
 			var serverip="http://api.caicui.com";
 			var username="caicuitemp";
 			var userpassword="caicuitemp";
-			var cook = {
-				"nickname":_this.getCookie("nickname"),
-				"nickschool":_this.getCookie("nickschool"),
-				"nickmajor":_this.getCookie("nickmajor"),
-				"nickemail":_this.getCookie("nickemail"),
-				"nickqq":_this.getCookie("nickqq"),
-				"phone":_this.getCookie("phone")
+
+			
+
+
+			if(this.examUserInfo){
+				var examUserInfoJson = JSON.parse(this.examUserInfo);
+				$("input[name=nickname]").val(examUserInfoJson.userName);
+				$("input[name=nickschool]").val(examUserInfoJson.certificate);
+				$("input[name=nickemail]").val(examUserInfoJson.email);
+				$("input[name=nickmajor]").val(examUserInfoJson.subject);
+				$("input[name=nickqq]").val(examUserInfoJson.refereeId);
+				$("input[name=phone]").val(examUserInfoJson.mobile);
 			}
-			cook.nickname ? $("input[name=nickname]").val(cook.nickname) : null;
-			cook.nickschool ? $("input[name=nickschool]").val(cook.nickschool) : null;
-			cook.nickemail ? $("input[name=nickemail]").val(cook.nickemail) : null;
-			cook.nickmajor ? $("input[name=nickmajor]").val(cook.nickmajor) : null;
-			cook.nickqq ? $("input[name=nickqq]").val(cook.nickqq) : null;
-			cook.phone ? $("input[name=phone]").val(cook.phone) : null;
+			
 
 			//获取验证码
 			 $('#getcode').click(function(){
@@ -130,74 +146,7 @@ $(function(){
 		    $('#mobileFormCommit').click(function(){
 
 
- 				//获取认证token
-				$.ajax({
-					url : serverip+'/api/v2.1/getToken',
-					async:false,
-					type : 'get',
-					dataType : 'json',
-					contentType: "application/x-www-form-urlencoded",
-					data : {
-						"appType" : "pc",
-						"appId" : "pcWeb",
-						"appKey" : "e877000be408a6cb0428e0f584456e03"
-					},
-					success : function(data){
-						_this.token=data.data.token;
-						//console.log(data.data.token)
-						//登录获取用户token
-						$.ajax({
-							url : serverip+'/api/v2.1/login',
-							async:false,
-							type : 'post',
-							dataType : 'json',
-							contentType: "application/x-www-form-urlencoded",
-							data : {
-								"account" : username,
-								"password" : userpassword,
-								"token" : _this.token
-							},
-							success : function(data){
-								//console.log(data)
-								_this.token=data.data.token;
-								var activeObj = {
-								"token" : _this.token,
-								"activityName" : "金融挑战赛"+myTime,
-								"userName" : nickname, 
-								"mobile" : phone,
-								"email" : nickemail,
-								"refereeId" : nickqq,
-								"certificate" : nickschool,
-								"subject" : nickmajor,
-								"hongbaoName" : "金融挑战赛",
-								"isRandom" : 0
-							}
-							setActivityLog(activeObj,function(){
-								 $(".login").hide();
-						         $(".test").show();
-						         document.cookie = 'nickname='+nickname;
-						    	 document.cookie = 'nickschool='+nickschool;
-						    	 document.cookie = 'nickmajor='+nickmajor;
-						    	 document.cookie = 'nickemail='+nickemail;
-						    	 document.cookie = 'nickqq='+nickqq;
-						    	 document.cookie = 'phone='+phone;
-								
-						        _this.initDom();
-								_this.initEvent();
-							})
-				         
-							},
-							error : function(data){
-								console.log(data)
-							}
-						})
-					},
-					error : function(data){
-						console.log(data)
-					}
-
-				})
-
+ 					
 
 				
 		    	var nickname = $.trim($("input[name=nickname]").val());
@@ -252,7 +201,70 @@ $(function(){
 		        	 $("#error").append("验证码错误！");
 		        	 return false;
 		         }
+						_this.activityLogData = {
+							"token" : _this.token,
+							"activityName" : "金融挑战赛"+myTime,
+							"userName" : nickname, 
+							"mobile" : phone,
+							"email" : nickemail,
+							"refereeId" : nickqq,
+							"certificate" : nickschool,
+							"subject" : nickmajor,
+							"hongbaoName" : "金融挑战赛",
+							"isRandom" : 0
+						}
+		        //获取认证token
+						$.ajax({
+							url : serverip+'/api/v2.1/getToken',
+							async:false,
+							type : 'get',
+							dataType : 'json',
+							contentType: "application/x-www-form-urlencoded",
+							data : {
+								"appType" : "pc",
+								"appId" : "pcWeb",
+								"appKey" : "e877000be408a6cb0428e0f584456e03"
+							},
+							success : function(data){
+								_this.token=data.data.token;
+								//console.log(data.data.token)
+								//登录获取用户token
+								$.ajax({
+									url : serverip+'/api/v2.1/login',
+									async:false,
+									type : 'post',
+									dataType : 'json',
+									contentType: "application/x-www-form-urlencoded",
+									data : {
+										"account" : username,
+										"password" : userpassword,
+										"token" : _this.token
+									},
+									success : function(data){
+										//console.log(data)
+										_this.token=data.data.token;
+										_this.activityLogData.token = data.data.token;
+									setActivityLog(_this.activityLogData,function(){
+										$('input').val('');
+										$(".login").hide();
+							      $(".test").show();
+							      _this.setCookie("examUserInfo",JSON.stringify(_this.activityLogData),1)
+									
+							      _this.initDom();
+										_this.initEvent();
+									})
+						         
+									},
+									error : function(data){
+										console.log(data)
+									}
+								})
+							},
+							error : function(data){
+								console.log(data)
+							}
 
+						})
 		       
 						        
 
@@ -316,6 +328,7 @@ $(function(){
 				        	if(data.state=="success"){
 				        		if(callback){callback()}
 				             }else{
+				             	if(callback){callback()}
 				             	alert("Sorry~ 网络错误，请重试。")
 				             }
 				         }
@@ -370,7 +383,11 @@ $(function(){
 				 _this.flag = true;
 			})
 			$("#quit").on("click",function(){
-		   		document.cookie = 'qtime='+_this.times;
+					myTime = new Date().getTime();
+					_this.activityLogData = {};
+		   		_this.clearCookie("examUserInfo");
+		   		_this.clearCookie("qid");
+		   		_this.clearCookie("qtime");
 		    	$(".test").hide();
 		    	$(".login").show();			
 			})
@@ -433,12 +450,12 @@ $(function(){
 				$("#qid").val("");
 
 		   		_this.index = 0;
-				_this.times = 0;
-				$(".test_time span").text("00:00:00");
-				_this.setTime();
+					_this.times = 0;
+					$(".test_time span").text("00:00:00");
+					_this.setTime();
 		   		document.cookie = 'qid='+_this.index;
 		   		document.cookie = 'qtime='+_this.times;
-				
+					
 								
 			})
 			$('#myModal').on('show.bs.modal', function (e) {
@@ -503,19 +520,50 @@ $(function(){
 			$(".test_time span").text(_this.showTime(_this.times++));
 			this.time = setInterval(function(){
 				if(!_this.flag){
-					$(".test_time span").text(_this.showTime(_this.times++));
+					document.cookie = 'qtime='+_this.times++;
+					var times = _this.showTime(_this.times++);
+					$(".test_time span").text(times);
 				}
 			},1000)
 		},
-		getCookie : function(name){
-			var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-			if(arr=document.cookie.match(reg)){
-				return unescape(arr[2]);
-			}else{
-				return null;
-			}						
+		// getCookie : function(name){
+		// 	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+		// 	if(arr=document.cookie.match(reg)){
+		// 		return unescape(arr[2]);
+		// 	}else{
+		// 		return null;
+		// 	}						
+		// },
+		setCookie : function (cname, cvalue, exdays) {
+		    var d = new Date();
+		    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		    var expires = "expires="+d.toUTCString();
+		    document.cookie = cname + "=" + cvalue + "; " + expires;
+		},
+		getCookie : function(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0; i<ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1);
+		        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+		    }
+		    return "";
+		},
+		clearCookie : function(name) {  
+		    this.setCookie(name, "", -1);  
+		},
+		checkCookie : function () {
+		    var user = getCookie("username");
+		    if (user != "") {
+		        alert("Welcome again " + user);
+		    } else {
+		        user = prompt("Please enter your name:", "");
+		        if (user != "" && user != null) {
+		            setCookie("username", user, 365);
+		        }
+		    }
 		}
-					
 	}
 	test.init();
 })
