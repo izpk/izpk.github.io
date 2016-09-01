@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- 宽度为设备宽度，初始缩放比例为一，用户最大最小缩放比例为一，不允许用户手动缩放 -->
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+	<!-- 禁止设备将数字作为拨号连接，邮箱自动发送，点击地图跳转 -->
+	<meta name="format-detection" content="telephone=no,email=no，adress=no">
+	<!-- 强制全屏显示 -->
+	<meta name="full-screen" content="yes">
+	<meta name="screen-orientation" content="portrait">
+	<meta name="x5-orientation" content="portrait">
+	<!-- 开启对webapp的支持 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- web app 应用下状态条（屏幕顶部条）的颜色,默认值为 default（白色） -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<!-- 禁止浏览器从的缓存中访问页面内容 -->
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>中博——蓝筹金融挑战赛，官方指定学习平台。</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/minimal/blue.css">
+	<link rel="stylesheet" href="css/test.css">
+	<script type="text/javascript">
+	 document.getElementsByTagName("html")[0].style.fontSize=document.documentElement.clientWidth/16+"px";
+	</script>
+</head>
+<body>
+	<div class="container" id="container">
+		<!--登录部分-->
+		<div class="login">
+			<div class="banner">
+		        <img src="images/banne.jpg">
+		    </div>
+		    <div class="subject">
+		        <form id="regFrom" action="/weixin/binding.do" method="post" class="getMeg">
+		        	<input name="cardCode" type="hidden" value="6LWN">
+		          	<input name="wxCode" type="hidden" value="">
+		            <h1>用户验证</h1>
+		            <div>
+		            	<label class="mesTit">姓　名:</label>
+		            	<div class="inpText">
+		            		<input class="mesText" name="nickname" type="text">
+		            	</div>
+		            </div>
+		             <input class="mesText" name="actvCode" type="hidden" value="TVM6">
+		             <div>
+		            	<label class="mesTit">学　校:</label>
+		            	<div class="inpText">
+		            		<input class="mesText" name="nickschool" type="text">
+		            	</div>
+		            </div>
+		             <div>
+		            	<label class="mesTit">专　业:</label>
+		            	<div class="inpText">
+		            		<input class="mesText" name="nickmajor" type="text">
+		            	</div>
+		            </div>
+		            <div>
+		            	<label class="mesTit">邮　箱:</label>
+		            	<div class="inpText">
+		            		<input class="mesText" name="nickemail" type="text">
+		            	</div>
+		            </div>
+		            <div>
+		            	<label class="mesTit">Q　Q:</label>
+		            	<div class="inpText">
+		            		<input class="mesText" name="nickqq" type="text">
+		            	</div>
+		            </div>
+
+		            <div class="phone">
+		            	<label class="mesTit">手机号:</label>
+		            	<span class="note" id="getcode">获取验证</span>
+		            	<span id="tip" style="display:none" class="note"></span>
+		            	<div class="inpText2">
+		            		<input class="mesText" name="phone" type="text">
+		            	</div>
+		            </div>
+		            <div>
+		            	<label class="mesTit">验证码:</label>
+		            	<div class="inpText">
+		            		<input class="mesText" name="code" type="text">
+		            	</div>
+		            </div>
+		  
+		            <div id="error" class="error"></div>
+		            <div style="text-align: center;border-bottom: none">
+		            	<button id="mobileFormCommit" class="getBut" type="button">开始练习</button>
+		            </div>
+		        </form>
+		    </div>
+
+		</div>
+		<!--试题部分-->
+		<div class="test" style="display: none;">
+			<div class="test_header">
+				<div class="test_time"><i class="glyphicon glyphicon-time"></i><span>00:00:00</span></div>
+				<div class="test_btn">
+				  <button class="btn btn-default" type="button" id="pause"  data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pause"></i>暂停</button>
+				  <button class="btn btn-default quit" type="button" id="quit">退出</button>
+				  <button class="btn btn-default reset" type="button" data-toggle="modal" data-target="#myModal2">重新开始</button>
+				</div>
+			</div>
+			<div class="test_card">
+				<div class="card">
+					跳转到第<input type="number" min="1" max="4633" id="qid" class="qid">题<button class="btn btn-default jump" id="jump">跳转</button>
+				</div>
+			</div>
+			<div class="test_main">		
+				<div class="test_questions">
+
+				</div>				
+			</div>
+			<div class="test_footer">
+				<p id="prev"><i class="glyphicon glyphicon-menu-left"></i>上一题</p>
+				<p id="next">下一题<i class="glyphicon glyphicon-menu-right"></i></p>
+			</div>
+
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog tan" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <h2><i class="glyphicon glyphicon-time"></i>休息一会，快点回来...</h2>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default study" data-dismiss="modal">继续答题</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog tan" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <h2>确定要重新开始吗？</h2>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal"  id="put">我确定</button>
+	        <button type="button" class="btn btn-default study" data-dismiss="modal">取消</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+<script  id="tpl" type="text/x-handlebars-template">
+		
+	<div class="test_questions_list">
+		<h4><span>{{id}}.</span>{{context.subject}}</h4>
+		<p>{{context.option}}</p>
+		<div><input type="text" placeholder="请输入您的答案" id="inp"><button class="btn btn-default" id="testing">验证答案</button></div>
+    	<div class="answer">
+    		<h5>正确答案是<span>{{context.answer}}</span><em class="result">，回答正确</em></h5>
+    	</div>
+	</div>
+			
+</script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/icheck.min.js"></script>
+<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+<script type="text/javascript" src="js/examData.js"></script>
+<script type="text/javascript" src="js/test.js"></script>
+</html>

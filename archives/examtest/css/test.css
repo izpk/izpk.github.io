@@ -1,0 +1,429 @@
+@import url(reset.css);
+*{margin: 0;padding: 0;font-family: "微软雅黑"}
+a{text-decoration: none;}
+a:active, a:hover{text-decoration: none;}
+p{margin:0;}
+label{display: inline;font-weight: normal;}
+input[type=checkbox], input[type=radio]{
+	margin:0;
+}
+/*iphone 4  iphone 5 */
+@media screen and (min-width: 320px) and (max-width: 374px) {
+  html {
+    font-size: 62.5%; 
+  } 
+}
+/*iphone 6 */
+@media screen and (min-width: 375px) and (max-width: 413px) {
+  html {
+    font-size: 87.5%; 
+  } 
+}
+/*Ipad*/
+@media screen and (min-width: 414px) and (max-width:768px) {
+  html {
+    font-size: 100%; 
+  } 
+}
+
+html,body,.container{
+	width:100%;
+	height: 100%;
+}
+html,body{
+	/*overflow: hidden;*/
+}
+.container{
+	padding: 0;
+	overflow-y:scroll;
+}
+.container .test{
+	width:100%;
+	height: 100%;
+	position: relative;
+	padding-top: 92px;
+	padding-bottom: 44px;
+}
+.container .test .test_header{
+	width:100%;
+	height:44px;
+	position:absolute;
+	background-color: #fff;
+	top:0;
+    border-bottom: 1px solid #ccc;
+}
+.container .test .test_header .test_time{
+	position: absolute;
+	top:10px;
+	left:10px;
+	font-size: 16px;
+}
+.container .test .test_header .test_time i{
+	padding-right: 5px;
+}
+.container .test .test_header .test_btn{
+	position: absolute;
+	top:4px;
+	right:10px;
+}
+.container .test .test_header .test_btn button{
+	outline: none;
+}
+.qid{
+    height: 34px;
+    width: 60px;
+    vertical-align: middle;
+    line-height: 34px;
+    margin:0 5px;
+    outline: none;
+}
+.jump{
+    margin-left: 10px;
+}
+.test_main{
+	    width: 100%;
+    height: 100%;
+    /* padding-top: 88px; */
+    overflow-y: auto;
+    /* overflow-y: scroll; */
+    padding: 0 10px;
+    border-top: 1px solid #ccc;
+}
+.test_card{
+	width: 100%;
+	position: absolute;
+	top:44px;
+	border-bottom: 1px solid #ccc;
+	background-color:#fff;
+}
+.test_card div{
+	height: 48px;		
+	line-height: 44px;
+	padding-left: 10px;
+}
+
+.test_card_list{
+	width: 100%;
+	padding:5px 10px;
+	background-color: #eee;
+	border-top:1px solid #ccc;
+	display: none;
+}
+.test_card_list li{
+	border:1px solid #ccc;
+	margin: 5px 0;
+	min-width: 42px;
+}
+.test_card_list li a{
+	color:#000;
+}
+.test_card_list li.on{
+	background: blue;
+	
+}
+.test_card_list li.on a{
+	color:#fff;
+}
+.test_questions{
+	padding:0 10px;
+	width: 100%;
+	height: 100%;
+	/* padding-top: 88px; */
+}
+.test_questions_list{
+	padding-top: 10px;
+}
+.test_questions_list h4{
+	    font-size: 16px;
+    line-height: 20px;
+    font-weight: bold;
+
+}
+.test_questions_list h4 span{
+    font-size: 16px;
+}
+.test_questions_list button{outline: none;}
+.test_questions_list h4 span{
+	padding:0 5px 0 0;
+}
+.test_questions_list label{
+	line-height: 30px;
+	display: block;
+}
+.test_questions_list label input{
+	vertical-align:middle;
+}
+.test_questions_list label{
+	vertical-align:middle;
+	padding-left: 5px;
+	
+}
+.test_questions_list label span{
+	padding-left: 10px;
+}
+.test_questions_list label em{
+	padding-left: 5px;
+}
+.test_questions_list p{
+    margin :10px 0;
+}
+.test_questions_list div{
+    margin :10px 0;
+}
+.test_questions_list div input{
+    width: 125px;
+    height: 34px;
+    vertical-align: middle;
+    margin-right: 10px;
+    border-radius:5px; 
+    outline: none;
+    padding:0 10px;
+    margin:10px 10px 10px 0;
+    border: 1px solid #ccc;
+}
+
+.answer{
+	width: 100%;
+	height: 44px;
+	background-color: #f6f7f9;
+	display: none;
+}
+.answer h5{
+	line-height: 44px;
+	padding-left: 10px;
+}
+.answer h5 span{
+	color:#22B26C;
+}
+.test_footer{
+	width: 100%;
+	height: 44px;
+	position: absolute;
+	left:0;
+	bottom:0;
+	display:-webkit-box; 
+	background: #fff;
+}
+.test_footer p{
+	-webkit-box-flex:1;
+	text-align: center;
+	line-height: 44px;
+	border:1px solid #ccc;
+}
+.test_footer p:nth-of-type(2){
+	border-left: none;
+}
+
+
+#myModal .tan,#myModal2 .tan{
+	width:80%;
+	position:absolute;
+	top:50%;
+	left: 50%;
+	margin:0;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#myModal .tan .btn,#myModal2 .tan .btn{
+	margin:0 auto;
+	background-color: #00f;
+	color: #fff;
+}
+#myModal2 .tan .btn{
+	margin:8px auto;
+	display: block;
+	min-width: 138px;
+}
+#myModal .tan h2,#myModal2 .tan h2{
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+}
+#myModal .tan h2 i{
+	font-size: 20px;
+	vertical-align: middle;
+	padding-right: 10px;
+}
+.modal-footer{
+	text-align: center;
+}
+.modal-body{
+	padding:20px 30px;
+}
+
+.banner{
+    /*overflow: hidden;*/
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #bcbcbc;
+    margin-bottom: 20px;
+}
+.banner:after{
+    content: '';
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+.banner img{
+    float: left;
+    width: 100%;
+    height: auto;
+}
+.subject{
+    padding:0 20px 40px;
+}
+.subject h1{
+    font-size: 24px;
+    color: #31aab9;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.getMeg>div{
+    border-bottom: 1px solid #d8d8d8;
+    padding: 5px 0;
+    line-height: 30px;
+}
+.getMeg>div>.inpText2{
+    margin: 0 115px 0 80px;
+}
+.getMeg>div>.inpText2>.mesText{
+    width: 100%;
+    border: none;
+    line-height: 30px;
+    background-color: transparent;
+    color: #6c6c6c;
+    font-size: 16px;
+    outline: none;
+}
+.getMeg>div.phone>.note,.getMeg>div.experience>.note{
+    color: #fff;
+    line-height: 30px;
+    display: block;
+    float:right;
+    padding: 0 10px;
+    background-color: #31aab9;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.getMeg>div>.mesTit,.getMeg>div>.mesText{
+    display: inline-block;
+    margin: 0;
+}
+.getMeg>div>.mesTit{
+    float: left;
+    width: 70px;
+    text-align: right;
+    color: #aeaeae;
+    margin-right:10px;
+    font-size: 16px;
+}
+.getMeg>div>.inpText{
+    margin-left: 80px;
+}
+.getMeg>div>.inpText>.mesText{
+    width: 100%;
+    border: none;
+    line-height: 30px;
+    background-color: transparent;
+    color: #6c6c6c;
+    font-size: 16px;
+    outline: none;
+}
+.getMeg>div>.mesText:focus{
+    border: none;
+    outline: none;
+}
+.getMeg .lastText{
+    color: #6c6c6c;
+    border-bottom: none;
+    margin: 0 -5px;
+}
+.getMeg .lastText a{
+    color:#48b1be;
+}
+.getMeg .lastText>input[type='checkbox']{
+    display: inline-block;
+    margin-right: 5px;
+}
+.getMeg>div>.getBut{
+    width: 200px;
+    text-align: center;
+    display: inline-block;
+    border: none;
+    background-color:#31aab9;
+    padding: 10px 0;
+    color:#fff;
+    font-size:16px;
+    border-radius: 5px;
+    font-family: "Microsoft Yahei";
+}
+.getMeg>.error{
+    height: 25px;
+    line-height: 25px;
+    color:red;
+    border-bottom: none;
+    margin-bottom:10px;
+    font-weight: bold;
+    padding:0;
+    padding-left:22px;
+}
+.twoSub{
+    padding: 30px 15px 0;
+}
+.logoImg{
+    text-align: center;
+    margin-bottom: 40px;
+}
+.logoImg>span{
+    display: inline-block;
+    width: 50%;
+    margin-bottom: 10px;
+}
+.logoImg>span>img{
+    width: 100%;
+    height:auto;
+}
+.logoImg>.attention{
+    padding: 10px 20px;
+    color: #fff;
+    display: inline-block;
+    background-color: #31aab9;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-family: "Microsoft Yahei",'Glyphicons Halflings',icomoon,Heiti, arial,helvetica,sans-serif !important;;
+    outline: none;
+}
+.logoImg>.attention:focus{
+    outline: none;
+}
+.textTitle{
+    position: absolute;
+    top:30px;
+    left: 10px;
+}
+.textTitle>p{
+    color: #fff;
+    font-size: 18px;
+    line-height: 30px;
+}
+.textTitle>p>span{
+    font-size:26px;
+    display: inline-block;
+    margin-right: 5px;
+}
+#tip{
+    background-color: #bababa;
+    cursor: not-allowed;
+}
+.enter-experience-code{
+    margin-left: 27px;
+    color: #aeaeae;
+    display: none;
+}
+.enter-experience-code span{color: #72d4d3;}
+.experience-code{color: #72d4d3;}
+#container .test .test_card .card #jump{outline: :none;}
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none}
