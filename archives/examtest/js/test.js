@@ -1,5 +1,8 @@
 $(function(){
+	var arr=["A","B","C","D","E","F","G","H"];
+	var listLength = 0;
 	var today = new Date();
+	var myTime = today.getTime();
 	var activeTime = new Date(2016,8,21,0,0,0);
 	if(today.getTime()-activeTime.getTime()>=0){
 		$("body").html("<h1 style='color:#f00;font-size:25px'>挑战赛已经结束</h1>");
@@ -14,14 +17,22 @@ $(function(){
 			this.token = "";
 			this.index = this.getCookie("qid") ? parseInt(this.getCookie("qid")) : 0;
 			this.times = this.getCookie("qtime") ? parseInt(this.getCookie("qtime")) : 0;
-			this.login();
-			// this.initDom();
-			// this.initEvent();
-			//
+			if(true){
+				$(".login").hide();	
+				$(".test").show();
+				this.initDom();
+				this.initEvent();
+			}else{
+				$(".login").show();	
+				$(".test").hide();
+				this.login();
+			}
 		},
 		login : function(){
 			var _this = this;
 			var serverip="http://api.caicui.com";
+			var username="caicuitemp";
+			var userpassword="caicuitemp";
 			var cook = {
 				"nickname":_this.getCookie("nickname"),
 				"nickschool":_this.getCookie("nickschool"),
@@ -117,6 +128,78 @@ $(function(){
 			 
 		    //点击提交
 		    $('#mobileFormCommit').click(function(){
+
+
+ 				//获取认证token
+				$.ajax({
+					url : serverip+'/api/v2.1/getToken',
+					async:false,
+					type : 'get',
+					dataType : 'json',
+					contentType: "application/x-www-form-urlencoded",
+					data : {
+						"appType" : "pc",
+						"appId" : "pcWeb",
+						"appKey" : "e877000be408a6cb0428e0f584456e03"
+					},
+					success : function(data){
+						_this.token=data.data.token;
+						//console.log(data.data.token)
+						//登录获取用户token
+						$.ajax({
+							url : serverip+'/api/v2.1/login',
+							async:false,
+							type : 'post',
+							dataType : 'json',
+							contentType: "application/x-www-form-urlencoded",
+							data : {
+								"account" : username,
+								"password" : userpassword,
+								"token" : _this.token
+							},
+							success : function(data){
+								//console.log(data)
+								_this.token=data.data.token;
+								var activeObj = {
+								"token" : _this.token,
+								"activityName" : "金融挑战赛"+myTime,
+								"userName" : nickname, 
+								"mobile" : phone,
+								"email" : nickemail,
+								"refereeId" : nickqq,
+								"certificate" : nickschool,
+								"subject" : nickmajor,
+								"hongbaoName" : "金融挑战赛",
+								"isRandom" : 0
+							}
+							setActivityLog(activeObj,function(){
+								 $(".login").hide();
+						         $(".test").show();
+						         document.cookie = 'nickname='+nickname;
+						    	 document.cookie = 'nickschool='+nickschool;
+						    	 document.cookie = 'nickmajor='+nickmajor;
+						    	 document.cookie = 'nickemail='+nickemail;
+						    	 document.cookie = 'nickqq='+nickqq;
+						    	 document.cookie = 'phone='+phone;
+								
+						        _this.initDom();
+								_this.initEvent();
+							})
+				         
+							},
+							error : function(data){
+								console.log(data)
+							}
+						})
+					},
+					error : function(data){
+						console.log(data)
+					}
+
+				})
+
+
+				
 		    	var nickname = $.trim($("input[name=nickname]").val());
 		    	 if(nickname==""){
 		    		 $("#error").empty();
@@ -169,17 +252,11 @@ $(function(){
 		        	 $("#error").append("验证码错误！");
 		        	 return false;
 		         }
-		         $(".login").hide();
-		         $(".test").show();
-		         document.cookie = 'nickname='+nickname;
-		    	 document.cookie = 'nickschool='+nickschool;
-		    	 document.cookie = 'nickmajor='+nickmajor;
-		    	 document.cookie = 'nickemail='+nickemail;
-		    	 document.cookie = 'nickqq='+nickqq;
-		    	 document.cookie = 'phone='+phone;
-					
-		        _this.initDom();
-				_this.initEvent();
+
+		       
+						        
+
+		         
 
 		    });
 
@@ -228,6 +305,23 @@ $(function(){
 				     });
 					 return fv;
 				}
+
+				function setActivityLog(obj,callback){
+					 $.ajax({
+				         type: "POST",
+				         url: "http://www.caicui.com/api/v2/order/setActivityLog ",
+				         data: obj,
+				         async: false,
+				         success: function(data){
+				        	if(data.state=="success"){
+				        		if(callback){callback()}
+				             }else{
+				             	alert("Sorry~ 网络错误，请重试。")
+				             }
+				         }
+				     });
+				}
+
 				function checkEmail(obj){
 					var reg = /\w+((-w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+/;
 					if(!reg.test(obj)){
@@ -244,8 +338,20 @@ $(function(){
 				}
 		},
 		initDom : function(){
+				
+				
+			Handlebars.registerHelper("compare",function(v1,v2,options){
+		        return v1[v2]
+		    });
+			Handlebars.registerHelper("index",function(v1,options){
+		        return v1+1;
+		    });
+
 			var _this = this;
 			this.flag = false;
+			listLength = examData.list.length;
+			$('.total-question').text(listLength);
+			console.log(examData.list)
 			console.log(examData.list.length)
 			this.renderTpl($("#tpl"),examData.list[_this.index],$(".test_questions"),_this.index+1);
 			this.iCheck();
@@ -274,9 +380,12 @@ $(function(){
 			})
 
 			container.on("click","#jump",function(){
-				var qid = $("#qid").val();
-				if(qid == "") return;
-				 _this.go(qid-1);
+				var qid = +$("#qid").val()-1;
+				if(qid>=0 && qid<=listLength){
+					_this.go(qid);
+				}
+				
+				 
 			})
 
 			/*container.on('ifChecked',"input", function(event){
@@ -347,20 +456,13 @@ $(function(){
 			})
 		},
 		renderTpl : function(tpl,data,box,id){
-			var arr=["A","B","C","D","E","F","G","H"];
 			
-			Handlebars.registerHelper("compare",function(v1,v2,options){
-		        return v1[v2]
-		    });
-			Handlebars.registerHelper("index",function(v1,options){
-		        return v1+1;
-		    });
-		    var tpl   =  tpl.html();
-		    var temp = Handlebars.compile(tpl);
-		    var context = data;
-		    var html = temp({"context":context,"arr":arr,"id":id});
-		    box.html(html);
-		    this.iCheck();
+	    var tpl   =  tpl.html();
+	    var temp = Handlebars.compile(tpl);
+	    var context = data;
+	    var html = temp({"context":context,"arr":arr,"id":id});
+	    box.html(html);
+	    this.iCheck();
 		},
 		go : function(idx){
 			this.index = idx;

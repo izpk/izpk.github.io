@@ -92,7 +92,7 @@
 
 		</div>
 		<!--试题部分-->
-		<div class="test" style="display: none;">
+		<div class="test">
 			<div class="test_header">
 				<div class="test_time"><i class="glyphicon glyphicon-time"></i><span>00:00:00</span></div>
 				<div class="test_btn">
@@ -103,6 +103,7 @@
 			</div>
 			<div class="test_card">
 				<div class="card">
+					总计<span class="total-question"></span>道试题，
 					跳转到第<input type="number" min="1" max="4633" id="qid" class="qid">题<button class="btn btn-default jump" id="jump">跳转</button>
 				</div>
 			</div>
@@ -151,7 +152,7 @@
 		
 	<div class="test_questions_list">
 		<h4><span>{{id}}.</span>{{context.subject}}</h4>
-		<p>{{context.option}}</p>
+		<pre class="question-option-pre">{{context.option}}</pre>
 		<div><input type="text" placeholder="请输入您的答案" id="inp"><button class="btn btn-default" id="testing">验证答案</button></div>
     	<div class="answer">
     		<h5>正确答案是<span>{{context.answer}}</span><em class="result">，回答正确</em></h5>

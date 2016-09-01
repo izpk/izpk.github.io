@@ -37,6 +37,9 @@ html,body{
 	padding: 0;
 	overflow-y:scroll;
 }
+.test{
+    display: none;
+}
 .container .test{
 	width:100%;
 	height: 100%;
@@ -71,11 +74,12 @@ html,body{
 }
 .qid{
     height: 34px;
-    width: 60px;
+    width: 80px;
     vertical-align: middle;
     line-height: 34px;
     margin:0 5px;
     outline: none;
+    padding: 0 5px;
 }
 .jump{
     margin-left: 10px;
@@ -137,7 +141,7 @@ html,body{
 	    font-size: 16px;
     line-height: 20px;
     font-weight: bold;
-
+    margin-bottom: 10px;
 }
 .test_questions_list h4 span{
     font-size: 16px;
@@ -209,6 +213,7 @@ html,body{
 	text-align: center;
 	line-height: 44px;
 	border:1px solid #ccc;
+    cursor: pointer;
 }
 .test_footer p:nth-of-type(2){
 	border-left: none;
@@ -251,7 +256,9 @@ html,body{
 .modal-body{
 	padding:20px 30px;
 }
-
+.login{
+    display: none;
+}
 .banner{
     /*overflow: hidden;*/
     width: 100%;
@@ -427,3 +434,11 @@ html,body{
 .experience-code{color: #72d4d3;}
 #container .test .test_card .card #jump{outline: :none;}
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none}
+
+.total-question{
+    color: #f00;
+    padding: 0 5px;
+}
+.question-option-pre{
+    padding: 10px;
+}
