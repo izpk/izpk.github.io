@@ -17,7 +17,7 @@ $(function(){
 			this.token = "";
 			this.index = this.getCookie("qid") ? parseInt(this.getCookie("qid")) : 0;
 			this.times = this.getCookie("qtime") ? parseInt(this.getCookie("qtime")) : 0;
-			if(true){
+			if(_this.getCookie("nickname")){
 				$(".login").hide();	
 				$(".test").show();
 				this.initDom();
