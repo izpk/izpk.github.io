@@ -60,7 +60,7 @@
 	        <h2><i class="glyphicon glyphicon-time"></i>休息一会，快点回来...</h2>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success study" data-dismiss="modal">继续做题</button>
+	        <button type="button" class="btn btn-success study mt-10" data-dismiss="modal">继续做题</button>
 	      </div>
 	    </div>
 	  </div>
@@ -74,7 +74,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-primary" data-dismiss="modal"  id="put">我要交卷</button>
-	        <button type="button" class="btn btn-default study" data-dismiss="modal">谢谢提醒，继续查看</button>
+	        <button type="button" class="btn btn-default study mt-10" data-dismiss="modal">谢谢提醒，继续查看</button>
 	      </div>
 	    </div>
 	  </div>
@@ -87,7 +87,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-danger" data-dismiss="modal"  id="exit">我要退出</button>
-	        <button type="button" class="btn btn-default study" data-dismiss="modal">谢谢提醒，继续做</button>
+	        <button type="button" class="btn btn-default study mt-10" data-dismiss="modal">谢谢提醒，继续做</button>
 	      </div>
 	    </div>
 	  </div>
@@ -99,7 +99,7 @@
 		<div class="question-list">
 		<h6 class="question-list-title">{{name}}</h6>
 		<div class="question-list-button">
-		<button class="btn btn-primary testStart" id="{{id}}">开始练习</button>
+		<button class="testStart" id="{{id}}">开始练习</button>
 		</div>
 		
 		</div>
@@ -129,7 +129,7 @@
 		{{#each context.data}}
 		<div class="test_questions_list" data-id="{{id}}" data-inputtype="{{type}}" data-listActiveSelected="false">
 			<div class="test-question-content">
-				<h4 id="{{id}}" class="test-question-title">{{index @index}}.{{title}}</h4>
+				<h4 id="{{id}}" class="test-question-title">{{index @index}}.{{{title}}}</h4>
 				{{#each option}}
 					{{{optionDom @index this}}}
 		    {{/each}}
@@ -162,12 +162,8 @@
 			</div>
 		</div>
 		<div class="test-answer-content">
-			{{#if analyze}}
-				{{analyze}}
-			{{else}}
-				"暂无解析"
-			{{/if}}
-			
+			<p>{{resultRight this}}</p>
+			<p class="mt-10">{{isAnalyze analyze}}</p>
 		</div>
 	</div>
 </script>

@@ -80,7 +80,6 @@
 			})
 		},
 		start : function(){
-			
 			test.examAjax(function(data){
 				var startTemp   =  $("#start-temp").html();
 				var temp = Handlebars.compile(startTemp);
@@ -122,6 +121,14 @@
 					return "btn-danger"
 				}
 	    });
+	    Handlebars.registerHelper("isAnalyze",function(analyzeVal){
+	    	var val = analyzeVal.substr(0,6)
+				if(val && val != "&nbsp;"){
+					return val;
+				}else{
+					return "暂无解析";
+				}
+	    });
 	    Handlebars.registerHelper("resultAnalyze",function(options){
 				
 				if(options.type=="radio" || options.type=="checkbox"){
@@ -131,23 +138,30 @@
 					var answerMe = answerData.answerMe;
 					var answerText = "";
 					if(answerState==1){
-						answerText = answerMe+"，"+"回答正确"
+						//answerMe+"，"+"回答正确"
+						answerText = "回答正确"
 					}else if(answerState==-1){
-						answerText = answerMe+"，"+"回答错误"
+						//answerMe+"，"+"回答错误"
+						answerText = "回答错误"
 					}else if(answerState==0){
 						answerText = "未选择"
 					}
-					return "正确答案："+answerRight+"，你的答案："+answerText;
+					//"正确答案："+answerRight+"，你的答案："+answerText;
+					return answerText;
 				}
 	    });
-	    
+	    Handlebars.registerHelper("resultRight",function(options){
+				var answerData = test.getAnswerState(options);
+				var answerRight = answerData.answerRight;
+				return "正确答案："+answerRight;
+	    });
 			Handlebars.registerHelper("optionDom",function(index,options){
 				switch (options.type){
 					case "radio":
-						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'</em><span class="test-question-option">'+options.name+'</span></label>'
+						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck'+options.id+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'：</em><span class="test-question-option">'+options.name+'</span></label>'
 						break;
 					case "checkbox":
-						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'</em><span class="test-question-option">'+options.name+'</span></label>'
+						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck'+options.id+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'：</em><span class="test-question-option">'+options.name+'</span></label>'
 						break;
 					case "text":
 						return '<label><input class="inputText" type="'+options.type+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"></label>'
@@ -300,13 +314,14 @@
 		  this.listTotal = 0;
 		  this.index = 0;
 		  this.initQuestionData(this.index);
-      $('input[name="iCheck"]').iCheck({
+		  console.log(data)
+      $('input').iCheck({
   	    checkboxClass: 'icheckbox_minimal-blue js-input',
   	    radioClass: 'iradio_minimal-blue js-input',
   	    increaseArea: '20%' 
   	  });
   	  
-      $('input[name="iCheck"]').on('ifChecked', function(event){
+      $('input').on('ifChecked', function(event){
       	var that = $(this);
       	var parentQuestion = that.parents('.test_questions_list');
       	that.iCheck('check');
@@ -317,7 +332,7 @@
       	}
       	_this.listCardActive.attr('class','btn btn-primary active');
       });
-      $('input[name="iCheck"]').on('ifUnchecked', function(event){
+      $('input').on('ifUnchecked', function(event){
       	var that = $(this);
       	var parentQuestion = that.parents('.test_questions_list');
       	that.iCheck('uncheck'); 
@@ -397,11 +412,11 @@
 		},
 		getPutData : function(){
 			var result = [];
-			for(var i=0;len=this.test_questions_list.length,i<len;i++){
+			var listLength = $('.test_questions_list').length;
+			for(var i=0;i<listLength;i++){
 				var thisList = this.test_questions_list.eq(i);
 				var inputId = thisList.attr('data-id');
 				var inputType = thisList.attr('data-inputtype');
-				var addData = false;
 				var selectData = {
             "type": inputType,
             "questionid": inputId,
@@ -414,6 +429,7 @@
 				// }
 				if(inputType == "radio" || inputType == "checkbox"){
 					var thisListInput = thisList.find(".js-input");
+					console.log(thisListInput)
 					for(var j=0;len=thisListInput.length,j<len;j++){
 						var thisInput = thisListInput.eq(j);
 						if(thisInput.hasClass('checked')){
@@ -423,7 +439,6 @@
 							selectData.answer[j] = id;
 						}
 					}
-					
 				}else if(inputType == "blank"){
 					var input = thisList.find('.inputText');
 					var id = input.attr('data-id');
@@ -439,6 +454,8 @@
 				}
 				result.push(selectData)
 			}
+			console.log(result);
+
 			return result;
 		},
 		filterQuestionData : function(data,arr){
