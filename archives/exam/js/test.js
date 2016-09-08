@@ -99,7 +99,7 @@
 						_this.test.find('.test_header').removeClass('active');
 						_this.interval();
 						_this.testBody = $('.test_body');
-
+						_this.initPadding = $('.test_card_list').innerHeight();
 					});			
 				})
 			});
@@ -302,6 +302,8 @@
 			this.total = data.total;
 			this.flag = false;
 			this.isEnd = false;
+			
+
 			var tpl   =  $("#tpl").html();
 			var temp = Handlebars.compile(tpl);
 			var html = temp({"context":data,"arr":this.answerArr});
@@ -314,7 +316,7 @@
 		  this.listTotal = 0;
 		  this.index = 0;
 		  this.initQuestionData(this.index);
-		  console.log(data)
+		  
       $('input').iCheck({
   	    checkboxClass: 'icheckbox_minimal-blue js-input',
   	    radioClass: 'iradio_minimal-blue js-input',
@@ -507,6 +509,7 @@
 			this.test.find('input').iCheck('disable');
 			// this.test.find('.test_time').text('测试结果');
 			// this.test.find('.js-btn-step2').remove();
+			console.log(this.initPadding)
 			this.testBody.css('padding-top',this.initPadding)
 			var tpl   =  $('#card-result').html();
 			var temp = Handlebars.compile(tpl);
