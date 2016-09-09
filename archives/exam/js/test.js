@@ -155,13 +155,15 @@
 				var answerRight = answerData.answerRight;
 				return "正确答案："+answerRight;
 	    });
-			Handlebars.registerHelper("optionDom",function(index,options){
+			Handlebars.registerHelper("optionDom",function(index,id,options){
+
+				console.log(id + ';' + options)
 				switch (options.type){
 					case "radio":
-						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck'+options.id+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'：</em><span class="test-question-option">'+options.name+'</span></label>'
+						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck'+id+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'：</em><span class="test-question-option">'+options.name+'</span></label>'
 						break;
 					case "checkbox":
-						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck'+options.id+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'：</em><span class="test-question-option">'+options.name+'</span></label>'
+						return '<label for="'+options.id+'"><input type="'+options.type+'" name="iCheck'+id+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"><em>'+test.answerArr[index]+'：</em><span class="test-question-option">'+options.name+'</span></label>'
 						break;
 					case "text":
 						return '<label><input class="inputText" type="'+options.type+'" id="'+options.id+'" data-id="'+options.id+'" data-qid="'+options.qid+'"></label>'
