@@ -4,6 +4,7 @@ html,body{
 	font-family: "微软雅黑"
 }
 .welcome-container{
+	display: none;
 	position: relative;
 	overflow: hidden;
 	min-width: 990px;
@@ -73,4 +74,87 @@ html,body{
 
 .text-5{
 	float: right;
+}
+
+
+.welcome-load{
+
+}
+.loader-box{
+	color: #000;	
+	background-color: #fff;
+}
+.loader-text{
+	position: absolute !important;
+  top: 50%;
+  left: 50%;
+  margin: 90px 0px 0px -54px;
+  color: #000;
+  opacity: .8;
+  font-size: 14px;
+}
+.loader {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0px 0px -10px;
+  font-size: 20px;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  text-indent: -9999em;
+  -webkit-animation: load 1.5s infinite linear;
+  animation: load 1.5s infinite linear;
+}
+/* 8cc474  */
+@-webkit-keyframes load {
+  0%,
+  100% {
+    box-shadow: 0em -3em 0em 0.2em #43b0ab, 2em -2em 0 0em #43b0ab, 3em 
+0em 0 -0.5em #43b0ab, 2em 2em 0 -0.5em #43b0ab, 0em 3em 0 -0.5em 
+#43b0ab, -2em 2em 0 -0.5em #43b0ab, -3em 0em 0 -0.5em #43b0ab, -2em -2em
+ 0 0em #43b0ab;
+  }
+  12.5% {
+    box-shadow: 0em -3em 0em 0em #43b0ab, 2em -2em 0 0.2em #43b0ab, 3em 
+0em 0 0em #43b0ab, 2em 2em 0 -0.5em #43b0ab, 0em 3em 0 -0.5em #43b0ab, 
+-2em 2em 0 -0.5em #43b0ab, -3em 0em 0 -0.5em #43b0ab, -2em -2em 0 -0.5em
+ #43b0ab;
+  }
+  25% {
+    box-shadow: 0em -3em 0em -0.5em #43b0ab, 2em -2em 0 0em #43b0ab, 3em
+ 0em 0 0.2em #43b0ab, 2em 2em 0 0em #43b0ab, 0em 3em 0 -0.5em #43b0ab, 
+-2em 2em 0 -0.5em #43b0ab, -3em 0em 0 -0.5em #43b0ab, -2em -2em 0 -0.5em
+ #43b0ab;
+  }
+  37.5% {
+    box-shadow: 0em -3em 0em -0.5em #43b0ab, 2em -2em 0 -0.5em #43b0ab, 
+3em 0em 0 0em #43b0ab, 2em 2em 0 0.2em #43b0ab, 0em 3em 0 0em #43b0ab, 
+-2em 2em 0 -0.5em #43b0ab, -3em 0em 0 -0.5em #43b0ab, -2em -2em 0 -0.5em
+ #43b0ab;
+  }
+  50% {
+    box-shadow: 0em -3em 0em -0.5em #43b0ab, 2em -2em 0 -0.5em #43b0ab, 
+3em 0em 0 -0.5em #43b0ab, 2em 2em 0 0em #43b0ab, 0em 3em 0 0.2em 
+#43b0ab, -2em 2em 0 0em #43b0ab, -3em 0em 0 -0.5em #43b0ab, -2em -2em 0 
+-0.5em #43b0ab;
+  }
+  62.5% {
+    box-shadow: 0em -3em 0em -0.5em #43b0ab, 2em -2em 0 -0.5em #43b0ab, 
+3em 0em 0 -0.5em #43b0ab, 2em 2em 0 -0.5em #43b0ab, 0em 3em 0 0em 
+#43b0ab, -2em 2em 0 0.2em #43b0ab, -3em 0em 0 0em #43b0ab, -2em -2em 0 
+-0.5em #43b0ab;
+  }
+  75% {
+    box-shadow: 0em -3em 0em -0.5em #43b0ab, 2em -2em 0 -0.5em #43b0ab, 
+3em 0em 0 -0.5em #43b0ab, 2em 2em 0 -0.5em #43b0ab, 0em 3em 0 -0.5em 
+#43b0ab, -2em 2em 0 0em #43b0ab, -3em 0em 0 0.2em #43b0ab, -2em -2em 0 
+0em #43b0ab;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0em 0em #43b0ab, 2em -2em 0 -0.5em #43b0ab, 3em
+ 0em 0 -0.5em #43b0ab, 2em 2em 0 -0.5em #43b0ab, 0em 3em 0 -0.5em 
+#43b0ab, -2em 2em 0 0em #43b0ab, -3em 0em 0 0em #43b0ab, -2em -2em 0 
+0.2em #43b0ab;
+  }
 }

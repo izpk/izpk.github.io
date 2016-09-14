@@ -9,7 +9,8 @@
     <link rel="stylesheet" type="text/css" href="styles/welcome.css">
   </head>
   <body>
-    <div class="welcome-container">
+    <div id="loader" class="loader-box" ><div class="loader"></div><div class="loader-text">加载中，请稍候...</div></div>
+    <div id="welcome-container" class="welcome-container">
       <div class="welcome-bg">
         <img class="welcome-img" src="images/bg-1.jpg">
         <img class="welcome-img" src="images/bg-2.jpg">
@@ -43,8 +44,15 @@
         </div>
         <img class="text text-4" src="images/text-4.png">
           <img class="text text-5" src="images/text-5.png">
-        
+
       </div>
     </div>
+  <script type="text/javascript">
+    window.onload=function(){
+      var loader = document.getElementById('player-button');
+      var welcome = document.getElementById('welcome-container');
+      welcome.style.display = "block";
+    }
+  </script>
   </body>
 </html>
