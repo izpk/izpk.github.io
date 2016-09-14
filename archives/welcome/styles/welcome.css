@@ -1,0 +1,76 @@
+html,body{
+	width: 100%;
+	margin: 0;
+	font-family: "微软雅黑"
+}
+.welcome-container{
+	position: relative;
+	overflow: hidden;
+	min-width: 990px;
+}
+.welcome-bg{
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 1600px;
+	height: 4060px;
+	margin-left: -800px;
+	overflow: hidden;
+}
+.welcome-img{
+	float: left;
+}
+.welcome-content{
+	position: relative;
+	z-index: 9;
+	width: 990px;
+	height: 3821px;
+	margin: 0 auto;
+}
+.welcome-title{
+	text-align: right;
+  margin-top: 239px;
+  font-size: 14px;
+  width: 763px;
+	color: #fff;
+	opacity: .8;
+}
+.video{
+	width: 477px;
+	height: 227px;
+	margin-left: 510px;
+  margin-top: -57px;
+}
+.text{
+	display: block;
+}
+.text-1{
+	margin-left: 105px;
+}
+.text-2{
+	margin-left: 105px;
+}
+.text-3{
+	margin-left: 550px;
+}
+.banner-1{
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+.student-content{
+	overflow: hidden;
+	margin-left: -90px;
+}
+.student{
+	float: left;
+	margin-left: 90px;
+	margin-top: 50px;
+}
+.text-4{
+	float: right;
+	margin-top: -285px;
+}
+
+.text-5{
+	float: right;
+}
