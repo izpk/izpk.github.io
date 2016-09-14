@@ -1,0 +1,298 @@
+body{	
+	width:100%;
+	overflow:hidden;	
+}
+.hide{ display:none;}
+.page{
+	width:100%;
+	height:100%;
+	position:absolute;
+	font-size:100px;
+	text-align:center;
+}
+.page .wrap{
+	height:100%;
+}
+.page-1-1{ background-color:#48465C;}
+.page-2-1{ background-color:#3B3961;}
+.page-3-1{ background-color:#25234A;}
+.page-4-1{ background-color:#F8F8F8;}
+.page-5-1{ background-color:#48465C;}
+.page-6-1{ background-color:#3B3961;}
+.page-7-1{ background-color:#25234A;}
+.page-8-1{ background-color:#3D3861;}
+.page-current{
+	z-index:1;
+}
+/*第一页*/
+.page-1-1 .img_1 {
+	    height: auto;
+    max-width: 5.8rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 38%;
+    margin: auto;
+}
+.page-1-1 .img_2 {
+	    height: auto;
+    max-width: 5.9rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 42%;
+    bottom: 0;
+    margin: auto;
+}
+.page-1-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第二页*/
+.page-2-1 .img_1 {
+	    height: auto;
+    max-width: 4rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 45%;
+    margin: auto;
+}
+.page-2-1 .img_2 {
+	   height: auto;
+    max-width: 5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40%;
+    bottom: 0;
+    margin: auto;
+}
+.page-2-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第三页*/
+.page-3-1 .img_1 {
+	    height: auto;
+    max-width: 3.5rem;
+    position: absolute;
+    left: 0;
+    right: 10%;
+    top: 0;
+    bottom: 45%;
+    margin: auto;
+}
+.page-3-1 .img_2 {
+	   height: auto;
+    max-width: 5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44%;
+    bottom: 0;
+    margin: auto;
+}
+.page-3-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第四页*/
+.page-4-1 .img_1 {
+	    height: auto;
+    max-width: 5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 45%;
+    margin: auto;
+}
+.page-4-1 .img_2 {
+	    height: auto;
+    max-width: 7.2rem;
+    position: absolute;
+    left: 0%;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.page-4-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第五页*/
+.page-5-1 .img_1 {
+	  height: auto;
+    max-width: 5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0px;
+    bottom: 47%;
+    margin: auto;
+}
+.page-5-1 .img_2 {
+	    height: auto;
+    max-width: 5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 39%;
+    bottom: 0;
+    margin: auto;
+}
+.page-5-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第六页*/
+.page-6-1 .img_1 {
+	    height: auto;
+    max-width: 4rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 49%;
+    margin: auto;
+}
+.page-6-1 .img_2 {
+	height: auto;
+    max-width: 5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 38%;
+    bottom: 0;
+    margin: auto;
+}
+.page-6-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第七页*/
+.page-7-1 .img_1 {
+	    height: auto;
+    max-width: 4rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 46%;
+    margin: auto;
+}
+.page-7-1 .img_2 {
+	    height: auto;
+    max-width: 4.6rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40%;
+    bottom: 0;
+    margin: auto;
+}
+.page-7-1 .img_3 {
+	height:auto;width:25px;
+	position:absolute;
+	left:50%;
+	bottom: 4%;
+	margin-left:-12px;
+}
+/*第八页*/
+.page-8-1 .img_1 {
+	    height: auto;
+    max-width: 6rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 45%;
+    margin: auto;
+}
+@media screen and (max-height: 512px) {
+  
+	.page-4-1 .img_2 {
+	    height: auto;
+	    max-width: 6.6rem;
+	    position: absolute;
+	    left: 0%;
+	    right: 0;
+	    bottom: 0;
+	    margin: auto;
+	}
+}
+ @media screen and (min-width: 415px){
+  .page-4-1 .img_2 {
+	    height: auto;
+	    max-width: 6rem;
+	    position: absolute;
+	    left: 0%;
+	    right: 0;
+	    bottom: 0;
+	    margin: auto;
+	}
+}
+@media screen and (max-height: 512px) and (min-width: 384px) {
+  	.page-1-1 .img_1{
+  		max-width: 5rem;
+  	}
+  	.page-1-1 .img_2{
+  		top:5rem;
+  		width: 5.5rem;
+  	}
+  	.page-2-1 .img_1{
+  		max-width: 3.6rem;
+  	}
+  	.page-2-1 .img_2{
+  		max-width: 4.5rem;
+  	}
+  	.page-3-1 .img_1{
+  		max-width: 3.6rem;
+  	}
+  	.page-3-1 .img_2{
+  		max-width: 4.2rem;
+  	}
+	.page-4-1 .img_2 {
+	    max-width: 5.7rem;
+	}
+	.page-5-1 .img_1{
+  		max-width: 3.6rem;
+  	}
+  	.page-5-1 .img_2{
+  		max-width: 4.5rem;
+  	}
+  	.page-6-1 .img_1{
+  		max-width: 3.6rem;
+  	}
+  	.page-6-1 .img_2{
+  		max-width: 4.5rem;
+  	}
+  	.page-7-1 .img_1{
+  		max-width: 3.2rem;
+  	}
+  	.page-7-1 .img_2{
+  		max-width: 4.2rem;
+  	}
+}
+ 
