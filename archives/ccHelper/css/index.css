@@ -230,69 +230,55 @@ body{
     bottom: 10%;
     margin: auto;
 }
-/* @media screen and (max-height: 512px) {
-  
-	.page-4-1 .img_2 {
-	    height: auto;
-	    max-width: 6.6rem;
-	    position: absolute;
-	    left: 0%;
-	    right: 0;
-	    bottom: 0;
-	    margin: auto;
-	}
-}
- @media screen and (min-width: 415px){
-  .page-4-1 .img_2 {
-	    height: auto;
-	    max-width: 6rem;
-	    position: absolute;
-	    left: 0%;
-	    right: 0;
-	    bottom: 0;
-	    margin: auto;
-	}
-}
-@media screen and (max-height: 512px) and (min-width: 384px) {
+@media screen and (max-height: 568px){
   	.page-1-1 .img_1{
-  		max-width: 5rem;
+  		max-width: 200px;
   	}
   	.page-1-1 .img_2{
-  		top:5rem;
-  		width: 5.5rem;
+  		max-width: 200px;
   	}
   	.page-2-1 .img_1{
-  		max-width: 3.6rem;
+  		max-width: 150px;
   	}
   	.page-2-1 .img_2{
-  		max-width: 4.5rem;
+  		max-width: 200px;
   	}
   	.page-3-1 .img_1{
-  		max-width: 3.6rem;
+  		max-width: 129px;
+    	bottom: 47%;
   	}
   	.page-3-1 .img_2{
-  		max-width: 4.2rem;
+  		max-width: 190px;
   	}
+  	.page-4-1 .img_1 {
+	    max-width: 200px;
+    	bottom: 47%;
+	}
 	.page-4-1 .img_2 {
-	    max-width: 5.7rem;
+	    max-width: 275px;
 	}
 	.page-5-1 .img_1{
-  		max-width: 3.6rem;
+  		 max-width: 190px;
+    	bottom: 47%;
   	}
   	.page-5-1 .img_2{
-  		max-width: 4.5rem;
+  		 max-width: 190px;
   	}
   	.page-6-1 .img_1{
-  		max-width: 3.6rem;
+  		 max-width: 170px;
+    	bottom: 47%;
   	}
   	.page-6-1 .img_2{
-  		max-width: 4.5rem;
+  		max-width: 200px;
+  		top:41%;
   	}
   	.page-7-1 .img_1{
-  		max-width: 3.2rem;
+  		 max-width: 170px;
+    	bottom: 47%;
   	}
   	.page-7-1 .img_2{
-  		max-width: 4.2rem;
+  		 max-width: 190px;
+  		 top:44%;
   	}
-} */
+} 
  
