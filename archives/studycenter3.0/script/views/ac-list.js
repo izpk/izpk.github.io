@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,l){"use strict";var n=l.View.extend({tagName:"ul",className:"ac-list-ul",template:t.template(e("#template-ac-list").html()),events:{},type:"",render:function(e){return console.log(e),this.$el.html(this.template(e)),this}});return n});

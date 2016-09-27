@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>学习中心</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style type="text/css">
+    	html,body{
+    		width: 100%;
+    		height: 100%;
+    		margin: 0;
+    	}
+    </style>
+  </head>
+  <body>
+
+  	<script type="text/javascript">
+      var palyerUrl = 'http://p.bokecc.com/player?vid=' + '313A5C7994F57292' + '&siteid=' + parent.CAICUI.render.helpVideoCcid + '&autoStart=true&width=100%&height=100%&playerid=cc_' + parent.CAICUI.render.helpVideoCcid + '&playertype=1';
+      createScript(palyerUrl);
+      function createScript(url){
+        var script=document.createElement("script");  
+        script.setAttribute("type", "text/javascript");  
+        script.setAttribute("src", url);  
+        var body = document.getElementsByTagName("body");  
+        if(body.length){
+          body[0].appendChild(script);
+        }else{
+          document.documentElement.appendChild(script);
+        }
+      }
+	    function on_cc_player_init(vid, objectId ){
+	    	var config = {};
+	    	config.rightmenu_enable = 0;
+	    	var player = getSWF(objectId);
+	    	player.setConfig(config);
+	    }
+	    function getSWF(objectId) { 
+	    	if (window.document[ objectId ]) {
+	    	    return window.document[ objectId ];
+	    	} else if (navigator.appName.indexOf("Microsoft") == -1) {
+	    	    if (document.embeds && document.embeds[ objectId ]) {
+	    	    	return document.embeds[ objectId ];
+	    	    }
+	    	} else {
+	    		return document.getElementById( objectId );
+	    	}
+	    }
+  	</script>
+  </body>
+</html>

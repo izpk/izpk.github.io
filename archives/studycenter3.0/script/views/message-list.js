@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,r){"use strict";var s=r.View.extend({id:"wrapper-message-list",className:"wrapper",template:t.template(e("#template-message-list").html()),events:{},type:"",render:function(e){return this.$el.html(this.template(e)),this}});return s});

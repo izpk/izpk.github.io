@@ -1,0 +1,1 @@
+define(["underscore","backbone"],function(e,n){"user strict";var r=n.Model.extend({defaults:{options:["一","二","三","四","五","六"]}});return r});

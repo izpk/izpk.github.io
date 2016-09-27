@@ -1,0 +1,104 @@
+<!DOCTYPE html><html><head><meta content="True" name="HandheldFriendly"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="author" content="XiunoBBS 3.0"><meta name="keywords" content="Xiuno BBS"><meta name="description" content="Xiuno BBS"><meta name="renderer" content="webkit"><title>发帖</title><link rel="shortcut icon" href="static/favicon.ico"><link rel="icon" sizes="32x32" href="static/favicon.ico"><link rel="Bookmark" href="static/favicon.ico"><link rel="stylesheet" type="text/css" media="screen" href="xiunoui/xiuno.css"><link rel="stylesheet" type="text/css" href="xiunoui/icon.css"><link rel="stylesheet" type="text/css" media="screen" href="static/bbs.css"><link rel="stylesheet" type="text/css" media="screen" href="view/pc.css"><script>var debug = 0;</script></head><body><div class="editor-discussQA"><form method="POST" id="thread_create_form" action="http://124.200.190.86/xiuno/thread-create.htm"><p class="margin"><input id="discussQA-title" class="discussQA-title" type="text" placeholder="标题" name="subject" style="width: 100%"></p><p class="margin"><textarea id="message" name="message" placeholder="内容" style="width: 100%; height: 400px"></textarea></p><dl class="row margin"><dt><button type="submit" loading-text="正在提交..." class="big caicui" style="width: 208px; display:none">发帖</button></dt><dd class="right"></dd></dl></form></div><script id="script_data">// 全局的数据
+    var fid = 0; // 当前激活的 fid
+    var forumlist = {
+        "1": {
+            "fid": "1",
+            "name": "acca",
+            "rank": "0",
+            "threads": "11",
+            "todayposts": "0",
+            "todaythreads": "0",
+            "brief": "默认版块介绍",
+            "accesson": "0",
+            "orderby": "0",
+            "create_date": "1452956691",
+            "icon": "0",
+            "moduids": "",
+            "seo_title": "",
+            "seo_keywords": "",
+            "create_date_fmt": "2016-1-16",
+            "icon_url": "static/forum.png",
+            "accesslist": [],
+            "modlist": [],
+            "newtids": {
+                "113": 1453191807
+            }
+        }
+    }; // 板块数据，包含 new_tids
+    var new_thread_days = 3;</script><script src="xiunoui/zepto.js"></script><script src="xiunoui/xiuno.js"></script><script src="xiunoui/dialog.js"></script><script src="xiunoui/md5.js"></script><script src="static/bbs.js"></script></body></html><link rel="stylesheet" type="text/css" href="xneditor/editor.css"><script src="xiunoui/async.js"></script><script src="xiunoui/upload.js"></script><script src="xneditor/editor.js"></script><script>$('#discussQA-title').val(parent.document.getElementById("editor-discussQA").getAttribute('data-title'))
+if(window.location.protocol!="file:"){
+    localStorage.setItem('xneditor_pdata_message',JSON.stringify(parent.document.getElementById("editor-discussQA").getAttribute('data-content')))
+}else{
+    $('#message').val(parent.document.getElementById("editor-discussQA").getAttribute('data-content'));
+}
+
+var editor = new $.XNEditor({
+    textarea: 'message',
+    image_upload_url: 'http://bbs.caicui.com/post-upload-1.htm',
+    image_upload_width: 927,
+    file_upload_url: 'http://bbs.caicui.com/post-upload-0.htm'
+});
+
+
+var jform = $('#thread_create_form');
+var jinput = jform.find('input');
+var jsubject = jinput.filter('[name="subject"]');
+var jmessage = $('#message');
+var jseo_url = jform.find('input[name="seo_url"]');
+var jsubmit = jform.find('button').filter('[type="submit"]');
+
+// 选择论坛
+// var jforum_select = $('#forum_select');
+// var forumarr = {
+//     "1": "acca"
+// };
+// var s = '<select name="fid">';
+// for (k in forumarr) s += '<option value="' + k + '">' + forumarr[k] + '</option>';
+// s += '</select>';
+// var jselect = jforum_select.html(s).find('select');
+// jselect.checked(fid);
+
+// jform.off('submit').on('submit', function() {
+//     if (!jsubject.val()) {
+//         jsubject.popover('请输入标题！').focus();
+//         return false;
+//     }
+//     if (!jmessage.val()) {
+//         editor.jeditor.popover('请输入内容');
+//         editor.focus();
+//         return false;
+//     }
+//     jsubmit.button('loading');
+//     var postdata = jform.serializeObj();
+//     $.xpost(jform.attr('action'), postdata, function(code, message) {
+//         if (code == 0) {
+//             jsubmit.button('发帖成功');
+//             var fid = $('select[name="fid"]').checked();
+//             setTimeout(function() {
+//                 editor.clear();
+//                 window.location = 'forum-' + fid + '.htm';
+//             }, 1000);
+//             return;
+//         } else if (code == 1) {
+//             jsubject.popover(message).focus();
+//         } else if (code == 2) {
+//             jmessage.popover(message).focus();
+//         } else if (code == 3) {
+//             jselect.popover(message).focus();
+//         } else if (code == 4) {
+//             jseo_url.popover(message).focus();
+//         } else {
+//             $.alert(message);
+//         }
+//         jsubmit.button('reset');
+//     });
+//     return false;
+// });
+
+// 快捷键回复
+jform.keyup(function(e) {
+    if ((e.ctrlKey && (e.which == 13 || e.which == 10)) || (e.altKey && e.which == 83)) {
+        jsubmit.trigger('click');
+        return false;
+    }
+});</script>

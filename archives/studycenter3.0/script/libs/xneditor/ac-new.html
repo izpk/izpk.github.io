@@ -1,0 +1,290 @@
+<!DOCTYPE html><html><head><meta content="True" name="HandheldFriendly"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="author" content="XiunoBBS 3.0"><meta name="keywords" content="Xiuno BBS"><meta name="description" content="Xiuno BBS"><meta name="renderer" content="webkit"><title>发帖</title><link rel="shortcut icon" href="static/favicon.ico"><link rel="icon" sizes="32x32" href="static/favicon.ico"><link rel="Bookmark" href="static/favicon.ico"><link rel="stylesheet" type="text/css" media="screen" href="xiunoui/xiuno.css"><link rel="stylesheet" type="text/css" href="xiunoui/icon.css"><link rel="stylesheet" type="text/css" media="screen" href="static/bbs.css"><link rel="stylesheet" type="text/css" media="screen" href="view/pc.css"><style type="text/css">html,body{
+    		width: 100%;
+    		height: 100%;
+    	}
+    	.editor-form{
+    		position: relative;
+    		width: 100%;
+    		height: 100%;
+    		overflow: hidden;
+    	}
+    	.editor-box{
+    		width: 100%;
+    		height: 100%;
+    	}
+    	.message{
+    		width: 100%;
+    		height: 100%;
+    	}
+    	.editor-button-box{
+    		position: absolute;
+    		right: 0;
+    		bottom: 10px;
+
+    	}
+    	.confirm-button,.cancel-button{
+    		float: left;
+    		width: 144px;
+    		height: 28px;
+    		padding: 0;
+    		line-height: 28px;
+    		text-align: center;
+    		font-size: 14px;
+    		
+    		border-radius: 0;
+    		background-image: none;
+    		
+    	}
+    	.cancel-button{
+    		color: #4A4A4A;
+    		margin-right: 10px;
+    		border: 1px solid #9B9B9B;
+    		background-color: #f5f5f5;
+    	}
+    	.confirm-button{
+    		color: #fff;
+    		border: 1px solid #3E4E63;
+    		background-color: #3E4E63;
+    	}</style><script>var debug = 0;</script></head><body><!-- <div class="editor" style="width:100%;height:170px;"> --><form method="POST" id="thread_create_form" class="editor-form" action="http://api.caicui.com/api/studytools/discussreply/v2.1"><div class="editor-box"><textarea id="message" class="message" name="message" placeholder="内容"></textarea></div><div class="editor-button-box"><button type="button" class="cancel-button">取消</button> <button id="submit" type="submit" loading-text="正在提交..." class="confirm-button">发布</button> <input id="reset" type="reset" name="reset" value="重置" style="display:none"></div><!-- <p class="margin">
+                <textarea id="message" name="message" placeholder="内容" style="width: 100%; height: 100%;"></textarea>
+            </p>
+            <dl class="row margin">
+                <dt>
+                    <button type="submit" loading-text="正在提交..." class="reply-button">回复</button>
+                </dt>
+                <dd class="right">
+                </dd>
+            </dl> --></form><!-- </div> --><script id="script_data">// 全局的数据
+    var fid = 0; // 当前激活的 fid
+    var forumlist = {
+        "1": {
+            "fid": "1",
+            "name": "acca",
+            "rank": "0",
+            "threads": "11",
+            "todayposts": "0",
+            "todaythreads": "0",
+            "brief": "默认版块介绍",
+            "accesson": "0",
+            "orderby": "0",
+            "create_date": "1452956691",
+            "icon": "0",
+            "moduids": "",
+            "seo_title": "",
+            "seo_keywords": "",
+            "create_date_fmt": "2016-1-16",
+            "icon_url": "static/forum.png",
+            "accesslist": [],
+            "modlist": [],
+            "newtids": {
+                "113": 1453191807
+            }
+        }
+    }; // 板块数据，包含 new_tids
+    var new_thread_days = 3;
+    var messageHeight = document.documentElement.scrollHeight-74;
+    document.getElementById('message').style.height =  messageHeight+'px';</script><script src="xiunoui/zepto.js"></script><script src="xiunoui/xiuno.js"></script><script src="xiunoui/dialog.js"></script><script src="xiunoui/md5.js"></script><script src="static/bbs.js"></script><script type="text/javascript" src="../underscore-min.js"></script></body></html><link rel="stylesheet" type="text/css" href="xneditor/editor.css"><script src="xiunoui/async.js"></script><script src="xiunoui/upload.js"></script><script src="xneditor/editor.js"></script><script>if(window.location.protocol!="file:"){
+    localStorage.setItem('xneditor_pdata_message',JSON.stringify(''))
+}
+var editor = new $.XNEditor({
+    textarea: 'message',
+    image_upload_url: 'http://bbs.caicui.com/post-upload-1.htm',
+    image_upload_width: 927,
+    file_upload_url: 'http://bbs.caicui.com/post-upload-0.htm'
+});
+var jform = $('#thread_create_form');
+var jinput = jform.find('input');
+var jsubject = jinput.filter('[name="subject"]');
+var jmessage = $('#message');
+var jseo_url = jform.find('input[name="seo_url"]');
+var jsubmit = jform.find('button').filter('[type="submit"]');
+var cancelButton = jform.find('.cancel-button');
+cancelButton.on('click',function(){
+    parent.$('body .js-close-sidebar').trigger('click');
+})
+// 选择论坛
+// var jforum_select = $('#forum_select');
+// var forumarr = {
+//     "1": "acca"
+// };
+// var s = '<select name="fid">';
+// for (k in forumarr) s += '<option value="' + k + '">' + forumarr[k] + '</option>';
+// s += '</select>';
+// var jselect = jforum_select.html(s).find('select');
+// jselect.checked(fid);
+
+
+jform.off('submit').on('submit', function() {
+    // if (!jsubject.val()) {
+    //     jsubject.popover('请输入标题！').focus();
+    //     return false;
+    // }
+    if (!jmessage.val()) {
+        editor.jeditor.popover('请输入内容');
+        editor.focus();
+        return false;
+    }
+    jsubmit.button('loading');
+    var postdata = jform.serializeObj();
+    // var newPostData = {
+    //     "token" : parent.iMobile.constant.user['token'],
+    //     "id" : parent.discussQADesc.discussQAId,
+    //     "subjectId" : "subjectId",
+    //     "content" : postdata.message,
+    //     "clientType" : "pcWeb"
+    // };
+    //parent.discussQADesc.discussreply(postdata.message);
+    var thisParent= parent;
+    thisParent.CAICUI.render.replayContent = postdata.message;
+    var imgSrcArray = thisParent.CAICUI.iGlobal.filterImages(postdata.message);
+    thisParent.CAICUI.Request.ajax({
+        'server' : 'bbssave',
+        'data' : {
+            'token' : thisParent.CAICUI.User.token,
+            'type' : thisParent.CAICUI.render.newAcType,
+            'title' : thisParent.CAICUI.render.newAcTitle,
+            'content' : thisParent.CAICUI.render.replayContent,
+            'imgPath' : imgSrcArray,
+            'clientType' : 'pc',
+            'subjectId' : thisParent.CAICUI.render.subjectId,
+            'courseId' : thisParent.CAICUI.render.courseId,
+            'taskProgress' : '-1'
+        },
+        done : function(data){
+            thisParent.CAICUI.iGlobal.loading('.ac-right');
+            thisParent.CAICUI.Request.ajax({
+              'server' : 'bbslist',
+              'data' : {
+                'token' : thisParent.CAICUI.User.token,
+                'type' : 3,
+                'subjectId' : thisParent.CAICUI.render.subjectId,
+                'keyWords' : '',
+                'self' : thisParent.CAICUI.render.self,
+                'ordertype' : 1,
+                'pageNo' : 1,
+                'pageSize' : thisParent.CAICUI.render.pageSize
+              },
+              done : function(data){
+                var addListData = '';
+                for(var i in data.data){
+                    if(data.data[i].toporder == "0"){
+                        addListData = data.data[i];
+                        break;
+                    }
+                }
+                var addTemp = _.template($('#template-ac-list-li').html());
+                thisParent.$('body .ac-list-ul').prepend(addTemp({
+                  "CAICUI" : thisParent.CAICUI,
+                  "element" : addListData
+                }));
+                thisParent.$('body .ac-list-li-content').eq(0).trigger('click');
+                thisParent.CAICUI.myScroll.refresh();
+
+                // if(callback){
+                //   callback(data);
+                // }else{
+                //   CAICUI.render.serverNum ++;
+                //   CAICUI.render.$this.$bbslist = data.data;
+
+                //   CAICUI.render.pageNo = data.pageNo;
+                //   CAICUI.render.pageSize = data.pageSize;
+                //   CAICUI.render.totalCount = data.totalCount;
+                //   CAICUI.render.pageTotal = Math.ceil(data.total/data.pageSize);
+                // }
+              }
+            })
+            // jsubmit.button('发布');
+            // $('#reset').click();
+            // $('#submit').removeClass('disabled').removeAttr('disabled');
+            // editor.clear();
+            // return;
+        }
+    })
+  /*
+    $.ajax({
+        "url" : parent.iMobile.constant.config.host.name + "/api/studytools/discussreply/v2.1",
+        "type" : "POST",
+        "data" : newPostData,
+        success : function(data){
+            jsubmit.button('回复成功');
+            //var fid = $('select[name="fid"]').checked();
+            //editor.clear();
+            parent.discussQADesc.discussdetail();
+            //console.log(parent.layer)
+            parent.layer.close(parent.window.replyTextareaEditor);
+
+            return;
+        },
+        error : function(data){
+            console.log(data)
+        }
+    })
+    $.xpost(jform.attr('action'), newPostData, function(code, message) {
+        console.log(code)
+        console.log(message)
+        if (code == 0) {
+            jsubmit.button('发帖成功');
+            var fid = $('select[name="fid"]').checked();
+            setTimeout(function() {
+                editor.clear();
+                window.location = 'forum-' + fid + '.htm';
+            }, 1000);
+            return;
+        } else if (code == 1) {
+            jsubject.popover(message).focus();
+        } else if (code == 2) {
+            jmessage.popover(message).focus();
+        } else if (code == 3) {
+            jselect.popover(message).focus();
+        } else if (code == 4) {
+            jseo_url.popover(message).focus();
+        } else {
+            $.alert(message);
+        }
+        jsubmit.button('reset');
+    });
+  */
+    return false;
+});
+
+
+// 快捷键回复
+jform.keyup(function(e) {
+    if ((e.ctrlKey && (e.which == 13 || e.which == 10)) || (e.altKey && e.which == 83)) {
+        jsubmit.trigger('click');
+        return false;
+    }
+});</script><script id="template-ac-list-li" type="text/template"> <% 
+  var bbstype,bbstypeClass,isPhoto;
+  if(element.bbstype == "0"){
+    bbstype = '讨论';
+    bbstypeClass = 'ac-list-type-1';
+    
+  }else{
+    bbstype = '问答';
+    bbstypeClass = 'ac-list-type-0';
+  }
+  if(element.imgPath && element.imgPath.substr(1,7) == 'upload'){
+    isPhoto = 'active';
+  }
+  %> <li class="ac-list-li" data-id="<%= element.id %>">
+  <div class="ac-list-a">
+    <a class="ac-list-li-content <%= isPhoto %> js-ac-list-active" data-isme="<%= element.memberId == CAICUI.User.memberId ? 'true' : 'false' %>" href="javascript:;"> <% if(isPhoto){ %> <img class="ac-list-img " src="<%= CAICUI.Common.host.imgAddress + element.imgPath %>"> <% } %> <p class="ac-list-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>] </span><span class="ac-list-title-span"><%= element.title %></span><i class="icon icon-post-type-0"></i></p>
+      <p class="ac-list-desc"><%= element.contentSummary %></p>
+    </a>
+    <div class="ac-list-info">
+      <p class="ac-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.imgAddress + element.headImg %>"><span class="ac-list-info-span user-name"><%= element.nikeName %></span></p>
+      <ul class="ac-list-info-ul"> <% if(element.taskType=="video"){ %> <li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+          <li class="ac-list-info-li"><a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>?return_link=<%= data.acType == 'myAc' ? 'myAc' : 'courseAc/element.courseId' %>" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></li> <% } %> <li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+        <li class="ac-list-info-li"><span class="ac-list-info-span ac-list-info-time"><%= CAICUI.iGlobal.getDate(element.updateTime) %></span></li>
+        <li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+        <li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-discuss"></i><span class="ac-list-info-discuss-num"><%= element.replyCount %></span></span></li>
+        <li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+        <li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-like"></i><span class="ac-list-info-like-num"><%= element.praiseCount %></span></span></li>
+        <li class="ac-list-info-li"><span class="vertical-line">|</span></li> <% if(element.memberId == CAICUI.User.memberId){ %> <li class="ac-list-info-li">
+            <span class="ac-list-info-span ac-list-remove"  data-type="0">删除</span>
+            </li>
+          <li class="ac-list-info-li"><span class="vertical-line">|</span></li> <% } %> </ul>
+    </div>
+  </div>
+</li></script>

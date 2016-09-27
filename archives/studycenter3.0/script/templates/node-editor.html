@@ -1,0 +1,49 @@
+<script id="template-node-editor" type="text/template"><div class="node-top">
+	<div class="node-top-left"> <%= data ? "修改笔记" : "新建笔记" %> </div>
+</div>
+<div class="node-content node-editor-content">
+	<div class="node-editor-top">
+		<div class="node-editor-top-left"> <% if(data){ %> <p class="node-editor-time"> <% if(data.videoTime != '-1'){ %> <span class="node-editor-time-span"><i class="icon icon-node-time"></i><span class="node-editor-videoTime"><%= CAICUI.iGlobal.formatSeconds(data.videoTime) %> </span></span>
+					<span class="vertical-line">|</span> <% } %> <span class="node-editor-time-text"><%= data.time %></span></span>
+			</p>
+			<p class="node-editor-isOpen"> <% if(data.isPublic){ %> <span class="node-editor-isOpen-text">私有</span>
+					<a class="node-editor-isOpen-button" href="javascript:;">
+						<i class="icon icon-open"></i><i class="icon icon-private"></i>
+					</a> <% }else{ %> <span class="node-editor-isOpen-text">公开</span>
+					<a class="node-editor-isOpen-button active" href="javascript:;">
+						<i class="icon icon-open"></i><i class="icon icon-private"></i>
+					</a> <% } %> </p> <% }else{ %> <p class="node-editor-time">
+					<span class="node-editor-time-text"><%= CAICUI.iGlobal.getLocalTime(new Date().getTime()) %></span>
+			</p>
+			<p class="node-editor-isOpen">
+				<span class="node-editor-isOpen-text">私有</span>
+				<a class="node-editor-isOpen-button" href="javascript:;">
+					<i class="icon icon-open"></i><i class="icon icon-private"></i>
+				</a>
+			</p> <% } %> </div>
+		<div class="node-editor-top-middle">
+			<textarea class="node-editor-textarea" placeholder="请输入您的内容..."><%= data ? data.content : "" %></textarea>
+		</div>
+		<div class="node-editor-top-bottom">
+			<div class="node-editor-button">
+				<a class="node-editor-cancel" href="javascript:;">取消</a>
+				<a class="node-editor-confirm" href="javascript:;">发布</a>
+			</div>
+		</div>
+	</div>
+	<div class="node-editor-bottom">
+		<div class="add-photo-box"> <% if(data && data.imgPath.length){ 
+				console.log(data)
+				_.each(data.imgPath,function(element, index, list){
+					if(element){
+				%> <div class="add-photo-show" id="add-photo-show">
+						<img class="add-photo-img" src="<%= CAICUI.Common.host.img + element %>">
+						<a class="add-photo-remove" data-src="<%= element %>" href="javascript:;"><i class="icon icon-add-remove"></i></a>
+					</div> <% } }) } %> <% if(data && data.imgPath.length){ %> <form id= "uploadForm" class="add-photo-form" style="<%=   data.imgPath.length < 5 ? '' : 'display:none;' %>" enctype="multipart/form-data"> <% }else{ %> <form id= "uploadForm" class="add-photo-form" enctype="multipart/form-data"> <% } %> <input type="hidden" name="filename" value= "upfile"/>
+					<input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+					<input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+					<i class="icon icon-add-photo"></i>
+				</form> 
+		</div>
+	</div>
+</div></script>

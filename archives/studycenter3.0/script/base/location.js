@@ -1,0 +1,1 @@
+define([],function(){var n={args:function(){for(var e={},s=null,t=decodeURIComponent(n.search.substring(1)),a=/(?:([^&]+)=([^&]+))/g;null!==(s=a.exec(t));)e[s[1]]=s[2];return e},getHash:function(){return window.location.hash},setHash:function(n){window.location.hash=n}};return{args:n.args,getHash:n.getHash,setHash:n.setHash}});

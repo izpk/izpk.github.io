@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,s){"use strict";var a=s.View.extend({tagName:"div",className:"message-box",template:t.template(e("#template-message").html()),events:{},type:"",render:function(e){return this.$el.html(this.template({type:e})),this}});return a});

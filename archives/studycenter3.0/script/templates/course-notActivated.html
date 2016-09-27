@@ -1,0 +1,91 @@
+<script id="template-course-notActivated" type="text/template"><div class="course">
+	<ul class="course-ul">
+		<li class="course-li ">
+			<a class="course-a" href="#courseStudyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li active">
+			<a class="course-a" href="#courseNotActivated">
+				<span class="course-text">未激活课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#courseActivated">
+				<span class="course-text">已过期课程</span>
+			</a>
+		</li>
+	</ul>
+	<div class="course-content">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller"> <% if(data.courseLists.length && data.courseListNav.length){ %> <div class="container container-list">
+						<div class="studyin">
+							<ul class="studyin-header clearfloat"> <% _.each(data.courseLists,function(element, index, list){ %> <li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+										<a href="javascript:;"><%= element.categoryName %></a>
+									</li> <% }) %> </ul>
+							<div class="studyin-content"> <% _.each(data.courseLists,function(element, index, list){ %> <div class="studyin-contents <%= index ? '' : 'active' %>"> <% _.each(element.newList,function(element, index, list){ %> <div class="studyin-contents-list">
+										<div class="studyin-content-header clearfloat">
+											<div class="subject-type-lf">
+												<span class="subject-name"><%= element.subjectName %></span> <% if(element.isU){ %> <span class="u-icon"></span> <% } %> </div>
+											<div class="subject-type-rt stop">
+												<a class="u-icon" href="javascript:;"></a>
+											</div>
+										</div>
+										<ul class="studyin-content-subject clearfloat" > <% _.each(element.list,function(element, index, list){ %> <li class="studyin-content-subjects">
+													<a class="js-course-notActivated" href="javascript:;" data-courseid="<%= element.courseId %>" data-orderitemid="<%= element.orderID_item_id %>" data-isu="<%= element.isU %>" data-title="<%= element.courseName %>" data-effectiveday="<%= element.effectiveDay %>">
+														<div class="subject-lf">
+															<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+															<div class="subject-mask">
+																<span class="mask-lf">
+																	马上激活
+																</span>
+																<span class="mask-rt">
+																	→
+																</span>
+															</div>
+														</div>
+														<div class="subject-rt subject-rt-notactived">
+															<h3><%= element.courseName %></h3>
+															<div class="subject-line"></div>
+															<div class="subject-progress">
+																课程有效期：<%= element.effectiveDay %>天
+															</div>
+														</div>
+													</a>
+												</li> <% }) %> </ul>
+									</div> <% }) %> </div> <% }) %> </div>
+						</div>
+
+					</div> <% }else{ %> <div class="studyin-nodata">
+							<div class="studyin-nodata-img u-icon"></div>
+							<div class="studyin-nodata-des">
+								您还未有购买课程
+							</div>
+							<div class="studyin-nodata-btn">
+								<a class="studycenter-buy" href="http://www.caicui.com/" target="_blank">
+									选课购买
+								</a>
+							</div>
+						</div> <% } %> </div>
+		</div>
+	</div>
+</div>
+<div id="courseActivation" style="display: none">
+  <h3 class="ca-h3">您正在激活在线课程&nbsp;<font>&nbsp;复习串讲 - ACCA</font></h3>
+  <p class="ca-p">激活课程后即可正常学习，请注意，激活动作无法撤销，此课程一旦激活将在<span class="effectiveDay">180</span>天后失效,失效后将无法继续学习。请在有效期内合理安排学习进度。</p>
+  <form class="form-horizontal courseActivation-form">
+      <div class="ca-select">
+          <select class="form-control input-sm">
+          </select>
+      </div>
+      <div class="checkbox ca-checkbox">
+          <label>
+              <input type="checkbox">确定激活此课程
+          </label>
+      </div>
+      <div class="ca-btn-div">
+          <button type="button" class="btn ca-btn-ok">&nbsp;激活&nbsp;</button>
+          <button type="button" class="btn ca-btn-no">以后在说</button>
+      </div>
+  </form>
+</div></script>

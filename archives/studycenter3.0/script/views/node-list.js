@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){"use strict";var i=n.View.extend({tagName:"div",className:"node-list",template:t.template(e("#template-node-list").html()),events:{},type:"",render:function(e){return this.$el.html(this.template(e)),this}});return i});
