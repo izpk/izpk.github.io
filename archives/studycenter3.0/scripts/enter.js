@@ -1,6 +1,6 @@
 'use strict';
 var libsOrigin = 'libjs/';
-if(window.location.origin!='http://localhost:3000'){
+if(window.location.origin==='http://www.caicui.com'){
 	libsOrigin = 'http://libjs.caicui.com/libjs/';
 }
 require.config({
@@ -80,7 +80,7 @@ require(['jquery', 'cookie', 'backbone', 'underscore', 'router', 'iScroll', 'iGl
 			'domRender' : true
 		}
 		var studycenterUrl = '';
-		if(window.location.origin=='http://localhost:3000'){
+		if(window.location.origin!=='http://www.caicui.com'){
 			CAICUI.Common.loginLink = CAICUI.Common.loginLinkTest;
 			studycenterUrl = 'scripts/html/studycenter.min.html';
 		}else{
