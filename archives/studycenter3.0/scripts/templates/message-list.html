@@ -1,0 +1,97 @@
+<script id="template-message-list" type="text/template">
+<% console.log(data) %>
+	<div id="scroller-message-list" class="scroller">
+		<div class="message-num">
+			<span class="message-total-num">共有信息：<%= data.totalCount %>条</span>
+			<span class="message-noread-num">未读信息：0条</span>
+		</div>
+		<ul class="message-list-ul">
+			<% _.each(data.messageList,function(element, index, list){ %>
+				<li class="message-list-li">
+					<div class="message-list-a" data-content='<%= JSON.stringify(list[index]) %>'>
+						<p class="message-list-title"><%= element.title %></p>
+						<% if(element.content){ %>
+							<p class="message-list-desc"><%= element.content %></p>
+						<% } %>
+						<div class="message-list-info">
+							<p class="message-list-info-user"><img class="avatar" src="<%=  element.headImg ? CAICUI.Common.host.img + element.headImg : 'images/avatar.jpg'  %>"><span class="message-list-info-span user-name"><%= element.sender %></span></p>
+							<ul class="message-list-info-ul">
+								<li class="message-list-info-li"><span class="vertical-line">|</span></li>
+								<li class="message-list-info-li"><span class="message-list-info-span message-list-info-time"><%=  CAICUI.iGlobal.stringData(element.sentTime) %></span></li>
+								<li class="message-list-info-li"><span class="vertical-line">|</span></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			<% }) %>
+			
+			<div class="pagination-box">
+				<ul class="pagination">
+					<% 
+						var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+						var pageStart = +data.pageNo;
+						var pagePrevs = 4;
+						var pageNexts = 4;
+						var pageStartI = 1;
+						var pageForNum = pageStartI+pagePrevs+pageNexts;
+						var pageNum = 0;
+						if(pageTotal>pageForNum){
+							if(pageStart<=pagePrevs){
+								pageStartI = 1;
+								pageForNum = pageForNum;
+							}else if(pageStart<pagePrevs+pageNexts){
+								pageForNum = pageForNum+2;
+								pageStartI = pagePrevs-pageStartI;
+							}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+								pageForNum = pageStart+pageNexts;
+								pageStartI = pageStart-pagePrevs;
+							}else if(pageStart>pageTotal-pageNexts){
+								pageForNum = pageTotal;
+								pageStartI = pageTotal-pagePrevs-pagePrevs;
+							}
+						}else{
+							pageForNum = pageTotal;
+							pageStartI = pageStartI;
+						}
+						if(+pageForNum>+pageTotal){
+							pageForNum = pageTotal;
+						}
+					%>
+					<% if(pageStart>1){ %>
+						<li class="pagination-li js-pagination-prev">
+						  <a class="pagination-a pagination-prev" href="javascript:;">
+						  &lt;
+						  </a>
+						</li>
+					<% } %>
+					
+					<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+						<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+					<% } %>
+
+					<% if(data.totalCount>20){ %>
+						<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+							<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+						<% } %>
+					<% } %>
+
+					<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+						<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+					<% } %>
+
+					<% if(pageStart<pageTotal){ %>
+						<li class="pagination-li js-pagination-next">
+						  <a class="pagination-a pagination-next" href="javascript:;">
+						  &gt;
+						  </a>
+						</li>
+					<% } %>
+			  </ul>
+			</div>
+	
+		</ul>
+	</div>
+
+	
+	
+</script>

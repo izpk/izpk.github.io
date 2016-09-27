@@ -1,0 +1,164 @@
+<script id="template-course-courseNote" type="text/template">
+	<div class="courseIndex">
+		<ul class="option-ul course-change-ul">
+			<% 
+				var courseName;
+				_.each(data.learningcourse,function(element, index, list){ 
+					_.each(element.newList,function(element, index){
+						_.each(element.list,function(element, index){
+							if(element.courseId == data.courseId){
+								courseName = element.courseName;
+							}
+			%>
+							<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseNote/<%= element.courseId %>"><%= element.courseName %></a></li>
+				<%
+						})
+					})
+				}) %>
+		</ul>
+		<div class="courseIndex-header">
+			<div class="courseIndex-header-left">
+				<% if(courseName){ %>
+					<a class="course-change" href="javascript:;">
+						
+						<span class="course-name"><%= courseName %></span>
+						<i class="icon-triangle"></i>
+					</a>
+				<% }else{ %>
+					<span class="course-name"><%= data.courseBaseInfo.courseName %></span>
+				<% }  %>
+				
+			</div>
+
+			<div class="courseIndex-header-right">
+				<ul class="courseIndex-ul">
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseStudy/<%= data.courseId %>">
+							<i class="icon icon-courseStudy"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseStudy-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseStudy/<%= data.courseId %>">
+									<i class="icon icon-courseStudy-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseAc/<%= data.courseId %>">
+							<i class="icon icon-courseAc"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseAc-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseAc/<%= data.courseId %>">
+									<i class="icon icon-courseAc-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					<li class="courseIndex-li active hover">
+						<a class="courseIndex-a" href="javascript:;">
+							<i class="icon icon-courseNote"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseNote-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="javascript:;">
+									<i class="icon icon-courseNote-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+
+		<div class="node-main">
+			<div class="node-left">
+				<div class="node-top">
+					<div class="node-top-left">
+						课程笔记
+					</div>
+					<a class="node-top-right node-lately" href="javascript:;">
+						查看最近笔记<span class="node-top-right-triangle"></span>
+					</a>
+				</div>
+				<div class="node-content">
+
+					<div id="wrapper" class="wrapper">
+						<div id="scroller" class="scroller">
+
+							<% if(data.nodelist.data.length){ %>
+								<div class="node-list">
+										<p class="node-total">笔记共有：<span class="node-total-num"><%= data.nodelist.data[0].nodeNum %></span>处</p>
+										<% _.each(data.nodelist.data[0].children,function(element, index, list){ %>
+										
+										<ul class="node-list-one-ul">
+											<li>
+												<a class="node-list-title-a" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %></a>
+													<% if(element.children && element.children.length){ %>
+													<ul class="node-list-two-ul">
+														<% _.each(element.children,function(element, index, list){ %>
+															<li>
+																<% if(element.children && element.children.length){ %>
+																<a class="node-list-title-a node-list-title-two-a" data-nodenum="<%= element.nodeNum %>"  href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></a>
+																<ul class="node-list-three-ul">
+																	<% _.each(element.children,function(element, index, list){
+																		var  nodeNum = 0;
+																		if(element.nodeNum){
+																			nodeNum = element.nodeNum
+																		}
+																	%>
+																	<li>
+																		<a class="node-list-link" data-id="<%= element.chapterId %>" data-title="<%= element.chapterTitle %>" data-nodenum="<%= nodeNum %>" href="javascript:;">
+																			<span class="node-list-desc"><%= element.chapterTitle %><span class="node-list-num">[<%= nodeNum %>]</span></span>
+																		</a>
+																	</li>
+																	<% }) %>
+																</ul>
+																<% }else{ %>
+																	<a class="node-list-link" data-nodenum="<%= element.nodeNum %>" data-id="<%= element.id %>" data-title="<%= element.title %>" href="javascript:;">
+																		<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></span>
+																	</a>
+
+																<% } %>
+															</li>
+														<% }) %>
+														
+													</ul>
+													<% } %>
+												</a>
+											</li>
+										</ul>
+										<% }) %>
+									
+								</div>
+							<% }else{ %>
+								<div class="no-data">
+									<i class="icon icon-no-data-node"></i>
+									<p class="no-data-p">当前课程没有公开笔记，<br>赶快分享一个</p>
+									<a class="no-data-a node-new" href="javascript:;">新建笔记</a>
+								</div>
+							<% } %>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="node-right">
+				
+			</div>
+		</div>
+		
+	</div>
+<div id="remove-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该笔记吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm" href="javascript:;">确认</a>
+    </div>
+  </div>
+</script>

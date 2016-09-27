@@ -1,0 +1,84 @@
+<script id="template-layout" type="text/template">
+	<div id="layout" class="contariner mini-nav">
+		<div class="top">
+			<div class="top-left">
+			<i class="icon icon-logo "></i>
+				<a class="link-caicui" href="http://www.caicui.com" target="_blank">
+					
+				</a>
+				<a class="link-studycenter" href="http://www.caicui.com/studycenter/#studycenterIndex">
+					
+				</a>
+			</div>
+			<div class="top-right">
+				<a class="return-old-studycenter" href="http://www.caicui.com/studycenter2.1/">
+					<i class="icon-old-studycenter"></i>
+					<span class="return-old-studycenter-text">旧版学习中心</span>
+				</a>
+				<span class="bar"></span>
+				<a class="download-app" href="http://www.caicui.com/static/Special/app/" target="_blank">
+					<i class="icon icon-download"></i>
+					<span class="download-app-text">财萃课堂APP下载</span>
+				</a>
+				<span class="bar"></span>
+				<a class="message" href="javascript:;">
+					<i class="icon icon-comment"></i>
+				</a>
+				<a class="exit" href="javascript:;">
+					<img class="avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>" />
+					<span class="user-name"><%= CAICUI.User.nickName %></span>
+				</a>
+				<div class="exit-option">
+					<i class="icon icon-exit-bg"></i>
+					<a class="exit-select personal-center" href="http://www.caicui.com/mc/home" target="_blank">个人中心</a>
+					<a class="exit-select sign-out" href="javascript:;">退出</a>
+				</div>
+			</div>
+		</div>
+		<div class="main">
+			<div class="left">
+				<ul class="nav">
+					<li class="nav-li <%= nav == 'studycenterIndex'||nav == ' ' ? 'active' : '' %> " >
+						<a class="nav-a" href="#studycenterIndex">
+							<i class="icon icon-home"></i><span class="nav-text">首页</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'courseStudyIn' || nav == 'courseNotActivated' || nav == 'courseActivated' || nav == 'courseStudy' || nav == 'courseAc' || nav == 'courseNote' ? 'active' : '' %>" >
+						<a class="nav-a" href="#courseStudyIn">
+							<i class="icon icon-course"></i><span class="nav-text">我的课程</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'myExam'? 'active' : '' %>" >
+						<a class="nav-a" href="#myExam">
+							<i class="icon icon-exam"></i><span class="nav-text">我的题库</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'myNote'? 'active' : '' %>" >
+						<a class="nav-a" href="#myNote">
+							<i class="icon icon-note"></i><span class="nav-text">我的笔记</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'myAc'? 'active' : '' %>" >
+						<a class="nav-a" href="#myAc">
+							<i class="icon icon-ac"></i><span class="nav-text">我的交流</span>
+						</a>
+					</li>
+					<li class="nav-li nav-li-last <%= nav == 'help'? 'active' : '' %>" >
+						<a class="nav-a" href="#help">
+							<i class="icon icon-help"></i><span class="nav-text">学习帮助</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div id="right" class="right">
+				
+			</div>
+			<div class="message-main">
+				<div class="message-shadow"></div>
+				<div class="message-content">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

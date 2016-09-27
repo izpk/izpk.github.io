@@ -1,0 +1,329 @@
+<script id="video" type="text/template">
+<div class="studycenter-video layout">
+    <div class="studycenter-video-header layout">
+        <div class="studycenter-video-title">
+            <%= taskData.chapterTitle %>
+        </div>
+        <div class="studycenter-video-task">
+            <% 
+            var nexttaskid='';
+            var taskNum=0;
+            _.each(taskData.tasks,function(element, index){
+                var active = '';
+                taskNum = index+1;
+                
+                if(index == taskIndex){
+                    active = 'active';
+                    nexttaskid = taskData.tasks[index].taskId;
+                }
+                if(index == taskIndex+1){
+                    nexttaskid = taskData.tasks[index].taskId;
+                }
+            %>
+                <a id="<%= element.taskId %>" data-index="<%= index %>" class="studycenter-video-task-a video-icon video-icon-task-bg <%= active %>" href="javascript:;">
+                    <span class="studycenter-video-task-number"><%= taskNum %></span>
+                    <em class="studycenter-video-task-triangle"></em>
+                </a>
+                <% }) %>
+        <!-- 
+            <a class="studycenter-video-task-a video-icon video-icon-task-success" href="javascript:;">
+                <span class="studycenter-video-task-number">1</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-success" href="javascript:;">
+                <span class="studycenter-video-task-number">2</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-bg active" href="javascript:;">
+                <span class="studycenter-video-task-number">3</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-bg" href="javascript:;">
+                <span class="studycenter-video-task-number">4</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-bg" href="javascript:;">
+                <span class="studycenter-video-task-number">5</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a> 
+        -->
+                    <a data-index="<%= taskNum %>" class="studycenter-video-task-a video-icon video-icon-task-bg js-studycenter-video-task-end" href="javascript:;">
+                        <span class="studycenter-video-task-end"></span>
+                        <!--<span class="studycenter-video-task-end active"></span>-->
+                        <em class="studycenter-video-task-triangle"></em>
+                    </a>
+                    <!--下一步-->
+                    <a class="studycenter-video-task-next video-icon video-icon-task-next" href="javascript:;">
+                    </a>
+        </div>
+        <a class="studycenter-video-close video-icon video-icon-task-close video-icon-task-courselist" link="<%= CAICUI.iGlobal.getUrlPara('return_link') %>" href="javascript:;">
+        </a>
+    </div>
+    <div class="studycenter-video-tasks-center layout hidden">
+        <div class="studycenter-video-tasks-end-center layout studycenter-video-tasks-unfinished hidden">
+            <img class="studycenter-video-tasks-unfinished" src="images/tasks-unfinished.jpg">
+            <a class="studycenter-video-tasks-end-center-a video-icon-task-courselist" link="#courseStudy/<%= courseId %>" href="javascript:;">返回课程列表</a>
+            <a class="studycenter-video-tasks-end-center-button video-icon-task-continue" href="javascript:;">继续完成任务</a>
+        </div>
+        <div class="studycenter-video-tasks-end-center layout studycenter-video-tasks-finished hidden">
+            <img class="studycenter-video-tasks-finished" src="images/tasks-finished.jpg">
+            <img class="studycenter-video-tasks-master-degree" src="images/tasks-master-degree.jpg">
+            <div class="studycenter-video-tasks-stars-list">
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars" href="javascript:;"></a>
+            </div>
+            <a class="studycenter-video-tasks-end-center-a" href="javascript:;" style="cursor:text;">好样的！请继续加油</a>
+            <a class="studycenter-video-tasks-end-center-button video-icon-task-courselist" link="#courseStudy/<%= courseId %>" href="javascript:;">返回课程列表</a>
+        </div>
+    </div>
+    <div class="studycenter-video-main layout">
+        <div class="studycenter-video-main-left layout">
+            <div class="studycenter-video-play-center layout">
+                <!-- 视频DIV -->
+                <div class="video-play" style="display: block;height:100%;padding-bottom:38px;">
+                    <div class="dummy" style="height:0px;overflow:hidden;">load</div>
+                    <div class="content" style="height:100%;padding:10px;">
+                        <h3 style="display:block;color:#FFF;margin:20px;">正在加载课程信息...</h3>
+                        <h1>视频播放</h1>
+                    </div>
+                </div>
+                <!-- 试题 DIV -->
+                <div class="myExercises" style="display: block;height:100%;padding-bottom:32px;padding-bottom: 42px;padding-top:10px;width: 75%;margin: auto;" style="display: none">
+                    <div class="dummy" style="height:0px;overflow:hidden;"></div>
+                    <div class="content" style="height:100%;border-top:1px solid #000;border-bottom:1px solid #000;background-color:#FFF;">
+                        <iframe frameborder="0" height="100%" width="100%" id="exercisText" src=""></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="studycenter-video-periphery layout">
+                <!-- 控制条 -->
+                <div class="videoPeriphery">
+                    <div class="viosController">
+                        <!--提问列表-->
+                        <div class="ctrRight" style="width:133px;">
+                            <span class="ctrOption js-open-sidebar js-questions" control="quiz">
+                                <i class="navios c1"></i><i class="iosText">提问</i>
+                            </span>
+                            <span class="ctrOption js-open-sidebar js-node" control="note">
+                                <i class="navios c2"></i><i class="iosText">笔记</i>
+                            </span>
+                            <span class="ctrOption js-open-sidebar js-handout" control="handout">
+                                <i class="navios c3"></i><i class="iosText">讲义</i>
+                            </span>
+                            <!--<span class="js-close-sidebar">
+                                <i class="navios c4"></i>
+                            </span>-->
+                        </div>
+                        <div class="ctrLefts" style="margin-right:1px;">
+                            <!--视频控制栏-->
+                            <div class="ctrLeft1">
+                                <div class="playSpeeds">
+                                    <span class="waiSpeed">
+                                        <!--<small class="playSpeed">1X</i></small>-->
+                                    </span>
+                                    <div class="soundCtr">
+                                        <span class="soundIos"><i class="glyphicon glyphicon-volume-down"></i></span>
+                                        <div class="volumeCtr">
+                                            <div id="volumeCtrly"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="playBefore">
+                                    <span><i class="glyphicon glyphicon-pause plays"></i></span>
+                                    <div class="ControlBar">
+                                        <span class="beforeTime">0</span>
+                                        <span class="afterTime">100</span>
+                                        <div class="centralCtr">
+                                            <div id="playCtr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 试题 -->
+                            <div class="ctrLeft2" style="padding: 4px;">
+                                <!--<div class="frontBack">-->
+                                <!--<span class="prevs"><i class="prevIocn"></i>上一题</span>-->
+                                <!--<span class="nexts">下一题<i class="nextIocn"></i></span>-->
+                                <!--<span class="saveTest">交 卷</span>-->
+                                <!--</div>-->
+                                <div class="ctrIocn">
+                                    <span class="analysis"><i class="navios c5"></i><i class="iosText">解析</i></span>
+                                    <div class="leftController">
+                                        <span class="prev disableBut"><i class="glyphicon glyphicon-chevron-left"></i>上一题</span>
+                                        <span class="next readyBut">下一题<i class="glyphicon glyphicon-chevron-right"></i></span>
+                                        <div class="spanIocn">
+                                            <div class="spans" style="width: 560px; left: 0px;">
+                                                <span class="active">1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="studycenter-video-main-right layout">
+            <div class="studycenter-video-right studycenter-video-questions hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    提问
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="right-header">
+                        <div class="right-time-icon pull-left video-icon video-icon-time">
+                            <span class="right-time">234:13</span>
+                        </div>
+                        <a class="right-other pull-right studycenter-video-close1 video-icon-task-courselist" link="#courseAc/<%= courseId %>" href="javascript:;">
+                            查看他人提问
+                        </a>
+                      
+                    </div>
+                    <div class="right-main">
+                      <iframe id="ac-new-video" scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="" ></iframe>
+                    </div>
+                    
+                    <!-- 
+                    <div class="right-content right-row">
+                        <textarea class="right-content-textarea form-control" placeholder="内容描述"></textarea> 
+                    </div>
+                    <div class="imgUpLoad">
+                        <span class="selectBut"><i class="glyphicon glyphicon-picture"></i>图片上传</span>
+                        <div id="imgUpLoadQuiz" class="demo"></div>
+                    </div>
+                    -->
+                    
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-node hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    笔记
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="right-header">
+                        <div class="right-time-icon pull-left video-icon video-icon-time">
+                            <span class="right-time">234:13</span>
+                        </div>
+                        <a class="right-other pull-right studycenter-video-close1 video-icon-task-courselist" link="#courseNote/<%= courseId %>" href="javascript:;">
+                            查看他人笔记
+                        </a>
+                    </div>
+                    <div class="right-main-courseNode">
+
+                      <div class="node-content node-editor-content">
+                        <div class="node-editor-top">
+                          <div class="node-editor-top-left">
+                            <p class="node-editor-time">
+                                <span class="node-editor-time-text"><%= CAICUI.iGlobal.getLocalTime(new Date().getTime()) %></span>
+                            </p>
+                            <p class="node-editor-isOpen">
+                              <span class="node-editor-isOpen-text">私有</span>
+                              <a class="node-editor-isOpen-button" href="javascript:;">
+                                <i class="icon icon-open"></i><i class="icon icon-private"></i>
+                              </a>
+                            </p>
+                            
+                          </div>
+                          <div class="node-editor-top-middle">
+                            <textarea class="node-editor-textarea" id="node-editor-textarea" placeholder="请输入您的内容..."></textarea>
+                          </div>
+                          <div class="node-editor-top-bottom">
+                            <div class="node-editor-button">
+                              <a class="node-editor-cancel" href="javascript:;">取消</a>
+                              <a class="node-editor-confirm" href="javascript:;">发布</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="node-editor-bottom">
+                          <div class="add-photo-box">
+                            <form id="uploadForm" class="add-photo-form" enctype="multipart/form-data"> 
+                                <input type="hidden" name="filename" value= "upfile"/>
+                                <input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+                                <input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+                                <i class="icon icon-add-photo"></i>
+                            </form> 
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- <div class="right-title right-row">
+                        <input class="right-title-input form-control" type="text" placeholder="输入标题">
+                    </div> 
+                    <div class="right-content right-row">
+                        <textarea class="right-content-textarea form-control" placeholder="内容描述"></textarea>
+                    </div>
+                    <div class="imgUpLoad">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="notesOpens2" name="dxuan1" checked="true">
+                            <label for="notesOpens2" class="checked">公开笔记</label>
+                        </div>
+                        <span class="selectBut"><i class="glyphicon glyphicon-picture"></i>图片上传</span>
+                        <div id="imgUpLoadNote" class="demo"></div>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit js-save-note">完成</button>
+                    </div>-->
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-handout hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    讲义
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class=" thrHandouts">
+                        <div class="scanImg" id="scanImg">
+                            <img src="images/twoimg.jpg" />
+                        </div>
+                        <h3>扫描二维码在移动设备上打开</h3>
+                        <ul class="downloadList">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit">完成</button>
+                    </div>
+                </div>
+            </div>
+      <div class="studycenter-video-right studycenter-video-handout hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    设置
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="videoSetting">
+                            <div class="soundCtr">
+                <span>音量：</span>
+                                <span id="volumeCtrly" style="width:80%;margin-top:6px;"></span>
+              </div>
+              <div class="speedCtr" style="width:100%;clear:both;">
+                <span>倍速：</span>
+                                <span class="speedCtrBtn active" data-speed="4">1 X</span>
+                <span class="speedCtrBtn" data-speed="5">1.5 X</span>
+                <span class="speedCtrBtn" data-speed="6">2 X</span>
+                <span class="speedCtrBtn" data-speed="7">3 X</span>
+                <span class="speedCtrBtn" data-speed="8">4 X</span>
+                            </div>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit js-close-sidebar">完成</button>
+                    </div>
+                </div
+            </div>
+        </div>
+    </div>
+</div>
+</script>

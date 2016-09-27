@@ -1,0 +1,3455 @@
+<script id="template-ac-desc" type="text/template">
+<% 
+	var bbstype,bbstypeClass,isPhoto,element=data.bbsdetail;
+	if(data.bbsdetail.bbstype == "0"){
+		bbstype = '讨论';
+		bbstypeClass = 'ac-list-type-1';
+		
+	}else{
+		bbstype = '问答';
+		bbstypeClass = 'ac-list-type-0';
+	}
+%>
+
+	<div class="ac-right-top">
+		<div class="ac-top-left">
+			<img class="ac-desc-avatar" src="<%= CAICUI.Common.host.img + data.bbsdetail.headImg %>">
+			<span class="ac-desc-user-name"><%= data.bbsdetail.nikeName %></span>
+			<span class="ac-desc-line"></span>
+			<span class="ac-desc-time"><%= CAICUI.iGlobal.getLocalTime(data.bbsdetail.updateTime) %></span>
+			<% if(data.bbsdetail.memberId ==  CAICUI.User.memberId){ %>
+				<span class="ac-desc-line"></span>
+				<span class="ac-desc-time ac-desc-remove" data-type="0">删除</span>
+			<% } %>
+
+		</div>
+		<div class="ac-top-right">
+			<a class="ac-desc-like-a" href="javascript:;"><i class="icon icon-desc-like"></i><span class="ac-desc-like-num"><%= data.bbsdetail.praiseCount %></span></a>
+			<a class="ac-desc-discuss-a" href="javascript:;"><i class="icon icon-desc-discuss"></i><span class="ac-desc-discuss-num"><%= data.bbsdetail.replyCount %></span></a>
+		</div>
+	</div>
+	<div class="ac-right-content">
+		<div id="wrapper-ac" class="wrapper">
+			<div id="scroller-ac" class="scroller">
+				<div class="ac-question">
+					<p class="ac-question-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>]</span><%= data.bbsdetail.title %></p>
+					<p class="ac-question-video">
+						
+						<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.chapterId && element.chapterId != ' ' && element.taskId && element.taskId != ' '){ %>
+							<% 
+								var return_render = '';
+								if(CAICUI.render.self){
+									return_render = 'myAc';
+								}else{
+									return_render = 'courseAc/' + CAICUI.render.courseId;
+								}
+							%>
+							<span class="ac-list-info-block"><a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=<%= return_render %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></span>
+							<span class="ac-question-video-title">
+								<%= element.chapterName %>
+								<% if(element.taskCount != "0"){ %>
+									X<%= element.taskCount %>
+								<% } %>
+								<% if(element.taskCurrent != "0"){ %>
+									- 任务<%= element.taskCurrent %>
+								<% } %>
+							</span>
+						<% } %>
+
+
+						</p>
+					<div class="ac-question-content"><pre><%= data.bbsdetail.contentHtml %></pre></div>
+          <% if(data.bbsdetail.imgPath && data.bbsdetail.imgPath !== 'imgpath'){%>
+            <div class="discussQA-imgPath">
+						<%
+					    var imgPath = '';
+					    data.bbsdetail.imgPath ? imgPath = data.bbsdetail.imgPath.split(',') : '';
+					    if(imgPath.length>0){
+					    	_.each(imgPath.slice(0,5),function(list){
+					        if(list){
+							    	var listImgPath = '';
+			              if(list.substr(0,4)!="http"){
+			                listImgPath = CAICUI.Common.host.img;
+			              }
+		            %>
+              <img layer-src="<%= listImgPath %><%= list %>" src="<%= listImgPath %><%= list %>" >
+            <%}})} %>
+            </div>
+          <%}%>
+				</div>
+					<div class="ac-answer">
+				<% if(data.bbsdetail.replys && data.bbsdetail.replys.length){ %>
+						<ul class="ac-answer-ul">
+							<% _.each(data.bbsdetail.replys,function(element, index, list){ %>
+								<li class="ac-answer-li">
+									<img class="ac-answer-avatar" src="<%= CAICUI.Common.host.img + element.headImg %>">
+									<div class="ac-answer-info">
+										<p class="ac-answer-info-top">
+											<span class="ac-answer-user-name"><%= element.nikeName %></span>
+											<span class="ac-answer-line"></span>
+											<span class="ac-answer-time"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span>
+											<% if(element.del_permission){ %>
+												<span class="ac-answer-line"></span>
+												<a id="replys-<%= element.pid %>" class="ac-answer-replys" data-pid="<%= element.pid %>" href="javascript:;" data-type="1">删除</a>
+											<% } %>
+											<span class="ac-answer-floor"><%= index+1 %></span>
+										</p>
+										<div class="ac-answer-info-desc"><pre><%= element.contentHtml %></pre></div>
+									</div>
+								</li>
+							<% }) %>
+						</ul>
+				<% } %>
+					</div>
+				<div class="ac-reply">
+					<div class="ac-reply-top">
+						<img class="ac-reply-avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>">
+						<span class="ac-reply-name"><%= CAICUI.User.nickName %></span>
+					</div>
+					<div class="ac-reply-content">
+						<iframe scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="script/libs/xneditor/ac-editor.html" ></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-ac-list" type="text/template">
+<% console.log(data) %>
+	<% if(data.bbslist.length){ %>
+
+		<% if(data.type){ %>
+		<% 
+		_.each(data.bbslist,function(element, index, list){ 
+
+			var bbstype,bbstypeClass,isPhoto;
+			if(element.bbstype == "0"){
+				bbstype = '讨论';
+				bbstypeClass = 'ac-list-type-1';
+				
+			}else{
+				bbstype = '问答';
+				bbstypeClass = 'ac-list-type-0';
+			}
+			if(element.imgPath && element.imgPath.substr(1,7) == 'upload'){
+				isPhoto = 'active';
+			}
+		%>
+		<li class="ac-list-li" data-id="<%= element.id %>" data-pid="<%= element.replys[0].pid %>">
+			<div class="ac-list-a" >
+				<a class="ac-list-info js-ac-list-active" href="javascript:;">
+					<p class="ac-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.replys[0].headImg %>"><span class="ac-list-info-span user-name"><%= element.replys[0].nikeName %></span></p>
+					<ul class="ac-list-info-ul">
+						
+						<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+						<li class="ac-list-info-li"><span class="ac-list-info-span ac-list-info-time"><%= CAICUI.iGlobal.stringData(element.replys[0].updateTime) %></span></li>
+						<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+						<li class="ac-list-info-li"><span id="pid-<%= element.replys[0].pid %>" class="ac-list-info-span ac-answer-replys" data-pid="<%= element.replys[0].pid %>" data-type="1">删除</span></li>
+						<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+						
+					</ul>
+				
+				<p class="ac-list-reply-desc"><%= element.replys[0].contentSummary %></p>
+				</a>
+				<div class="ac-list-reply">
+				<% if(element.isdelete){ %>
+					<p class="ac-list-reply-desc">原帖已删除</p>
+				<% }else{ %>
+					<div class="ac-list-li-content <%= isPhoto %>">
+						<% if(isPhoto){ %>
+							<img class="ac-list-img " src="<%= CAICUI.Common.host.img + element.imgPath %>">
+						<% } %>
+						<p class="ac-list-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>] </span><span class="ac-list-title-span"><%= element.title %></span>
+							<% if(element.toporder != '0'){ %>
+								<i class="icon icon-post-type-0"></i>
+							<% } %>
+							<% if(+element.replyCount > 10){ %>
+								<i class="icon icon-post-type-1"></i>
+							<% } %>
+							<% if(element.userlevel == 4){ %>
+								<i class="icon icon-post-type-3"></i>
+							<% } %>
+						</p>
+					<p class="ac-list-desc"><%= element.contentSummary %></p>
+					</div>
+					<div class="ac-list-info">
+						<p class="ac-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.headImg %>"><span class="ac-list-info-span user-name"><%= element.nikeName %></span></p>
+						<ul class="ac-list-info-ul">
+							<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.chapterId && element.chapterId != ' ' && element.taskId && element.taskId != ' '){ %>
+
+								<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+								<% 
+									var return_render = '';
+									if(CAICUI.render.self){
+										return_render = 'myAc';
+									}else{
+										return_render = 'courseAc/' + CAICUI.render.courseId;
+									}
+								%>
+								<li class="ac-list-info-li"><a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=<%= return_render %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></li>
+							<% } %>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="ac-list-info-li"><span class="ac-list-info-span ac-list-info-time"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span></li>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-discuss"></i><span class="ac-list-info-discuss-num"><%= element.praiseCount %></span></span></li>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-like"></i><span class="ac-list-info-like-num"><%= element.replyCount ? element.replyCount : 0 %></span></span></li>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+
+						</ul>
+					</div>
+				<% } %>
+				</div>
+			</div>
+		</li>
+		<% }) %>
+		<div class="pagination-box">
+			<ul class="pagination">
+				<% 
+					var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+					var pageStart = +data.pageNo;
+					var pagePrevs = 4;
+					var pageNexts = 4;
+					var pageStartI = 1;
+					var pageForNum = pageStartI+pagePrevs+pageNexts;
+					var pageNum = 0;
+					if(pageTotal>pageForNum){
+						if(pageStart<=pagePrevs){
+							pageStartI = 1;
+							pageForNum = pageForNum;
+						}else if(pageStart<pagePrevs+pageNexts){
+							pageForNum = pageForNum+2;
+							pageStartI = pagePrevs-pageStartI;
+						}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+							pageForNum = pageStart+pageNexts;
+							pageStartI = pageStart-pagePrevs;
+						}else if(pageStart>pageTotal-pageNexts){
+							pageForNum = pageTotal;
+							pageStartI = pageTotal-pagePrevs-pagePrevs;
+						}
+					}else{
+						pageForNum = pageTotal;
+						pageStartI = pageStartI;
+					}
+					if(+pageForNum>+pageTotal){
+						pageForNum = pageTotal;
+					}
+				%>
+				<% if(pageStart>1){ %>
+					<li class="pagination-li js-pagination-prev">
+					  <a class="pagination-a pagination-prev" href="javascript:;">
+					  &lt;
+					  </a>
+					</li>
+				<% } %>
+				
+				<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+					<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+				<% } %>
+
+				<% if(data.totalCount>20){ %>
+					<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+						<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+					<% } %>
+				<% } %>
+
+				<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+					<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+				<% } %>
+
+				<% if(pageStart<pageTotal){ %>
+					<li class="pagination-li js-pagination-next">
+					  <a class="pagination-a pagination-next" href="javascript:;">
+					  &gt;
+					  </a>
+					</li>
+				<% } %>
+		  </ul>
+		</div>
+		<% }else{ %>
+			<% 
+				_.each(data.bbslist,function(element, index, list){ 
+
+					var bbstype,bbstypeClass,isPhoto,isNew=false,isNewActive=true;
+					if(element.bbstype == "0"){
+						bbstype = '讨论';
+						bbstypeClass = 'ac-list-type-1';
+						
+					}else{
+						bbstype = '问答';
+						bbstypeClass = 'ac-list-type-0';
+					}
+					if(element.imgPath && element.imgPath.substr(1,7) == 'upload'){
+						isPhoto = 'active';
+					}
+					var acActive = CAICUI.Storage.getStorage('acActive');
+					for(var i in acActive){
+						if(acActive[i].id == element.id){
+							isNewActive = false;
+							break;
+						}
+					}
+					if(isNewActive){
+						for(var i in data.newtids){
+							if(data.newtids[i].id == element.id){
+								isNew = true;
+							}
+						}
+					}
+			%>
+			<li class="ac-list-li" data-id="<%= element.id %>">
+				<div class="ac-list-a">
+					<a class="ac-list-li-content <%= isPhoto %> js-ac-list-active" href="javascript:;">
+						<% if(isPhoto){ %>
+							<img class="ac-list-img " src="<%= CAICUI.Common.host.img + element.imgPath %>">
+						<% } %>
+						<p class="ac-list-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>] </span><span class="ac-list-title-span"><%= element.title %></span>
+							<% if(element.toporder != '0'){ %>
+								<i class="icon icon-post-type-0"></i>
+							<% } %>
+							<% if(+element.replyCount > 10){ %>
+								<i class="icon icon-post-type-1"></i>
+							<% } %>
+							<% if(isNew){ %>
+									<i class="icon icon-post-type-2"></i>
+							<% } %>
+							<% if(element.userlevel == 4){ %>
+								<i class="icon icon-post-type-3"></i>
+							<% } %>
+						</p>
+						<p class="ac-list-desc"><%= element.contentSummary %></p>
+					</a>
+					<div class="ac-list-info">
+						<p class="ac-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.headImg %>"><span class="ac-list-info-span user-name"><%= element.nikeName %></span></p>
+						<ul class="ac-list-info-ul">
+							<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.chapterId && element.chapterId != ' ' && element.taskId && element.taskId != ' '){ %>
+								<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+								<% 
+									var return_render = '';
+									if(CAICUI.render.self){
+										return_render = 'myAc';
+									}else{
+										return_render = 'courseAc/' + CAICUI.render.courseId;
+									}
+								%>
+								<li class="ac-list-info-li"><a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=<%= return_render %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></li>
+							<% } %>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="ac-list-info-li"><span class="ac-list-info-span ac-list-info-time"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span></li>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-discuss"></i><span class="ac-list-info-discuss-num"><%= element.replyCount %></span></span></li>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-like"></i><span class="ac-list-info-like-num"><%= element.praiseCount %></span></span></li>
+							<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+								<li class="ac-list-info-li">
+									<span class="ac-list-info-span ac-list-remove"  data-type="0">删除</span>
+									</li>
+								<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<% }) %>
+			<div class="pagination-box">
+				<ul class="pagination">
+					<% 
+						var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+						var pageStart = +data.pageNo;
+						var pagePrevs = 4;
+						var pageNexts = 4;
+						var pageStartI = 1;
+						var pageForNum = pageStartI+pagePrevs+pageNexts;
+						var pageNum = 0;
+						if(pageTotal>pageForNum){
+							if(pageStart<=pagePrevs){
+								pageStartI = 1;
+								pageForNum = pageForNum;
+							}else if(pageStart<pagePrevs+pageNexts){
+								pageForNum = pageForNum+2;
+								pageStartI = pagePrevs-pageStartI;
+							}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+								pageForNum = pageStart+pageNexts;
+								pageStartI = pageStart-pagePrevs;
+							}else if(pageStart>pageTotal-pageNexts){
+								pageForNum = pageTotal;
+								pageStartI = pageTotal-pagePrevs-pagePrevs;
+							}
+						}else{
+							pageForNum = pageTotal;
+							pageStartI = pageStartI;
+						}
+						if(+pageForNum>+pageTotal){
+							pageForNum = pageTotal;
+						}
+					%>
+					<% if(pageStart>1){ %>
+						<li class="pagination-li js-pagination-prev">
+						  <a class="pagination-a pagination-prev" href="javascript:;">
+						  &lt;
+						  </a>
+						</li>
+					<% } %>
+					
+					<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+						<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+					<% } %>
+
+					<% if(data.totalCount>20){ %>
+						<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+							<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+						<% } %>
+					<% } %>
+
+					<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+						<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+					<% } %>
+
+					<% if(pageStart<pageTotal){ %>
+						<li class="pagination-li js-pagination-next">
+						  <a class="pagination-a pagination-next" href="javascript:;">
+						  &gt;
+						  </a>
+						</li>
+					<% } %>
+			  </ul>
+			</div>
+			
+		<% } %>
+	<% }else{%>
+		<% if(data.type){ %>
+			<div class="no-data">
+				<i class="icon icon-no-data-ac"></i>
+				<p class="no-data-p">暂无数据</p>
+			</div>
+		<% }else{ %>
+			<% if(data.search){ %>
+				<div class="no-data">
+					<i class="icon icon-no-data-ac"></i>
+					<p class="no-data-p">Sorry~没有找到相关的帖子！</p>
+					<a class="no-data-a ac-list" href="javascript:;">返回 列表页</a>
+				</div>
+			<% }else{ %>
+				<div class="no-data">
+					<i class="icon icon-no-data-ac"></i>
+					<p class="no-data-p">您还没有发起过交流</p>
+					<!-- <a class="no-data-a ac-new" href="javascript:;">新建交流</a> -->
+				</div>
+			<% } %>
+		<% } %>
+		
+	<% } %>
+</script>
+<script id="template-ac-new" type="text/template">
+	<div class="ac-right-top">
+		<div class="ac-top-left">
+			<span class="ac-desc-new-text">发布新贴</span>
+		</div>
+	</div>
+	<div class="ac-right-content">
+		<div class="ac-editor">
+			<div class="ac-editor-top">
+				<div class="ac-editor-top-left">
+					<a class="ac-editor-select" href="javascript:;">
+						<span class="ac-editor-select-text ac-select-text">问答</span>
+						<span class="ac-select-triangle"></span>
+					</a>
+					<ul class="option-ul">
+						<li class="option-li option-li-newAcType active" data-type="1"><a class="option-a" href="javascript:;">问答</a></li>
+						<li class="option-li option-li-newAcType" data-type="0"><a class="option-a" href="javascript:;">讨论</a></li>
+					</ul>
+
+				</div>
+				<div class="ac-editor-top-right">
+					<input class="ac-editor-input newAc-title" type="text" placeholder="请输入您的标题...">
+					<span class="ac-editor-num">还可以输入50字</span>
+				</div>
+			</div>
+			<div class="ac-editor-content">
+				<iframe scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="script/libs/xneditor/ac-new.html" ></iframe>
+			</div>
+		</div>
+		
+	</div>
+</script>
+<script id="template-course-activated" type="text/template">
+<div class="course">
+	<ul class="course-ul">
+		<li class="course-li ">
+			<a class="course-a" href="#courseStudyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li ">
+			<a class="course-a" href="#courseNotActivated">
+				<span class="course-text">未激活课程</span>
+			</a>
+		</li>
+		<li class="course-li active">
+			<a class="course-a" href="#courseActivated">
+				<span class="course-text">已过期课程</span>
+			</a>
+		</li>
+	</ul>
+	<div class="course-content">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+				<% if(data.courseLists.length && data.courseListNav.length){ %>
+					<div class="container container-list">
+						<div class="studyin">
+							<ul class="studyin-header clearfloat">
+								<% _.each(data.courseLists,function(element, index, list){ %>
+									<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+										<a href="javascript:;"><%= element.categoryName %></a>
+									</li>
+								<% }) %>
+							</ul>
+							<div class="studyin-content">
+								<% _.each(data.courseLists,function(element, index, list){ %>
+										<div class="studyin-contents <%= index ? '' : 'active' %>">
+											<% _.each(element.newList,function(element, index, list){ %>
+
+											<div class="studyin-contents-list">
+												<div class="studyin-content-header clearfloat">
+													<div class="subject-type-lf">
+														<span class="subject-name"><%= element.subjectName %></span>
+														<% if(element.isU){ %>
+															<span class="u-icon"></span>
+														<% } %>
+													</div>
+													<div class="subject-type-rt stop">
+														<a class="u-icon" href="javascript:;"></a>
+													</div>
+												</div>
+												<ul class="studyin-content-subject clearfloat" >
+													<% _.each(element.list,function(element, index, list){ 
+														var link = '',
+															linkText = '';
+														if(element.isU=='true'){
+															link = 'http://www.caicui.com/mc/examReport/add';
+															linkText = '申请重听'
+														}else{
+															link = 'http://www.caicui.com/course/detail/'+element.courseId;
+															linkText = '重新购买'
+														}
+														%>
+														<li class="studyin-content-subjects">
+															<a href="<%= link %>" target="_blank">
+																<div class="subject-lf">
+																	<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+																	<div class="subject-mask">
+																		<span class="mask-lf">
+																			<%= linkText %>
+																		</span>
+																		<span class="mask-rt">
+																			→
+																		</span>
+																	</div>
+																</div>
+																<div class="subject-rt">
+																	<h3><%= element.courseName %></h3>
+																	<div class="subject-line"></div>
+																	<div class="subject-progress">
+																		进度
+																		<% 
+																			var taskprogress = element.taskprogress ? parseInt(element.taskprogress) : 0;
+																			var taskTotal = element.taskTotal ? parseInt(element.taskTotal) : 0;
+																			var percentage = 0;
+																			if(taskprogress && taskTotal){
+																				var a = taskprogress/taskTotal;
+																				if(a>0 && a<0.01){
+																					a = 0.01
+																				}
+																				percentage = parseInt(a*100);
+																			}
+																			
+																		%>
+																		<div class="total-progress">
+																			<div class="current-progress" data-progress=<%= percentage %>></div>
+																		</div>
+																		<span>%</span>
+																		<span> <%= percentage %> </span>
+																	</div>
+																</div>
+															</a>
+														</li>
+													<% }) %>
+												</ul>
+											</div>
+											<% }) %>
+										</div>
+										<% }) %>
+							</div>
+						</div>
+
+					</div>
+				<% }else{ %>
+					<div class="studyin-nodata">
+							<div class="studyin-nodata-img u-icon"></div>
+							<div class="studyin-nodata-des">
+								您还未有购买课程
+							</div>
+							<div class="studyin-nodata-btn">
+								<a class="studycenter-buy" href="http://www.caicui.com/" target="_blank">
+									选课购买
+								</a>
+							</div>
+						</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+<script id="template-course-ac" type="text/template">
+	<div class="courseIndex">
+		<ul class="option-ul course-change-ul">
+			<% 
+				var courseName;
+				_.each(data.learningcourse,function(element, index, list){ 
+					_.each(element.newList,function(element, index){
+						_.each(element.list,function(element, index){
+							if(element.courseId == data.courseId){
+								courseName = element.courseName;
+							}
+			%>
+							<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseAc/<%= element.courseId %>"><%= element.courseName %></a></li>
+				<%
+						})
+					})
+				}) %>
+		</ul>
+		<div class="courseIndex-header">
+			<div class="courseIndex-header-left">
+				<% if(courseName){ %>
+					<a class="course-change" href="javascript:;">
+						
+						<span class="course-name"><%= courseName %></span>
+						<i class="icon-triangle"></i>
+					</a>
+				<% }else{ %>
+					<span class="course-name"><%= data.courseBaseInfo.courseName %></span>
+				<% }  %>
+
+			</div>
+
+			<div class="courseIndex-header-right">
+				<ul class="courseIndex-ul">
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseStudy/<%= data.courseId %>">
+							<i class="icon icon-courseStudy"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseStudy-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseStudy/<%= data.courseId %>">
+									<i class="icon icon-courseStudy-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					
+					<li class="courseIndex-li active hover">
+						<a class="courseIndex-a" href="javascript:;">
+							<i class="icon icon-courseAc"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseAc-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="javascript:;">
+									<i class="icon icon-courseAc-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseNote/<%= data.courseId %>">
+							<i class="icon icon-courseNote"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseNote-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseNote/<%= data.courseId %>">
+									<i class="icon icon-courseNote-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="ac-content courseAc-content">
+			<div class="ac-left courseAc-left">
+				<div class="ac-left-top courseAc-left-top">
+					<div class="ac-top-left">
+						<div class="ac-select-box">
+							<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">全部</span><span class="ac-select-triangle"></span></a>
+							<ul class="option-ul">
+								<li class="option-li option-li-render active" data-type="3"><a  class="option-a" href="javascript:;">全部</a></li>
+								<li class="option-li option-li-render" data-type="0"><a  class="option-a" href="javascript:;">讨论</a></li>
+								<li class="option-li option-li-render" data-type="1"><a  class="option-a" href="javascript:;">问答</a></li>
+							</ul>
+						</div>
+						<div class="ac-select-box">
+							<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">发帖时间</span><span class="ac-select-triangle"></span></a>
+							<ul class="option-ul">
+								<li class="option-li option-li-render active" data-ordertype="1"><a  class="option-a" href="javascript:;">发帖时间</a></li>
+								<li class="option-li option-li-render" data-ordertype="2"><a  class="option-a" href="javascript:;">最新回复</a></li>
+								<li class="option-li option-li-render" data-ordertype="4"><a  class="option-a" href="javascript:;">精华热帖</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="ac-top-middle">
+						<input class="ac-search" type="text">
+						<a class="ac-search-a" href="javascript:;"><i class="icon icon-search"></i></a>
+					</div>
+					<div class="ac-top-right">
+						<a class="ac-new" href="javascript:;"><i class="icon icon-new-course"></i></a>
+					</div>
+				</div>
+				<div class="ac-left-content">
+					<div id="wrapper" class="wrapper">
+						<div id="scroller" class="scroller">
+							<ul class="ac-list-ul">
+								<% 
+									_.each(data.bbslist,function(element, index, list){ 
+										var bbstype,bbstypeClass,isPhoto,isNew=false,isNewActive=true;
+										if(element.bbstype == "0"){
+											bbstype = '讨论';
+											bbstypeClass = 'ac-list-type-1';
+											
+										}else{
+											bbstype = '问答';
+											bbstypeClass = 'ac-list-type-0';
+										}
+										if(element.imgPath && element.imgPath.substr(1,7) == 'upload'){
+											isPhoto = 'active';
+										}
+										var acActive = CAICUI.Storage.getStorage('acActive');
+										for(var i in acActive){
+											if(acActive[i].id == element.id){
+												isNewActive = false;
+												break;
+											}
+										}
+										if(isNewActive){
+											for(var i in data.newtids){
+												if(data.newtids[i].id == element.id){
+													isNew = true;
+												}
+											}
+										}
+										if(!element.isAd){
+								%>
+									<li class="ac-list-li" data-id="<%= element.id %>">
+										<div class="ac-list-a" >
+											<a class="ac-list-li-content <%= isPhoto %> js-ac-list-active" data-id="<%= element.id %>" data-isme="<%= element.del_permission ? 'true' : 'false' %>" data-isnew="<%= isNew %>" href="javascript:;">
+												<% if(isPhoto){ %>
+													<img class="ac-list-img " src="<%= CAICUI.Common.host.img + element.imgPath %>">
+												<% } %>
+												
+												<p class="ac-list-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>] </span><span class="ac-list-title-span"><%= element.title %></span>
+													<% if(element.toporder != '0'){ %>
+														<i class="icon icon-post-type-0"></i>
+													<% } %>
+													<% if(+element.replyCount > 10){ %>
+														<i class="icon icon-post-type-1"></i>
+													<% } %>
+													<% if(isNew){ %>
+															<i class="icon icon-post-type-2"></i>
+													<% } %>
+													<% if(element.userlevel == 4){ %>
+														<i class="icon icon-post-type-3"></i>
+													<% } %>
+
+												</p>
+											<p class="ac-list-desc"><%= element.contentSummary %></p>
+											</a>
+
+
+											<div class="ac-list-info">
+												<p class="ac-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.headImg %>"><span class="ac-list-info-span user-name"><%= element.nikeName %></span></p>
+												<ul class="ac-list-info-ul">
+													<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.chapterId && element.chapterId != ' ' && element.taskId && element.taskId != ' '){
+													%>
+														<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+														<li class="ac-list-info-li">
+															<a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=courseAc/<%= CAICUI.render.courseId  %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a>
+															
+														</li>
+													<% } %>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<li class="ac-list-info-li"><span class="ac-list-info-span ac-list-info-time"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span></li>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-discuss"></i><span class="ac-list-info-discuss-num"><%= element.replyCount %></span></span></li>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-like"></i><span class="ac-list-info-like-num"><%= element.praiseCount %></span></span></li>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<% if(element.del_permission){ %>
+														<li class="ac-list-info-li">
+															<span class="ac-list-info-span ac-list-remove"  data-type="0">删除</span>
+															</li>
+														<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<% } %>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<%}else{ %>
+										<% if(element.ad_discuss && element.ad_discuss.length){ %>
+											<li class="ac-list-li">
+												<div class="ac-Ad swiper-container ac-swiper-container">
+													<a class="ac-Ad-close" href="javascript:;">X</a>
+													<div class="swiper-wrapper">
+														<% _.each(element.ad_discuss,function(list,item){ %>
+															<div class="swiper-slide">
+																<img class="ac-Ad-img" data-id="<%= list.id %>" src="<%= CAICUI.Common.host.img + list.adpic %>">
+															</div>
+														<%})%>
+													</div>
+												</div>
+											</li>
+										<% } %>
+										
+									<% } %>
+								<% }) %>
+							
+								<div class="pagination-box">
+									<ul class="pagination">
+										<% 
+											var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+											var pageStart = +data.pageNo;
+											var pagePrevs = 4;
+											var pageNexts = 4;
+											var pageStartI = 1;
+											var pageForNum = pageStartI+pagePrevs+pageNexts;
+											var pageNum = 0;
+											if(pageTotal>pageForNum){
+												if(pageStart<=pagePrevs){
+													pageStartI = 1;
+													pageForNum = pageForNum;
+												}else if(pageStart<pagePrevs+pageNexts){
+													pageForNum = pageForNum+2;
+													pageStartI = pagePrevs-pageStartI;
+												}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+													pageForNum = pageStart+pageNexts;
+													pageStartI = pageStart-pagePrevs;
+												}else if(pageStart>pageTotal-pageNexts){
+													pageForNum = pageTotal;
+													pageStartI = pageTotal-pagePrevs-pagePrevs;
+												}
+											}else{
+												pageForNum = pageTotal;
+												pageStartI = pageStartI;
+											}
+											if(+pageForNum>+pageTotal){
+												pageForNum = pageTotal;
+											}
+										%>
+										<% if(pageStart>1){ %>
+											<li class="pagination-li js-pagination-prev">
+											  <a class="pagination-a pagination-prev" href="javascript:;">
+											  &lt;
+											  </a>
+											</li>
+										<% } %>
+										
+										<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+											<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+										<% } %>
+
+										<% if(data.totalCount>20){ %>
+											<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+												<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+											<% } %>
+										<% } %>
+
+										<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+											<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+										<% } %>
+
+										<% if(pageStart<pageTotal){ %>
+											<li class="pagination-li js-pagination-next">
+											  <a class="pagination-a pagination-next" href="javascript:;">
+											  &gt;
+											  </a>
+											</li>
+										<% } %>
+								  </ul>
+								</div>
+
+							</ul>
+
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="ac-right">
+			</div>
+		</div>
+	</div>
+
+	<div id="remove-ac-load" class="remove-load">
+	    <div class="remove-load-body">
+	        <p class="remove-load-title">您确定要删除该贴吗？</p>
+	        <p class="remove-load-content">删除主贴后，回复内容也一并全部删除</p>
+	    </div>
+	    <div class="remove-load-footer">
+	        <a class="remove-load-btn remove-load-cancel js-ac-load-cancel" href="javascript:;">取消</a>
+	        <a class="remove-load-btn remove-load-confirm js-ac-load-confirm" href="javascript:;">确认</a>
+	    </div>
+	</div>
+	<div id="remove-acReply-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该评论吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel js-acReply-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm js-acReply-load-confirm" href="javascript:;">确认</a>
+    </div>
+</div>
+</script>
+<script id="template-course-courseNote" type="text/template">
+	<div class="courseIndex">
+		<ul class="option-ul course-change-ul">
+			<% 
+				var courseName;
+				_.each(data.learningcourse,function(element, index, list){ 
+					_.each(element.newList,function(element, index){
+						_.each(element.list,function(element, index){
+							if(element.courseId == data.courseId){
+								courseName = element.courseName;
+							}
+			%>
+							<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseNote/<%= element.courseId %>"><%= element.courseName %></a></li>
+				<%
+						})
+					})
+				}) %>
+		</ul>
+		<div class="courseIndex-header">
+			<div class="courseIndex-header-left">
+				<% if(courseName){ %>
+					<a class="course-change" href="javascript:;">
+						
+						<span class="course-name"><%= courseName %></span>
+						<i class="icon-triangle"></i>
+					</a>
+				<% }else{ %>
+					<span class="course-name"><%= data.courseBaseInfo.courseName %></span>
+				<% }  %>
+				
+			</div>
+
+			<div class="courseIndex-header-right">
+				<ul class="courseIndex-ul">
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseStudy/<%= data.courseId %>">
+							<i class="icon icon-courseStudy"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseStudy-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseStudy/<%= data.courseId %>">
+									<i class="icon icon-courseStudy-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseAc/<%= data.courseId %>">
+							<i class="icon icon-courseAc"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseAc-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseAc/<%= data.courseId %>">
+									<i class="icon icon-courseAc-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					<li class="courseIndex-li active hover">
+						<a class="courseIndex-a" href="javascript:;">
+							<i class="icon icon-courseNote"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseNote-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="javascript:;">
+									<i class="icon icon-courseNote-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+
+		<div class="node-main">
+			<div class="node-left">
+				<div class="node-top">
+					<div class="node-top-left">
+						课程笔记
+					</div>
+					<a class="node-top-right node-lately" href="javascript:;">
+						查看最近笔记<span class="node-top-right-triangle"></span>
+					</a>
+				</div>
+				<div class="node-content">
+
+					<div id="wrapper" class="wrapper">
+						<div id="scroller" class="scroller">
+
+							<% if(data.nodelist.data.length){ %>
+								<div class="node-list">
+										<p class="node-total">笔记共有：<span class="node-total-num"><%= data.nodelist.data[0].nodeNum %></span>处</p>
+										<% _.each(data.nodelist.data[0].children,function(element, index, list){ %>
+										
+										<ul class="node-list-one-ul">
+											<li>
+												<a class="node-list-title-a" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %></a>
+													<% if(element.children && element.children.length){ %>
+													<ul class="node-list-two-ul">
+														<% _.each(element.children,function(element, index, list){ %>
+															<li>
+																<% if(element.children && element.children.length){ %>
+																<a class="node-list-title-a node-list-title-two-a" data-nodenum="<%= element.nodeNum %>"  href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></a>
+																<ul class="node-list-three-ul">
+																	<% _.each(element.children,function(element, index, list){
+																		var  nodeNum = 0;
+																		if(element.nodeNum){
+																			nodeNum = element.nodeNum
+																		}
+																	%>
+																	<li>
+																		<a class="node-list-link" data-id="<%= element.chapterId %>" data-title="<%= element.chapterTitle %>" data-nodenum="<%= nodeNum %>" href="javascript:;">
+																			<span class="node-list-desc"><%= element.chapterTitle %><span class="node-list-num">[<%= nodeNum %>]</span></span>
+																		</a>
+																	</li>
+																	<% }) %>
+																</ul>
+																<% }else{ %>
+																	<a class="node-list-link" data-nodenum="<%= element.nodeNum %>" data-id="<%= element.id %>" data-title="<%= element.title %>" href="javascript:;">
+																		<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></span>
+																	</a>
+
+																<% } %>
+															</li>
+														<% }) %>
+														
+													</ul>
+													<% } %>
+												</a>
+											</li>
+										</ul>
+										<% }) %>
+									
+								</div>
+							<% }else{ %>
+								<div class="no-data">
+									<i class="icon icon-no-data-node"></i>
+									<p class="no-data-p">当前课程没有公开笔记，<br>赶快分享一个</p>
+									<a class="no-data-a node-new" href="javascript:;">新建笔记</a>
+								</div>
+							<% } %>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="node-right">
+				
+			</div>
+		</div>
+		
+	</div>
+<div id="remove-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该笔记吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm" href="javascript:;">确认</a>
+    </div>
+  </div>
+</script>
+
+<script id="template-course-courseStudy" type="text/template">
+	<div class="courseIndex">
+		<ul class="option-ul course-change-ul">
+			
+		</ul>
+		<div class="courseIndex-header">
+			<div class="courseIndex-header-left">
+				<a class="course-change" href="javascript:;">
+					
+					<span class="course-name"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+					<i class="icon-triangle"></i>
+				</a>
+			</div>
+
+			<div class="courseIndex-header-right">
+				<ul class="courseIndex-ul">
+					<li class="courseIndex-li active hover">
+						<a class="courseIndex-a" href="javascript:;">
+							<i class="icon icon-courseStudy"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseStudy-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="javascript:;">
+									<i class="icon icon-courseStudy-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseAc/<%= data.courseId %>">
+							<i class="icon icon-courseAc"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseAc-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseAc/<%= data.courseId %>">
+									<i class="icon icon-courseAc-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseNote/<%= data.courseId %>">
+							<i class="icon icon-courseNote"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseNote-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseNote/<%= data.courseId %>">
+									<i class="icon icon-courseNote-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="courseIndex-main">
+			<div class="courseIndex-title">
+				<i class="icon icon-course-title"></i>课程章节
+				<div class="courseVersion">
+					<span class="courseVersion-title">课程版本：</span>
+					<div class="courseVersion-show">
+						<a class="courseVersion-show-btn active" href="javascript:;"><span class="courseVersion-show-round"></span><span class="course-name"><span class="text-loader-content"><span class="text-loader"></span></span></span><i class="icon-triangle"></i></a>
+					</div>
+				</div>
+			</div>
+			
+			<ul class="courseVersion-list">
+				
+			</ul>
+			<div class="courseIndex-content">
+				<div class="courseIndex-content-left">
+					<div class="course-list">
+						<div id="wrapper" class="wrapper">
+							<div id="scroller" class="scroller">
+							<div class="loader-content mt-50">
+								<div class="loader-box"><div class="loader">加载中。。。</div></div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="courseIndex-content-right">
+					<p class="course-title course-name"><span class="text-loader-content"><span class="text-loader"></span></span></p>
+					<a class="course-desc lastLearn" href="javascript:;"><span class="text-loader-content"><span class="text-loader"></span></span></a>
+					<p>
+						<a class="continue-learning" href="javascript:;">继续学习</a>
+						<a class="icon icon-handout-down" href="javascript:;" target="_blank"></a>
+					</p>
+					<p class="course-info">
+						考试时间：<span class="course-info-examTime"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+						<span>|</span>
+						课程到期：<span class="course-info-dueTime"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+					</p>
+					<div class="course-progress">
+						进度
+						<span class="course-progress-box">
+							<span class="course-progress-show" data-course-progress="0">
+								<i class="icon icon-course-progress"></i>
+							</span>
+							<i class="icon icon-course-no-progress"></i>
+						</span>
+						<span class="course-percentage">0</span>%
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+
+<script id="template-courseStudy-courseList" type="text/template">
+	<% _.each(courseNameArray,function(element, index, list){ %>
+		<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseStudy/<%= element.courseId %>"><%= element.courseName %></a></li>
+	<% }) %>
+</script>
+<script id="template-courseStudy-courseVersionList" type="text/template">
+	<%
+		var courseActiveTimeIndex = 1; 
+		_.each(courseVersion,function(element, index, list){
+			var showCourseVersion = false;
+			if(element.courseType && element.courseType != '1' && element.createDate>=courseActiveTime){
+				showCourseVersion = true;
+			}else{
+				if(element.courseType && element.courseType != '1' && courseActiveTimeIndex){
+					showCourseVersion = true;
+					courseActiveTimeIndex = 0;
+				}
+			}
+	%>
+		<% if(showCourseVersion){ %>
+			<li class="courseVersion-list-li">
+				<a class="courseVersion-list-a" href="#courseStudy/<%= element.id %>" title="<%= element.title %>">
+					<%= element.title %>
+				</a>
+			</li>
+		<% } %>
+	
+	<% }) %>
+</script>
+<script id="template-courseStudy-taskList" type="text/template">
+	<% if(data.courseDetail.availability && $.trim(data.courseDetail.availability) != ''){ %>
+		<div class="courseIndex-content-tips" title="<%= data.courseDetail.availability %>">
+			<%= data.courseDetail.availability %>
+		</div>
+
+	<% } %>
+	
+	<ul class="course-list-one-ul">
+		<% 
+		var hasTask = false;
+		console.log(data.courseDetail)
+		_.each(data.courseDetail.chapters,function(element, index, list){
+			var courseActiveState = element.courseActiveState;
+
+			var chaptersindex = index;
+			if(element.children && element.children.length || element.tasks && element.tasks.length){
+				hasTask = true;
+		%>
+			<li>
+				
+					<% if(element.children && element.children.length){ %>
+						<a class="course-list-title-a" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.chapterTitle %></a>
+					
+						<ul class="course-list-two-ul">
+							<% _.each(element.children,function(element, index, list){ 
+								var chaptersindex2 = index;
+							%>
+								<li>
+									<% if(element.children && element.children.length){ %>
+									<a class="course-list-title-a course-list-title-two-a"  href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.chapterTitle %></a>
+									<ul class="course-list-three-ul">
+										<% 
+											_.each(element.children,function(element, index, list){ 
+												var courseListLink = 'course-list-link';
+												var courseListType = 'icon-course-list-default';
+												var progress = 0;
+												var total = 0;
+												var tasksState = 'no';
+												var tasksStateEndNum = 0;
+												if(element.tasks){
+
+												
+												_.each(element.tasks,function(element,index){
+													var progressTotal = 0;
+													var elementProgress = element.progress ? element.progress : 0;
+													progress += elementProgress;
+													if(element.progress && element.total){
+														progressTotal = parseInt(element.progress)/parseInt(element.total);
+													}
+													if(progressTotal>=0.9){
+														tasksStateEndNum ++;
+													}
+												})
+												if(tasksStateEndNum == element.tasks.length){
+													tasksState = 'end';
+												}else{
+													if(progress){
+														tasksState = 'ing';
+													}else{
+														tasksState = 'no';
+													}
+												}
+												switch (tasksState){
+													case 'no':
+														courseListType = 'icon-course-list-default';
+														break;
+													case 'ing':
+														courseListType = 'icon-course-list-learning';
+														break;
+													case 'end':
+														courseListType = 'icon-course-list-completed';
+														break;
+												}
+										%>
+
+										<li>
+											<% 
+												var vidwoIsFree = false;
+												if(data.courseDetail.courseActiveState===4){
+													vidwoIsFree = false;
+												}else if(data.courseDetail.courseActiveState===3  || element.isFree=='true'){
+												//if(element.isFree=='false' && data.courseDetail.courseActiveState!=3){
+													vidwoIsFree = true;
+												}
+												if(vidwoIsFree){
+													courseListLink = 'js-course-list-link course-list-link';
+													var link = '#video/'+data.courseId+'/'+element.chapterId+'?return_link=courseStudy/'+ data.courseId+'&return_hash=on';
+													var videoNum = 0;
+													var examNum = 0;
+													
+													_.each(element.tasks,function(element, index){
+														if(element.taskType == "video"){
+															videoNum = videoNum + 1;
+														}else if(element.taskType == "exam"){
+															examNum = examNum + 1;
+														}
+													});
+													if(videoNum && examNum){
+														courseListLink = 'js-course-list-link course-list-link course-list-link-width';
+													}
+												}else{
+													var link = 'javascript:;';
+													courseListType = 'icon-course-list-lock';
+													courseListLink = 'js-course-list-link course-list-link course-list-link-nowidth';
+												} 
+											%>
+											<a class="<%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2 +"|" + index %>" href="javascript:;">
+												<i class="icon icon-left <%= courseListType %>"></i>
+												<span class="course-list-desc"><%= element.chapterTitle %></span>
+												<div class="course-list-info">
+													<% if(videoNum){ %>
+														<span class="course-list-triangle"></span>X<%= videoNum %>
+													<% } %>
+													<% if(examNum){ %>
+														<i class="icon icon-course-exam"></i>X<%= examNum %>
+													<% } %>
+												</div>
+											</a>
+										</li>
+										<% } }) %>
+									</ul>
+									<% 
+										}else if(element.tasks && element.tasks.length){
+											var courseListLink = 'course-list-link';
+											var courseListType = 'icon-course-list-default'; 
+											var progress = 0;
+											var total = 0;
+											var tasksState = 'no';
+											var tasksStateEndNum = 0;
+
+											_.each(element.tasks,function(element,index){
+												var progressTotal = 0;
+												var elementProgress = element.progress ? element.progress : 0;
+												progress += elementProgress;
+												if(element.progress && element.total){
+													progressTotal = parseInt(element.progress)/parseInt(element.total);
+												}
+												if(progressTotal>=0.9){
+													tasksStateEndNum ++;
+												}
+											})
+											if(tasksStateEndNum == element.tasks.length){
+												tasksState = 'end';
+											}else{
+												if(progress){
+													tasksState = 'ing';
+												}else{
+													tasksState = 'no';
+												}
+											}
+											switch (tasksState){
+												case 'no':
+													courseListType = 'icon-course-list-default';
+													break;
+												case 'ing':
+													courseListType = 'icon-course-list-learning';
+													break;
+												case 'end':
+													courseListType = 'icon-course-list-completed';
+													break;
+											}
+									%>
+
+										<% 
+											var vidwoIsFree = false;
+												if(data.courseDetail.courseActiveState===4){
+													vidwoIsFree = false;
+												}else if(data.courseDetail.courseActiveState==3  || element.isFree=='true'){
+												//if(element.isFree=='false' && data.courseDetail.courseActiveState!=3){
+													vidwoIsFree = true;
+												}
+											if(vidwoIsFree){
+												courseListLink = 'js-course-list-link course-list-link';
+												var link = '#video/'+data.courseId+'/'+element.chapterId+'?return_link=courseStudy/'+ data.courseId+'&return_hash=on';
+												var videoNum = 0;
+												var examNum = 0;
+												
+												_.each(element.tasks,function(element, index){
+													if(element.taskType == "video"){
+														videoNum = videoNum + 1;
+													}else if(element.taskType == "exam"){
+														examNum = examNum + 1;
+													}
+												});
+												if(videoNum && examNum){
+													courseListLink = 'js-course-list-link course-list-link course-list-link-width';
+												}
+											}else{
+												var link = 'javascript:;';
+												courseListType = 'icon-course-list-lock';
+												courseListLink = 'js-course-list-link course-list-link course-list-link-nowidth';
+											} 
+										%>
+										<a class="<%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2  %>" href="javascript:;">
+											<i class="icon icon-left <%= courseListType %>"></i>
+											<span class="course-list-desc"><%= element.chapterTitle %></span>
+											<div class="course-list-info">
+												<% if(videoNum){ %>
+													<span class="course-list-triangle"></span>X<%= videoNum %>
+												<% } %>
+												<% if(examNum){ %>
+													<i class="icon icon-course-exam"></i>X<%= examNum %>
+												<% } %>
+											</div>
+										</a>
+
+									<% } %>
+								</li>
+							<% }) %>
+							
+						</ul>
+
+					<% }else if(element.tasks && element.tasks.length){ %>
+						<% 
+								var courseListLink = 'course-list-link';
+								var courseListType = 'icon-course-list-default'; 
+								var progress = 0;
+								var total = 0;
+								var tasksState = 'no';
+								var tasksStateEndNum = 0;
+								_.each(element.tasks,function(element,index){
+									var progressTotal = 0;
+									var elementProgress = element.progress ? element.progress : 0;
+									progress += elementProgress;
+									if(element.progress && element.total){
+										progressTotal = parseInt(element.progress)/parseInt(element.total);
+									}
+									if(progressTotal>=0.9){
+										tasksStateEndNum ++;
+									}
+								})
+								if(tasksStateEndNum == element.tasks.length){
+									tasksState = 'end';
+								}else{
+									if(progress){
+										tasksState = 'ing';
+									}else{
+										tasksState = 'no';
+									}
+								}
+								switch (tasksState){
+									case 'no':
+										courseListType = 'icon-course-list-default';
+										break;
+									case 'ing':
+										courseListType = 'icon-course-list-learning';
+										break;
+									case 'end':
+										courseListType = 'icon-course-list-completed';
+										break;
+								}
+								var vidwoIsFree = false;
+								if(data.courseDetail.courseActiveState===4){
+									vidwoIsFree = false;
+								}else if(data.courseDetail.courseActiveState==3  || element.isFree=='true'){
+								//if(element.isFree=='false' && data.courseDetail.courseActiveState!=3){
+									vidwoIsFree = true;
+								}
+								if(vidwoIsFree){
+									courseListLink = 'js-course-list-link course-list-link';
+									var link = '#video/'+data.courseId+'/'+element.chapterId+'?return_link=courseStudy/'+ data.courseId+'&return_hash=on';
+									var videoNum = 0;
+									var examNum = 0;
+									
+									_.each(element.tasks,function(element, index){
+										if(element.taskType == "video"){
+											videoNum = videoNum + 1;
+										}else if(element.taskType == "exam"){
+											examNum = examNum + 1;
+										}
+									});
+									if(videoNum && examNum){
+										courseListLink = 'js-course-list-link course-list-link course-list-link-width';
+									}
+								}else{
+									var link = 'javascript:;';
+									courseListType = 'icon-course-list-lock';
+									courseListLink = 'js-course-list-link course-list-link course-list-link-nowidth';
+								} 
+						%>
+						<a class="<%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex %>" href="javascript:;">
+							<i class="icon icon-left <%= courseListType %>"></i>
+							<span class="course-list-desc"><%= element.chapterTitle %></span>
+							<div class="course-list-info">
+								<% if(videoNum){ %>
+									<span class="course-list-triangle"></span>X<%= videoNum %>
+								<% } %>
+								<% if(examNum){ %>
+									<i class="icon icon-course-exam"></i>X<%= examNum %>
+								<% } %>
+							</div>
+						</a>
+						
+					<% } %>
+			</li>
+		<%  } }) %>
+	</ul>
+</script>
+
+<script id="template-course-notActivated" type="text/template">
+<div class="course">
+	<ul class="course-ul">
+		<li class="course-li ">
+			<a class="course-a" href="#courseStudyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li active">
+			<a class="course-a" href="#courseNotActivated">
+				<span class="course-text">未激活课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#courseActivated">
+				<span class="course-text">已过期课程</span>
+			</a>
+		</li>
+	</ul>
+	<div class="course-content">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+				<% if(data.courseLists.length && data.courseListNav.length){ %>
+					<div class="container container-list">
+						<div class="studyin">
+							<ul class="studyin-header clearfloat">
+								<% _.each(data.courseLists,function(element, index, list){ %>
+									<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+										<a href="javascript:;"><%= element.categoryName %></a>
+									</li>
+								<% }) %>
+							</ul>
+							<div class="studyin-content">
+								<% _.each(data.courseLists,function(element, index, list){ %>
+								<div class="studyin-contents <%= index ? '' : 'active' %>">
+									<% _.each(element.newList,function(element, index, list){ %>
+
+									<div class="studyin-contents-list">
+										<div class="studyin-content-header clearfloat">
+											<div class="subject-type-lf">
+												<span class="subject-name"><%= element.subjectName %></span>
+												<% if(element.isU){ %>
+													<span class="u-icon"></span>
+												<% } %>
+											</div>
+											<div class="subject-type-rt stop">
+												<a class="u-icon" href="javascript:;"></a>
+											</div>
+										</div>
+										<ul class="studyin-content-subject clearfloat" >
+											<% _.each(element.list,function(element, index, list){ %>
+												<li class="studyin-content-subjects">
+													<a class="js-course-notActivated" href="javascript:;" data-courseid="<%= element.courseId %>" data-orderitemid="<%= element.orderID_item_id %>" data-isu="<%= element.isU %>" data-title="<%= element.courseName %>" data-effectiveday="<%= element.effectiveDay %>">
+														<div class="subject-lf">
+															<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+															<div class="subject-mask">
+																<span class="mask-lf">
+																	马上激活
+																</span>
+																<span class="mask-rt">
+																	→
+																</span>
+															</div>
+														</div>
+														<div class="subject-rt subject-rt-notactived">
+															<h3><%= element.courseName %></h3>
+															<div class="subject-line"></div>
+															<div class="subject-progress">
+																课程有效期：<%= element.effectiveDay %>天
+															</div>
+														</div>
+													</a>
+												</li>
+												
+												
+											<% }) %>
+										</ul>
+									</div>
+									<% }) %>
+								</div>
+								<% }) %>
+
+
+
+
+								
+								
+							</div>
+						</div>
+
+					</div>
+				<% }else{ %>
+					<div class="studyin-nodata">
+							<div class="studyin-nodata-img u-icon"></div>
+							<div class="studyin-nodata-des">
+								您还未有购买课程
+							</div>
+							<div class="studyin-nodata-btn">
+								<a class="studycenter-buy" href="http://www.caicui.com/" target="_blank">
+									选课购买
+								</a>
+							</div>
+						</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="courseActivation" style="display: none">
+  <h3 class="ca-h3">您正在激活在线课程&nbsp;<font>&nbsp;复习串讲 - ACCA</font></h3>
+  <p class="ca-p">激活课程后即可正常学习，请注意，激活动作无法撤销，此课程一旦激活将在<span class="effectiveDay">180</span>天后失效,失效后将无法继续学习。请在有效期内合理安排学习进度。</p>
+  <form class="form-horizontal courseActivation-form">
+      <div class="ca-select">
+          <select class="form-control input-sm">
+          </select>
+      </div>
+      <div class="checkbox ca-checkbox">
+          <label>
+              <input type="checkbox">确定激活此课程
+          </label>
+      </div>
+      <div class="ca-btn-div">
+          <button type="button" class="btn ca-btn-ok">&nbsp;激活&nbsp;</button>
+          <button type="button" class="btn ca-btn-no">以后在说</button>
+      </div>
+  </form>
+</div>
+</script>
+<script id="template-course-studyIn" type="text/template">
+<div class="course">
+	<ul class="course-ul">
+		<li class="course-li active">
+			<a class="course-a" href="#courseStudyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#courseNotActivated">
+				<span class="course-text">未激活课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#courseActivated">
+				<span class="course-text">已过期课程</span>
+			</a>
+		</li>
+	</ul>
+	<div class="course-content">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+			<% if(data.courseLists.length && data.courseListNav.length){ %>
+				<div class="container container-list">
+					<div class="studyin"> 
+						<ul class="studyin-header clearfloat">
+							<% _.each(data.courseLists,function(element, index, list){ %>
+								<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+									<a href="javascript:;"><%= element.categoryName %></a>
+								</li>
+							<% }) %>
+						</ul>
+						
+						<div class="studyin-content">
+							<% _.each(data.courseLists,function(element, index, list){ %>
+							<div class="studyin-contents <%= index ? '' : 'active' %>">
+								<% _.each(element.newList,function(element, index, list){ %>
+
+								<div class="studyin-contents-list">
+									<div class="studyin-content-header clearfloat">
+										<div class="subject-type-lf">
+											<span class="subject-name"><%= element.subjectName %></span>
+											<% if(element.isU){ %>
+												<span class="u-icon"></span>
+											<% } %>
+										</div>
+										<div class="subject-type-rt stop">
+											<a class="u-icon" href="javascript:;"></a>
+										</div>
+									</div>
+									<ul class="studyin-content-subject clearfloat" >
+										<% _.each(element.list,function(element, index, list){ %>
+											<li class="studyin-content-subjects">
+												<a href="#courseStudy/<%= element.courseId %>">
+													<div class="subject-lf">
+														<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+														<span class="subject-time">有效期至：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></span>
+														<% if(element.isU == "true"){ %>
+															<span class="subject-u"><span class="subject-u-text">U+</span></span>
+														<% } %>
+														<div class="subject-mask">
+															<span class="mask-lf">
+																继续学习
+															</span>
+															<span class="mask-rt">
+																→
+															</span>
+														</div>
+													</div>
+													<div class="subject-rt">
+														<h3><%= element.courseName %></h3>
+														<div class="subject-line"></div>
+														<div class="subject-progress">
+															进度
+															<% 
+																var taskprogress = element.taskprogress ? parseInt(element.taskprogress) : 0;
+																var taskTotal = element.taskTotal ? parseInt(element.taskTotal) : 0;
+																var percentage = 0;
+																var lastProgress = element.lastProgress;
+																if(taskprogress && taskTotal){
+																	var a = taskprogress/taskTotal;
+																	if(a>0 && a<0.01){
+																		a = 0.01
+																	}
+																	percentage = parseInt(a*100);
+																}else if(lastProgress){
+																	percentage = 1;
+																}
+																
+															%>
+															<div class="total-progress">
+																<div class="current-progress" data-progress=<%= percentage %>></div>
+															</div>
+															<span>%</span>
+															<span> <%= percentage %> </span>
+														</div>
+													</div>
+												</a>
+											</li>
+										<% }) %>
+									</ul>
+									</div>
+								<% }) %>
+							</div>
+							<% }) %>
+						</div>
+						
+					</div>
+
+					
+				</div>
+			<% }else{ %>
+				<div class="studyin-nodata">
+						<div class="studyin-nodata-img u-icon"></div>
+						<div class="studyin-nodata-des">
+							您还未有购买课程
+						</div>
+						<div class="studyin-nodata-btn">
+							<a class="studycenter-buy" href="http://www.caicui.com/" target="_blank">
+								选课购买
+							</a>
+						</div>
+					</div>
+			<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</script>
+
+<script id="template-exam-list" type="text/template">
+				<%
+					_.each(data.examList,function(element, index, list){ 
+						var time,timeClass;
+						time = element.testTime;
+						if(time == 'TODAY'){
+							timeClass = 'exam-list-time exam-list-today';
+						}else{
+							timeClass = 'exam-list-time';
+						}
+					%>
+						<li class="exam-list-item">
+							<span class="<%= timeClass %>"><%= time %></span>
+							<ul class="exam-list-ul">
+								<% 
+								_.each(element.list,function(element, index, list){
+									var percentage='';
+									if(element.rightCount){
+										percentage = (element.rightCount/element.count).toFixed(2);
+									}else{
+										percentage = 0;
+									}
+								%>
+									<li class="exam-list-li">
+										<a class="exam-list-li-a" href="http://www.caicui.com/exam/examinationReport/analyze/<%= element.id %>" target="_blank">
+											<p class="exam-list-p"><%= element.type %></p>
+											<ul class="exam-list-info">
+												<li class="exam-list-info-li"><%= CAICUI.iGlobal.formatSeconds(element.time) %></li>
+												<li class="exam-list-info-li">题目：<%= element.count %>道</li>
+												<li class="exam-list-info-li">错题：<%= element.count - element.rightCount %>道</li>
+												<li class="exam-list-info-li">正确率：<%= percentage %>%</li>
+											</ul>
+										</a>
+									</li>
+								<% }) %>
+							</ul>
+							
+						</li>
+					<% }) %>
+
+	<div class="pagination-box">
+		<ul class="pagination">
+			<% 
+				var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+				var pageStart = +data.pageNo;
+				var pagePrevs = 4;
+				var pageNexts = 4;
+				var pageStartI = 1;
+				var pageForNum = pageStartI+pagePrevs+pageNexts;
+				var pageNum = 0;
+				if(pageTotal>pageForNum){
+					if(pageStart<=pagePrevs){
+						pageStartI = 1;
+						pageForNum = pageForNum;
+					}else if(pageStart<pagePrevs+pageNexts){
+						pageForNum = pageForNum+2;
+						pageStartI = pagePrevs-pageStartI;
+					}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+						pageForNum = pageStart+pageNexts;
+						pageStartI = pageStart-pagePrevs;
+					}else if(pageStart>pageTotal-pageNexts){
+						pageForNum = pageTotal;
+						pageStartI = pageTotal-pagePrevs-pagePrevs;
+					}
+				}else{
+					pageForNum = pageTotal;
+					pageStartI = pageStartI;
+				}
+				if(+pageForNum>+pageTotal){
+					pageForNum = pageTotal;
+				}
+			%>
+			<% if(pageStart>1){ %>
+				<li class="pagination-li js-pagination-prev">
+				  <a class="pagination-a pagination-prev" href="javascript:;">
+				  &lt;
+				  </a>
+				</li>
+			<% } %>
+			
+			<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+				<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+			<% } %>
+
+			<% if(data.totalCount>20){ %>
+				<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+					<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+				<% } %>
+			<% } %>
+
+			<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+				<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+			<% } %>
+
+			<% if(pageStart<pageTotal){ %>
+				<li class="pagination-li js-pagination-next">
+				  <a class="pagination-a pagination-next" href="javascript:;">
+				  &gt;
+				  </a>
+				</li>
+			<% } %>
+	  </ul>
+	</div>
+</script>
+<script id="template-help" type="text/template">
+	<div class="help">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+		<div class="help-video">
+			<% if(0){ %>
+			<iframe allowtransparency="true" width="848px" height="450px" scrolling="no" frameborder="0" src="player.html" ></iframe>
+			<% } %>
+			<ul class="help-video-ul">
+				<% _.each(helpVideoDate,function(element,item){ %>
+					<li class="help-video-li">
+						<a class="help-video-a" href="javascript:;" data-ccid="<%= element.ccid %>" data-videoTitle="<%= element.videoTitle %>">
+							<div class="help-video-img-content">
+								<img class="help-video-img" src="images/help-video-bg.png">
+								<span class="help-video-round hidden">
+									<span class="help-video-triangle"></span>
+								</span>
+							</div>
+						</a>
+						<p class="help-video-p"><%= element.videoTitle %></p>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<div class="help-question">
+			<p class="help-question-title">常见问题</p>
+			<div class="help-question-left">
+				<a class="help-feedback" href="javascript:;"><i class="icon icon-feedback"></i>意见建议</a>
+				<ul class="help-question-ul">
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q1学服老师我激活了F3U+网课，请老师给我邮寄讲义好吗？</p>
+						<span class="help-question-li-span">请把你的姓名和电话发给我，我先帮你查一下网课。已经确定你的F3U+网课已经激活了，请把你的地址发给我，今天会帮你邮寄纸质讲义</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q2请问老师16年网课有更新吗？可以适用9月份的考试吗？</p>
+						<span class="help-question-li-span">会在8月份之前更新F5F7F9P2P4的网课，但是每科具体更新的时间没有确定，近期可以多关注学员中心的系统消息，有网课更新都会在学习中心的系统消息里面提示大家，更新科目的具体章节和内容</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q3学服老师请，问电子版讲义如何进行下载？</p>
+						<span class="help-question-li-span">你需要使用电脑登录财萃网站，在学习中心在学课程里面找到需要下载讲义科目的网课，进入课程页面，在课程列表的右边可以下载完整版讲义</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q4学服老师我在手机上面无法登陆财萃网站？</p>
+						<span class="help-question-li-span">现在手机和ipad已经不能使用网页版观看网课了，你可以下载财萃APP观看和下载网课</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q5老师我是刚从APP下载的财萃课堂，为什么登陆用户名和密码以后却显示不了网课呀？</p>
+						<span class="help-question-li-span">我们新版APP在第一次登录账号以后需要上传一张自己的照片或是图片之后，才可以进入课程中心观看网课</span>
+					</li>
+				</ul>
+			</div>
+			<div class="help-question-right">
+				<ul class="help-question-ul">
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q6老师我购买的U+课程网课过期了怎么申请重听呢？</p>
+						<span class="help-question-li-span">登陆财萃官网进入学习中心—个人中心—成绩管理—成绩录入上传成绩单或者缺考证明就会有老师给你解决的吆。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q7老师我已报名了考试可以申请取消考试吗？</p>
+						<span class="help-question-li-span">在每季报考的常规报名时间截止前取消就可以操作。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q8老师ACCA阶段证书怎么申请呢？</p>
+						<span class="help-question-li-span">ACCA考完前3科完成道德测试即可获得初级商业会计证书，考完前9科完成道德测试即可获得高级商业会计证书。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q9老师我报考了ACCA准备考试，报考有什么顺序吗？</p>
+						<span class="help-question-li-span">ACCA课程分知识课程、技能课程、核心课程、选修课程4个模块，按模块顺序报考，模块内顺序可以打乱，前一个模块没有考完的科目报下一个模块考试必须带上前一个模块未考过的科目。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q10我注册ACCA时没有达到免试要求，现在想追加免试，截止时间到什么时候呢？</p>
+						<span class="help-question-li-span">追加免试一年有2次机会，针对每年6月份或12月份考试，截止日分别为每年1月15日及7月15日，追加免试流程也可以发你吆！</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-help-video" type="text/template">
+	<div id="animate">
+		<div class="studycenter-video layout">
+			<div class="studycenter-video-header layout">
+		    <div class="studycenter-video-title">
+		    	<%= videoTitle %>
+		    </div>
+		    <a class="studycenter-video-close video-icon video-icon-task-close " href="javascript:;">
+		    </a>
+			</div>
+			<div id="studycenter-video-main" class="studycenter-video-main layout">
+
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-feedback" type="text/template">
+	<div id="help-feedback-pop" class="help-feedback-pop">
+		<span class="pop-shadow"></span>
+		<div class="pop-html">
+			<div class="pop-header">您的意见我会虚心接受的</div>
+			<div class="pop-body">
+				<div class="pop-radios">
+					<% _.each(feedbackType,function(element,item){ %>
+						<a class="pop-radio-label <%=!item ? 'active' : '' %>" href="javascript:;">
+							<span class="pop-radio"><span class="pop-radio-round"></span></span>
+							<span class="pop-radio-span"><%= element %></span>
+						</a>
+					<% }) %>
+				</div>
+				<div class="pop-textarea-content">
+					<textarea class="pop-textarea" placeholder="亲爱的同学：小财非常欢迎你向小财反馈产品的意见建议和体验感受。我们一定会认真调整，及时反馈。根据你的建议，不断完善和优化我们的产品，为你提供更舒适的学习体验。"></textarea>
+				</div>
+
+			</div>
+			<div class="pop-footer">
+				<div class="pop-tel">
+					联系方式
+					<input class="pop-input-tel" type="text">
+				</div>
+				<div class="pop-button">
+					<a class="pop-button-cancel" href="javascript:;">取消</a>
+					<a class="pop-button-confirm" href="javascript:;">提交</a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</script>
+<script id="template-layout" type="text/template">
+	<div id="layout" class="contariner mini-nav">
+		<div class="top">
+			<div class="top-left">
+			<i class="icon icon-logo "></i>
+				<a class="link-caicui" href="http://www.caicui.com" target="_blank">
+					
+				</a>
+				<a class="link-studycenter" href="http://www.caicui.com/studycenter/#studycenterIndex">
+					
+				</a>
+			</div>
+			<div class="top-right">
+				<a class="return-old-studycenter" href="http://www.caicui.com/studycenter2.1/">
+					<i class="icon-old-studycenter"></i>
+					<span class="return-old-studycenter-text">旧版学习中心</span>
+				</a>
+				<span class="bar"></span>
+				<a class="download-app" href="http://www.caicui.com/static/Special/app/" target="_blank">
+					<i class="icon icon-download"></i>
+					<span class="download-app-text">财萃课堂APP下载</span>
+				</a>
+				<span class="bar"></span>
+				<a class="message" href="javascript:;">
+					<i class="icon icon-comment"></i>
+				</a>
+				<a class="exit" href="javascript:;">
+					<img class="avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>" />
+					<span class="user-name"><%= CAICUI.User.nickName %></span>
+				</a>
+				<div class="exit-option">
+					<i class="icon icon-exit-bg"></i>
+					<a class="exit-select personal-center" href="http://www.caicui.com/mc/home" target="_blank">个人中心</a>
+					<a class="exit-select sign-out" href="javascript:;">退出</a>
+				</div>
+			</div>
+		</div>
+		<div class="main">
+			<div class="left">
+				<ul class="nav">
+					<li class="nav-li <%= nav == 'studycenterIndex'||nav == ' ' ? 'active' : '' %> " >
+						<a class="nav-a" href="#studycenterIndex">
+							<i class="icon icon-home"></i><span class="nav-text">首页</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'courseStudyIn' || nav == 'courseNotActivated' || nav == 'courseActivated' || nav == 'courseStudy' || nav == 'courseAc' || nav == 'courseNote' ? 'active' : '' %>" >
+						<a class="nav-a" href="#courseStudyIn">
+							<i class="icon icon-course"></i><span class="nav-text">我的课程</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'myExam'? 'active' : '' %>" >
+						<a class="nav-a" href="#myExam">
+							<i class="icon icon-exam"></i><span class="nav-text">我的题库</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'myNote'? 'active' : '' %>" >
+						<a class="nav-a" href="#myNote">
+							<i class="icon icon-note"></i><span class="nav-text">我的笔记</span>
+						</a>
+					</li>
+					<li class="nav-li <%= nav == 'myAc'? 'active' : '' %>" >
+						<a class="nav-a" href="#myAc">
+							<i class="icon icon-ac"></i><span class="nav-text">我的交流</span>
+						</a>
+					</li>
+					<li class="nav-li nav-li-last <%= nav == 'help'? 'active' : '' %>" >
+						<a class="nav-a" href="#help">
+							<i class="icon icon-help"></i><span class="nav-text">学习帮助</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div id="right" class="right">
+				
+			</div>
+			<div class="message-main">
+				<div class="message-shadow"></div>
+				<div class="message-content">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="template-login" type="text/template">
+	<div class="main-login">
+		<form class="form-login">
+		  <div class="form-block">
+		    <label for="name" class="form-label">用户名</label>
+		    <input type="text" class="form-input" id="name" placeholder="用户名">
+		  </div>
+		  <div class="form-block">
+		    <label for="password" class="form-label">密码</label>
+		    <input type="password" class="form-input" id="password" placeholder="密码">
+		  </div>
+		  <div class="form-block">
+		    <button type="button" id="login" class="form-button">登录</button>
+		  </div>
+		</form>
+	</div>
+</div>
+</script>
+<script id="template-message-desc" type="text/template">
+	<div class="message-right-top">
+		<div class="message-top-left">
+			<img class="message-desc-avatar" src="<%=  element.headImg ? CAICUI.Common.host.img + element.headImg : 'images/avatar.jpg'  %>">
+			<span class="message-desc-user-name"><%= element.sender %></span>
+			<span class="message-desc-line"></span>
+			<span class="message-desc-time"><%=  CAICUI.iGlobal.getLocalTime(element.sentTime) %></span>
+		</div>
+	</div>
+	<div class="message-right-content">
+		<div id="wrapper-message-desc" class="wrapper">
+			<div id="scroller-message-desc" class="scroller">
+				<div class="message-question">
+					<p class="message-question-title"><%= element.title %></p>
+					<div class="message-question-content"><%= element.content %></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-message-list" type="text/template">
+<% console.log(data) %>
+	<div id="scroller-message-list" class="scroller">
+		<div class="message-num">
+			<span class="message-total-num">共有信息：<%= data.totalCount %>条</span>
+			<span class="message-noread-num">未读信息：0条</span>
+		</div>
+		<ul class="message-list-ul">
+			<% _.each(data.messageList,function(element, index, list){ %>
+				<li class="message-list-li">
+					<div class="message-list-a" data-content='<%= JSON.stringify(list[index]) %>'>
+						<p class="message-list-title"><%= element.title %></p>
+						<% if(element.content){ %>
+							<p class="message-list-desc"><%= element.content %></p>
+						<% } %>
+						<div class="message-list-info">
+							<p class="message-list-info-user"><img class="avatar" src="<%=  element.headImg ? CAICUI.Common.host.img + element.headImg : 'images/avatar.jpg'  %>"><span class="message-list-info-span user-name"><%= element.sender %></span></p>
+							<ul class="message-list-info-ul">
+								<li class="message-list-info-li"><span class="vertical-line">|</span></li>
+								<li class="message-list-info-li"><span class="message-list-info-span message-list-info-time"><%=  CAICUI.iGlobal.stringData(element.sentTime) %></span></li>
+								<li class="message-list-info-li"><span class="vertical-line">|</span></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			<% }) %>
+			
+			<div class="pagination-box">
+				<ul class="pagination">
+					<% 
+						var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+						var pageStart = +data.pageNo;
+						var pagePrevs = 4;
+						var pageNexts = 4;
+						var pageStartI = 1;
+						var pageForNum = pageStartI+pagePrevs+pageNexts;
+						var pageNum = 0;
+						if(pageTotal>pageForNum){
+							if(pageStart<=pagePrevs){
+								pageStartI = 1;
+								pageForNum = pageForNum;
+							}else if(pageStart<pagePrevs+pageNexts){
+								pageForNum = pageForNum+2;
+								pageStartI = pagePrevs-pageStartI;
+							}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+								pageForNum = pageStart+pageNexts;
+								pageStartI = pageStart-pagePrevs;
+							}else if(pageStart>pageTotal-pageNexts){
+								pageForNum = pageTotal;
+								pageStartI = pageTotal-pagePrevs-pagePrevs;
+							}
+						}else{
+							pageForNum = pageTotal;
+							pageStartI = pageStartI;
+						}
+						if(+pageForNum>+pageTotal){
+							pageForNum = pageTotal;
+						}
+					%>
+					<% if(pageStart>1){ %>
+						<li class="pagination-li js-pagination-prev">
+						  <a class="pagination-a pagination-prev" href="javascript:;">
+						  &lt;
+						  </a>
+						</li>
+					<% } %>
+					
+					<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+						<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+					<% } %>
+
+					<% if(data.totalCount>20){ %>
+						<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+							<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+						<% } %>
+					<% } %>
+
+					<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+						<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+					<% } %>
+
+					<% if(pageStart<pageTotal){ %>
+						<li class="pagination-li js-pagination-next">
+						  <a class="pagination-a pagination-next" href="javascript:;">
+						  &gt;
+						  </a>
+						</li>
+					<% } %>
+			  </ul>
+			</div>
+	
+		</ul>
+	</div>
+
+	
+	
+</script>
+<script id="template-message" type="text/template">
+	<a class="message-close" href="javascript:;"><i class="icon icon-message-close"></i></a>
+		<div class="message-left">
+			<div class="message-left-top">
+				<div class="message-notice">通知</div>
+				
+			</div>
+			<div class="message-left-content">
+				<div class="loader">加载中。。。</div>
+			</div>
+		</div>
+		<div class="message-right">
+
+		</div>
+</script>
+<script id="template-my-ac" type="text/template">
+	<div class="ac-content myAc-content">
+		<div class="ac-left myAc-left">
+			<span class="myAc-shadow"></span>
+			<ul class="myAc-nav-ul">
+				<li class="myAc-nav-li <%= data.type ? '' : 'active' %>">
+					<a class="myAc-nav-a" href="javascript:;">我发起的</a>
+				</li>
+				<li class="myAc-nav-li <%= data.type ? 'active' : '' %>">
+					<a class="myAc-nav-a" href="javascript:;">我回复的</a>
+				</li>
+			</ul>
+			<div class="ac-left-top myAc-left-top">
+				<div class="ac-top-left">
+					<div class="ac-select-box">
+						<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">全部</span><span class="ac-select-triangle"></span></a>
+						<ul class="option-ul">
+							<li class="option-li option-li-render active" data-type="3"><a  class="option-a" href="javascript:;">全部</a></li>
+							<li class="option-li option-li-render" data-type="0"><a  class="option-a" href="javascript:;">讨论</a></li>
+							<li class="option-li option-li-render" data-type="1"><a  class="option-a" href="javascript:;">问答</a></li>
+						</ul>
+					</div>
+					<div class="ac-select-box">
+						<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">发帖时间</span><span class="ac-select-triangle"></span></a>
+						<ul class="option-ul">
+							<li class="option-li option-li-render active" data-ordertype="1"><a  class="option-a" href="javascript:;">发帖时间</a></li>
+							<li class="option-li option-li-render" data-ordertype="2"><a  class="option-a" href="javascript:;">最新回复</a></li>
+							<li class="option-li option-li-render" data-ordertype="4"><a  class="option-a" href="javascript:;">精华热帖</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="ac-top-middle">
+					<input class="ac-search" type="text">
+					<a class="ac-search-a" href="javascript:;"><i class="icon icon-search"></i></a>
+				</div>
+			</div>
+			<div class="ac-left-content">
+				<div id="wrapper" class="wrapper">
+					<div id="scroller" class="scroller">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ac-right">
+
+		</div>
+	</div>
+	<div id="remove-ac-load" class="remove-load">
+	    <div class="remove-load-body">
+	        <p class="remove-load-title">您确定要删除该贴吗？</p>
+	        <p class="remove-load-content">删除主贴后，回复内容也一并全部删除</p>
+	    </div>
+	    <div class="remove-load-footer">
+	        <a class="remove-load-btn remove-load-cancel js-ac-load-cancel" href="javascript:;">取消</a>
+	        <a class="remove-load-btn remove-load-confirm js-ac-load-confirm" href="javascript:;">确认</a>
+	    </div>
+	</div>
+	<div id="remove-acReply-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该评论吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel js-acReply-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm js-acReply-load-confirm" href="javascript:;">确认</a>
+    </div>
+</div>		
+</script>
+<script id="template-my-exam" type="text/template">
+<% console.log(data) %>
+<div class="main-exam">
+	<div class="exam-top">
+		我的题库
+	</div>
+	<div class="exam-left">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+			<% if(data.examList && data.examList.length){ %>
+				<ul class="exam-list">
+					<% 
+						_.each(data.examList,function(element, index, list){ 
+							var time,timeClass;
+							time = element.testTime;
+							if(time == 'TODAY'){
+								timeClass = 'exam-list-time exam-list-today';
+							}else{
+								timeClass = 'exam-list-time';
+							}
+					%>
+						<li class="exam-list-item">
+							
+							<span class="<%= timeClass %>"><%= time %></span>
+							<ul class="exam-list-ul">
+								<% 
+								_.each(element.list,function(element, index, list){
+									var percentage='';
+									if(element.rightCount){
+										percentage = (element.rightCount/element.count).toFixed(2);
+									}else{
+										percentage = 0;
+									}
+								%>
+									<li class="exam-list-li">
+										<a class="exam-list-li-a" href="http://www.caicui.com/exam/examinationReport/analyze/<%= element.id %>" target="_blank">
+											<p class="exam-list-p"><%= element.type %></p>
+											<ul class="exam-list-info">
+												<li class="exam-list-info-li"><%= CAICUI.iGlobal.formatSeconds(element.time) %></li>
+												<li class="exam-list-info-li">题目：<%= element.count %>道</li>
+												<li class="exam-list-info-li">错题：<%= element.count - element.rightCount %>道</li>
+												<li class="exam-list-info-li">正确率：<%= percentage %>%</li>
+											</ul>
+										</a>
+									</li>
+								<% }) %>
+							</ul>
+							
+						</li>
+					<% }) %>
+
+					<div class="pagination-box">
+						<ul class="pagination">
+							<% 
+								var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+								var pageStart = +data.pageNo;
+								var pagePrevs = 4;
+								var pageNexts = 4;
+								var pageStartI = 1;
+								var pageForNum = pageStartI+pagePrevs+pageNexts;
+								var pageNum = 0;
+								if(pageTotal>pageForNum){
+									if(pageStart<=pagePrevs){
+										pageStartI = 1;
+										pageForNum = pageForNum;
+									}else if(pageStart<pagePrevs+pageNexts){
+										pageForNum = pageForNum+2;
+										pageStartI = pagePrevs-pageStartI;
+									}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+										pageForNum = pageStart+pageNexts;
+										pageStartI = pageStart-pagePrevs;
+									}else if(pageStart>pageTotal-pageNexts){
+										pageForNum = pageTotal;
+										pageStartI = pageTotal-pagePrevs-pagePrevs;
+									}
+								}else{
+									pageForNum = pageTotal;
+									pageStartI = pageStartI;
+								}
+								if(+pageForNum>+pageTotal){
+									pageForNum = pageTotal;
+								}
+							%>
+							<% if(pageStart>1){ %>
+								<li class="pagination-li js-pagination-prev">
+								  <a class="pagination-a pagination-prev" href="javascript:;">
+								  &lt;
+								  </a>
+								</li>
+							<% } %>
+							
+							<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+								<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+							<% } %>
+
+							<% if(data.totalCount>20){ %>
+								<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+									<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+								<% } %>
+							<% } %>
+
+							<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+								<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+							<% } %>
+
+							<% if(pageStart<pageTotal){ %>
+								<li class="pagination-li js-pagination-next">
+								  <a class="pagination-a pagination-next" href="javascript:;">
+								  &gt;
+								  </a>
+								</li>
+							<% } %>
+					  </ul>
+					</div>
+				</ul>
+			<% }else{ %>
+				<div class="no-data">
+					<i class="icon icon-no-data-node"></i>
+					<p class="no-data-p">你还一道题都没做过呢</p>
+				</div>
+			<% } %>
+			</div>
+		</div>
+	</div>
+	<div class="exam-right">
+		<div id="wrapper-exam-type" class="wrapper">
+			<div id="scroller-exam-type" class="scroller">
+				<ul class="exam-type-list">
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/memberExamination/list" target="_blank">
+							<i class="icon icon-exam-type-0"></i>
+							<span class="exam-type-list-a">历史答题记录</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/chapter" target="_blank">
+							<i class="icon icon-exam-type-1"></i>
+							<span class="exam-type-list-a">章节定向</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/real" target="_blank">
+							<i class="icon icon-exam-type-2"></i>
+							<span class="exam-type-list-a">真题重现</span>
+						</a>
+					</li>
+
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/simulated" target="_blank">
+							<i class="icon icon-exam-type-3"></i>
+							<span class="exam-type-list-a">模拟考试</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/knowledgePoint" target="_blank">
+							<i class="icon icon-exam-type-4"></i>
+							<span class="exam-type-list-a">考点特训</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/intelligent" target="_blank">
+							<i class="icon icon-exam-type-5"></i>
+							<span class="exam-type-list-a">智能组卷</span>
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+</div>
+	
+</script>
+<script id="template-my-note" type="text/template">
+	<div class="node-main my-node-main">
+		<div class="node-left">
+			<div class="node-top">
+				<div class="node-top-left">
+					我的笔记
+				</div>
+				<% 
+				if(data && data.myNoteCourseList.length){ %>
+					<div class="node-top-middle">
+						<div class="node-select-box">
+							<a class="node-select-a" href="javascript:;"><span class="node-select-text">全部</span><span class="node-select-triangle"></span></a>
+							<ul class="option-ul">
+								<li class="option-li active"><a class="option-a" href="javascript:;">全部</a></li>
+								<% _.each(data.myNoteCourseList,function(element, index, list){ %>
+									<li class="option-li" ><a class="option-a" href="javascript:;" data-courseid="<%= element.courseId %>"><%= element.courseName %></a></li>
+								<% }) %>
+							</ul>
+						</div>
+					</div>
+					<a class="node-top-right node-lately" href="javascript:;">
+						查看最近笔记<span class="node-top-right-triangle"></span>
+					</a>
+				<% } %>
+			</div>
+			<div class="node-content">
+				<div id="wrapper" class="wrapper">
+					<div id="scroller" class="scroller">
+						<% if(data.nodelist.data.length){ %>
+							<div class="node-list">
+								<% 
+								var totalNode = 0;
+								_.each(data.nodelist.data,function(element, index, list){ 
+									totalNode += element.nodeNum;
+								}) %>
+								<p class="node-total">笔记共有：<span class="node-total-num"><%= totalNode %></span>处</p>
+								<ul class="node-list-one-ul">
+									<% _.each(data.nodelist.data,function(element, index, list){ 
+										if(element.nodeNum){
+										var courseId = element.id;
+									%>
+										<li class="node-list-one-li" id="node-list-<%= element.id %>">
+											<a class="node-list-title-a" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %></a>
+												<% if(element.children && element.children.length){ %>
+													<ul class="node-list-two-ul">
+														<% _.each(element.children,function(element, index, list){ 
+															if(element.nodeNum){
+														%>
+															<li>
+																<% if(element.children && element.children.length){ %>
+																	<a class="node-list-title-a node-list-title-three-a" data-nodenum="<%= element.nodeNum %>" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></a>
+																	<ul class="node-list-three-ul">
+																		<% _.each(element.children,function(element, index, list){ 
+																			if(element.nodeNum){
+																			var  nodeNum = 0;
+																			if(element.nodeNum){
+																				nodeNum = element.nodeNum
+																			}
+																		%>
+																		<li>
+																			<% if(element.children && element.children.length){ %>
+																				<a class="node-list-title-a node-list-title-four-a" data-nodenum="<%= nodeNum %>" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= nodeNum %>]</span></a>
+																				<ul class="node-list-four-ul">
+																					<% _.each(element.children,function(element, index, list){ 
+																						if(element.nodeNum){
+																						var  nodeNum = 0;
+																						if(element.nodeNum){
+																							nodeNum = element.nodeNum
+																						}
+																					%>
+																						<li>
+																							<a class="node-list-link" data-courseid = "<%= courseId %>" data-chapterId="<%= element.chapterId %>" data-chapterName="<%= element.chapterTitle %>" data-title="<%= element.title %>" data-nodenum="<%= nodeNum %>" href="javascript:;">
+																								<span class="node-list-desc"><%= element.chapterTitle %><span class="node-list-num">[<%= nodeNum %>]</span></span>
+																							</a>
+																						</li>
+																						<% } %>
+																					<% }) %>
+																				</ul>
+																			<% }else{ %>
+																				<a class="node-list-link" data-courseid = "<%= courseId %>" data-chapterId="<%= element.id %>" data-chapterName="<%= element.title %>" data-title="<%= element.title %>" data-nodenum="<%= nodeNum %>" href="javascript:;">
+																					<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= nodeNum %>]</span></span>
+																				</a>
+																			<% } %>
+																		</li>
+																		<% } %>
+																		<% }) %>
+																	</ul>
+																<% }else{ %>
+																	<a class="node-list-link" data-courseid = "<%= courseId %>" data-chapterId="<%= element.id %>" data-chapterName="<%= element.title %>" data-title="<%= element.title %>" data-nodenum="<%= element.nodeNum %>" href="javascript:;">
+																		<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></span>
+																	</a>
+
+																<% } %>
+															</li>
+															<% } %>
+														<% }) %>
+													</ul>
+												<% } %>
+											</a>
+										</li>
+										<% } %>
+									<% }) %>
+								</ul>
+							</div>
+						<% }else{ %>
+							<div class="no-data">
+								<i class="icon icon-no-data-node"></i>
+								<p class="no-data-p">做笔记可是好习惯哦</p>
+							</div>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="node-right">
+		</div>
+	</div>
+	<div id="remove-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该笔记吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm" href="javascript:;">确认</a>
+    </div>
+  </div>
+</script>
+<script id="template-node-desc-list" type="text/template">
+<div class="node-top">
+	<div class="node-top-left">
+		笔记详情
+	</div>
+	<% if(data.type){ %>
+		<div class="node-top-right">
+			<a class="node-new" href="javascript:;"><i class="icon icon-new-course"></i></a>
+		</div>
+	<% } %>
+	
+</div>
+<div class="node-content node-desc-content">
+	<div id="wrapper-node" class="wrapper">
+		<div id="scroller-node" class="scroller">
+			<ul class="node-desc-ul">
+				
+				<% 
+					if(data.data && data.data.length){ 
+
+				%>
+				<% 
+					_.each(data.data,function(element, index, list){
+						var imgPathArray = [];
+						if(element.imgPath){
+							imgPathArray = element.imgPath.split(',');
+						}
+				%>
+				<li class="node-desc-li <%= imgPathArray.length ? '' : 'noPhoto' %>" data-id="<%= element.id %>" data-updateTime="<%= CAICUI.iGlobal.getLocalTime(element.updateTime) %>" data-taskId="<%= element.taskId %>" data-taskprogress="<%= element.taskprogress %>" data-contentSummary="<%= element.contentSummary %>" data-imgPath="<%= element.imgPath %>" data-isPublic="<%= element.isPublic %>" data-charpterId="<%= element.charpterId %>">
+					<div class="node-desc-li-content">
+						<% if(imgPathArray.length){ %>
+							<img class="node-desc-img" src="<%= CAICUI.Common.host.img + imgPathArray[0] %>">
+						<% } %>
+						<p class="node-desc-p">
+							<span class="node-desc-span">
+							<%= CAICUI.iGlobal.cutstr(CAICUI.iGlobal.html_decode(element.contentSummary),120) %>
+							</span>
+							<% if(element.contentSummary.length > 120 || imgPathArray.length){ %>
+								<a class="node-desc-show"  href="javascript:;">［展开］</a>
+							<% } %>
+						</p>
+					</div>
+					<% if(imgPathArray.length){ %>
+						<div class="node-desc-show-photo">
+							<div class="show-photo-box">
+								<img class="show-photo-img-big" src="<%= CAICUI.Common.host.img + imgPathArray[0] %>">
+							</div>
+							<ul class="show-photo-ul">
+								<% _.each(imgPathArray,function(element, index){ %>
+									<li class="show-photo-li <%= index ? '' : 'active' %>"><img class="show-photo-img" src="<%= CAICUI.Common.host.img + element %>"></li>
+								<% }) %>
+							</ul>
+						</div>
+					<% } %>
+					<div class="node-list-info">
+						<p class="node-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.headImg %>"><span class="node-list-info-span user-name"><%= element.nikeName %></span></p>
+						<ul class="node-list-info-ul">
+							<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.charpterId && element.charpterId != ' ' && element.taskId && element.taskId != ' '){ %>
+								<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+								<% 
+									var return_render = '';
+									if(CAICUI.render.nodeType){
+										return_render = 'courseNote/' + CAICUI.render.courseId;
+									}else{
+										return_render = 'myNote';
+									}
+								%>
+								<li class="node-list-info-li"><a class="node-list-info-span node-list-desc-link" link="#video/<%= element.courseId %>/<%= element.charpterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=<%= return_render %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-node-time"></i><span class="node-desc-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></li>
+							<% } %>
+							<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="node-list-info-li"><span class="node-list-info-span"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span></li>
+							<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+
+							<% if(element.memberId == CAICUI.User.memberId){ %>
+								<% if(CAICUI.render.noEditor){ %>
+									<% if(!CAICUI.render.nodeType){ %>
+										<li class="node-list-info-li">
+											<span class="node-list-info-span node-editor-isOpen-text"><%= element.isPublic=='1' ? '私有' : '公开' %></span>
+											<a class="node-editor-isOpen-button <%= element.isPublic=='1' ? '' : 'active' %>" href="javascript:;">
+												<i class="icon icon-open-mini"></i><i class="icon icon-private-mini"></i>
+											</a>
+										</li>
+										<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+									<% } %>
+									
+									
+
+									<li class="node-list-info-li"><a class="node-lsit-editor" href="javascript:;"><span class="node-list-info-span">修改</span></a></li>
+									<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+								<% } %>
+								<% console.log(CAICUI.render.noEditor);if(CAICUI.render.noEditor){ %>
+									<li class="node-list-info-li"><a class="node-lsit-remove" href="javascript:;"><span class="node-list-info-span">删除</span></a></li> 
+									<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+								<% } %>
+							<% } %>
+							<a class="node-desc-hide" href="javascript:;">［收起］</a>
+						</ul>
+					</div>
+				</li>
+
+				<% }) %>
+				<div class="pagination-box">
+					<ul class="pagination">
+						<% 
+							var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+							var pageStart = +data.pageNo;
+							var pagePrevs = 4;
+							var pageNexts = 4;
+							var pageStartI = 1;
+							var pageForNum = pageStartI+pagePrevs+pageNexts;
+							var pageNum = 0;
+							if(pageTotal>pageForNum){
+								if(pageStart<=pagePrevs){
+									pageStartI = 1;
+									pageForNum = pageForNum;
+								}else if(pageStart<pagePrevs+pageNexts){
+									pageForNum = pageForNum+2;
+									pageStartI = pagePrevs-pageStartI;
+								}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+									pageForNum = pageStart+pageNexts;
+									pageStartI = pageStart-pagePrevs;
+								}else if(pageStart>pageTotal-pageNexts){
+									pageForNum = pageTotal;
+									pageStartI = pageTotal-pagePrevs-pagePrevs;
+								}
+							}else{
+								pageForNum = pageTotal;
+								pageStartI = pageStartI;
+							}
+							if(+pageForNum>+pageTotal){
+								pageForNum = pageTotal;
+							}
+						%>
+						<% if(pageStart>1){ %>
+							<li class="pagination-li js-pagination-prev">
+							  <a class="pagination-a pagination-prev" href="javascript:;">
+							  &lt;
+							  </a>
+							</li>
+						<% } %>
+						
+						<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+							<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+						<% } %>
+
+						<% if(data.totalCount>20){ %>
+							<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+								<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+							<% } %>
+						<% } %>
+
+						<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+							<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+						<% } %>
+
+						<% if(pageStart<pageTotal){ %>
+							<li class="pagination-li js-pagination-next">
+							  <a class="pagination-a pagination-next" href="javascript:;">
+							  &gt;
+							  </a>
+							</li>
+						<% } %>
+				  </ul>
+				</div>
+				<% }else{ %>
+					<div class="no-data">
+						<i class="icon icon-no-data-node"></i>
+						<% if(data.type){ %>
+							<p class="no-data-p">做笔记可是好习惯哦</p>
+							<a class="no-data-a node-new" href="javascript:;">新建笔记</a>
+						<% }else{ %>
+							<p class="no-data-p">做笔记可是好习惯哦</p>
+						<% } %>
+					</div>
+				<% } %>
+			</ul>
+		</div>
+	</div>
+</div>
+
+	
+	
+</script>
+<script id="template-node-editor" type="text/template">
+<div class="node-top">
+	<div class="node-top-left">
+		<%= data ? "修改笔记" : "新建笔记" %>
+	</div>
+</div>
+<div class="node-content node-editor-content">
+	<div class="node-editor-top">
+		<div class="node-editor-top-left">
+		<% if(data){ %>
+			<p class="node-editor-time">
+				<% if(data.videoTime != '-1'){ %>
+					<span class="node-editor-time-span"><i class="icon icon-node-time"></i><span class="node-editor-videoTime"><%= CAICUI.iGlobal.formatSeconds(data.videoTime) %> </span></span>
+					<span class="vertical-line">|</span>
+				<% } %>
+					<span class="node-editor-time-text"><%= data.time %></span></span>
+			</p>
+			<p class="node-editor-isOpen">
+				<% if(data.isPublic){ %>
+					<span class="node-editor-isOpen-text">私有</span>
+					<a class="node-editor-isOpen-button" href="javascript:;">
+						<i class="icon icon-open"></i><i class="icon icon-private"></i>
+					</a>
+				<% }else{ %>
+					<span class="node-editor-isOpen-text">公开</span>
+					<a class="node-editor-isOpen-button active" href="javascript:;">
+						<i class="icon icon-open"></i><i class="icon icon-private"></i>
+					</a>
+				<% } %>
+			</p>
+		<% }else{ %>
+			
+			<p class="node-editor-time">
+					<span class="node-editor-time-text"><%= CAICUI.iGlobal.getLocalTime(new Date().getTime()) %></span>
+			</p>
+			<p class="node-editor-isOpen">
+				<span class="node-editor-isOpen-text">私有</span>
+				<a class="node-editor-isOpen-button" href="javascript:;">
+					<i class="icon icon-open"></i><i class="icon icon-private"></i>
+				</a>
+			</p>
+		<% } %>
+			
+		</div>
+		<div class="node-editor-top-middle">
+			<textarea class="node-editor-textarea" placeholder="请输入您的内容..."><%= data ? data.content : "" %></textarea>
+		</div>
+		<div class="node-editor-top-bottom">
+			<div class="node-editor-button">
+				<a class="node-editor-cancel" href="javascript:;">取消</a>
+				<a class="node-editor-confirm" href="javascript:;">发布</a>
+			</div>
+		</div>
+	</div>
+	<div class="node-editor-bottom">
+		<div class="add-photo-box">
+
+			<% if(data && data.imgPath.length){ 
+				console.log(data)
+				_.each(data.imgPath,function(element, index, list){
+					if(element){
+				%>
+					<div class="add-photo-show" id="add-photo-show">
+						<img class="add-photo-img" src="<%= CAICUI.Common.host.img + element %>">
+						<a class="add-photo-remove" data-src="<%= element %>" href="javascript:;"><i class="icon icon-add-remove"></i></a>
+					</div>
+
+			<% } }) } %>
+				<% if(data && data.imgPath.length){ %>
+					<form id= "uploadForm" class="add-photo-form" style="<%=   data.imgPath.length < 5 ? '' : 'display:none;' %>" enctype="multipart/form-data">  
+				<% }else{ %>
+					<form id= "uploadForm" class="add-photo-form" enctype="multipart/form-data"> 
+				<% } %>
+				
+					<input type="hidden" name="filename" value= "upfile"/>
+					<input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+					<input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+					<i class="icon icon-add-photo"></i>
+				</form> 
+		</div>
+	</div>
+</div>
+</script>
+<script id="template-node-list" type="text/template">
+	<p class="node-total">笔记共有：<span class="node-total-num">12345</span>处</p>
+	<ul class="node-list-one-ul">
+		
+		<% _.each(data.nodelist.data,function(element, index, list){ %>
+			<li>
+				<a class="node-list-title-a" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %></a>
+					<% if(element.children && element.children.length){ %>
+
+					
+					<ul class="node-list-two-ul">
+						<% _.each(element.children,function(element, index, list){ %>
+							<li>
+								<% if(element.children && element.children.length){ %>
+								<a class="node-list-title-a node-list-title-two-a"  href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></a>
+								<ul class="node-list-three-ul">
+									<% _.each(element.children,function(element, index, list){ %>
+									<li>
+										<a class="node-list-link" data-id="<%= element.id %>" href="javascript:;">
+											<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></span>
+										</a>
+									</li>
+									<% }) %>
+								</ul>
+								<% }else{ %>
+									<a class="node-list-link" data-id="<%= element.id %>" href="javascript:;">
+										<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></span>
+									</a>
+
+								<% } %>
+							</li>
+						<% }) %>
+						
+					</ul>
+					<% } %>
+				</a>
+			</li>
+		<% }) %>
+	</ul>
+</script>
+<script id="template-note" type="text/template">
+	<div class="container container-list">
+
+	</div>
+</script>
+<script id="template-pagination" type="text/template">
+<div class="pagination-box">
+	<ul class="pagination">
+		<% 
+			var pageTotal = Math.ceil(data.totalCount/data.pageSize);
+			var pageStart = data.pageNo;
+			var pagePrevs = 4;
+			var pageNexts = 4;
+			var pageStartI = 1;
+			var pageForNum = pageStartI+pagePrevs+pageNexts;
+			var pageNum = 0;
+			if(pageTotal>pageForNum){
+				if(pageStart<=pagePrevs){
+					pageStartI = 1;
+					pageForNum = pageForNum;
+				}else if(pageStart<pagePrevs+pageNexts){
+					pageForNum = pageForNum+2;
+					pageStartI = pagePrevs-pageStartI;
+				}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+					pageForNum = pageStart+pageNexts;
+					pageStartI = pageStart-pagePrevs;
+				}else if(pageStart>pageTotal-pageNexts){
+					pageForNum = pageTotal;
+					pageStartI = pageTotal-pagePrevs-pagePrevs;
+				}
+			}else{
+				pageForNum = pageTotal;
+				pageStartI = pageStartI;
+			}
+			if(+pageForNum>+pageTotal){
+				pageForNum = pageTotal;
+			}
+		%>
+		<% if(pageStart>1){ %>
+			<li class="pagination-li js-pagination-prev">
+			  <a class="pagination-a pagination-prev" href="javascript:;">
+			  &lt;
+			  </a>
+			</li>
+		<% } %>
+		
+		<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+			<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+		<% } %>
+
+		<% if(data.totalCount>20){ %>
+			<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+				<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+			<% } %>
+		<% } %>
+
+		<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+			<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+		<% } %>
+
+		<% if(pageStart<pageTotal){ %>
+			<li class="pagination-li js-pagination-next">
+			  <a class="pagination-a pagination-next" href="javascript:;">
+			  &gt;
+			  </a>
+			</li>
+		<% } %>
+  </ul>
+</div>
+</script>
+<script id="template-studycenterIndex" type="text/template">
+	<div class="index">
+		<div class="index-top">
+			<div class="index-top-left">
+				<img class="index-top-avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>">
+				<p class="index-top-p index-top-title"><%= CAICUI.User.nickName %></p>
+				<p class="index-top-p index-top-desc">
+					上次登录：<span class="loginloglist"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+				</p>
+				<p class="index-top-p index-top-desc">
+					近期考试：<span class="getExamDate"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+				</p>
+			</div>
+			<div class="index-top-right">
+				<span class="index-top-right-text">笔记</span>
+				<span class="index-top-right-span"><span class="nodeNum">
+					<span class="text-loader-content"><span class="text-loader"></span></span>
+				</span></span>
+				<span class="index-top-right-text">交流</span>
+				<span class="index-top-right-span"><span class="acNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+				<span class="index-top-right-text">做题</span>
+				<span class="index-top-right-span"><span class="examNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+			</div>
+		</div>
+		<div class="index-content">
+			<div id="wrapper" class="wrapper">
+				<div id="scroller" class="scroller">
+					<div class="index-course">
+						<p class="index-course-title">最近所学课程</p>
+						<ul class="index-course-ul loader-content">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</ul>
+					</div>
+					<% if(false){ %>
+						<div class="index-experience">
+							<p class="index-experience-title">最近试听</p>
+							<ul class="studyin-content-subject clearfloat loader-content" >
+								<div class="loader-box"><div class="loader">加载中。。。</div></div>
+							</ul>
+						</div>
+					<% } %>
+					<div class="index-activity">
+						<p class="index-activity-title">财萃活动</p>
+						<ul class="index-activity-ul loader-content">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-studycenterIndex-courseList" type="text/template">
+		<% if(RecentCourse.length){ 
+			var RecentCourseNum = 0;
+			for(var i = 0;i<RecentCourse.length;i++){
+				var index = i;
+				var element = RecentCourse[index];
+				var taskprogress = element.taskprogress ? parseInt(element.taskprogress) : 0;
+				var taskTotal = element.taskTotal ? parseInt(element.taskTotal) : 0;
+				var percentage = 0;
+				var lastProgress = element.lastProgress;
+				if(taskprogress && taskTotal){
+					var a = taskprogress/taskTotal;
+					if(a>0 && a<0.01){
+						a = 0.01
+					}
+					percentage = parseInt(a*100);
+				}else if(lastProgress){
+					percentage = 1;
+				}
+			%>
+			<li class="index-course-li ">
+				<a class="index-course-a index-course-a-<%= index %>" href="#courseStudy/<%= element.courseId %>">
+					<p class="index-course-title"><%= element.courseName %></p>
+					<p class="index-course-p">考试时间：<%= CAICUI.iGlobal.getDate(element.lastmodifyTime) %></p>
+					<p class="index-course-p">课程到期：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></p>
+					<div class="index-course-progress">
+						<div class="progress-round">
+							<span class="progress-round-border"></span>
+							<span class="progress-round-num"><%= percentage %><span class="progress-round-unit">%</span></span>
+							<canvas id="progress-round-<%= index %>" class="progress-round-canvas" width="84" height="84" data-progress=<%= percentage %>></canvas>
+						</div>
+						<p class="index-course-num"><%= taskprogress %>/<%= taskTotal %></p>
+					</div>
+				</a>
+			</li>
+		<% } %>
+	<% }else{ %>
+		<li class="index-course-li ">
+				<a class="index-course-a index-course-a-none" href="#courseStudyIn">
+					<span class="index-course-a-none-content">开始新课程<span class="arrow-right"></span></span>
+					
+				</a>
+			</li>
+	<% } %>
+</script>
+<script id="template-studycenterIndex" type="text/template">
+	<% if(data.experience && data.experience.length){ %>
+		<% _.each(data.experience,function(element, index, list){ %>
+			<li class="studyin-content-subjects">
+				<a class="js-course-notActivated" href="#courseStudy/<%= element.courseId %>" >
+					<div class="subject-lf">
+						<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+						<div class="subject-mask">
+							<span class="mask-lf">
+								再次体验
+							</span>
+							<span class="mask-rt">
+								→
+							</span>
+						</div>
+					</div>
+					<div class="subject-rt subject-rt-notactived">
+						<h3><%= element.courseName %></h3>
+						<div class="subject-line"></div>
+						<div class="subject-progress">
+							<img class="index-experience-teacherAvatar" src="<%= CAICUI.Common.host.img + element.teacherAvatar %>" alt="教师头像">
+							<p class="index-experience-teacherName"><%= element.teacherName %></p>
+						</div>
+					</div>
+				</a>
+			</li>
+			
+		<% }) %>
+	<% } %>
+</script>
+<script id="template-studycenterIndex-activityList" type="text/template">
+<% if(slideList && slideList.length){ %>
+	<% _.each(slideList,function(element, index, list){ %>
+		<li class="index-activity-li">
+			<a class="index-activity-a" href="<%= element.url ? element.url : 'javascript:;' %>" target="_blank">
+				<% var imagePath = element.imagePath ? CAICUI.Common.host.img + element.imagePath : 'images/avatar.jpg' %>
+				<img class="index-activity-img" src="<%= imagePath %>">
+				<p class="index-activity-name"></p>
+			</a>
+		</li>
+	<% }) %>
+<% } %>
+</script>
+<script id="video" type="text/template">
+<div class="studycenter-video layout">
+    <div class="studycenter-video-header layout">
+        <div class="studycenter-video-title">
+            <%= taskData.chapterTitle %>
+        </div>
+        <div class="studycenter-video-task">
+            <% 
+            var nexttaskid='';
+            var taskNum=0;
+            _.each(taskData.tasks,function(element, index){
+                var active = '';
+                taskNum = index+1;
+                
+                if(index == taskIndex){
+                    active = 'active';
+                    nexttaskid = taskData.tasks[index].taskId;
+                }
+                if(index == taskIndex+1){
+                    nexttaskid = taskData.tasks[index].taskId;
+                }
+            %>
+                <a id="<%= element.taskId %>" data-index="<%= index %>" class="studycenter-video-task-a video-icon video-icon-task-bg <%= active %>" href="javascript:;">
+                    <span class="studycenter-video-task-number"><%= taskNum %></span>
+                    <em class="studycenter-video-task-triangle"></em>
+                </a>
+                <% }) %>
+        <!-- 
+            <a class="studycenter-video-task-a video-icon video-icon-task-success" href="javascript:;">
+                <span class="studycenter-video-task-number">1</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-success" href="javascript:;">
+                <span class="studycenter-video-task-number">2</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-bg active" href="javascript:;">
+                <span class="studycenter-video-task-number">3</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-bg" href="javascript:;">
+                <span class="studycenter-video-task-number">4</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a>
+            <a class="studycenter-video-task-a video-icon video-icon-task-bg" href="javascript:;">
+                <span class="studycenter-video-task-number">5</span>
+                <em class="studycenter-video-task-triangle"></em>
+            </a> 
+        -->
+                    <a data-index="<%= taskNum %>" class="studycenter-video-task-a video-icon video-icon-task-bg js-studycenter-video-task-end" href="javascript:;">
+                        <span class="studycenter-video-task-end"></span>
+                        <!--<span class="studycenter-video-task-end active"></span>-->
+                        <em class="studycenter-video-task-triangle"></em>
+                    </a>
+                    <!--下一步-->
+                    <a class="studycenter-video-task-next video-icon video-icon-task-next" href="javascript:;">
+                    </a>
+        </div>
+        <a class="studycenter-video-close video-icon video-icon-task-close video-icon-task-courselist" link="<%= CAICUI.iGlobal.getUrlPara('return_link') %>" href="javascript:;">
+        </a>
+    </div>
+    <div class="studycenter-video-tasks-center layout hidden">
+        <div class="studycenter-video-tasks-end-center layout studycenter-video-tasks-unfinished hidden">
+            <img class="studycenter-video-tasks-unfinished" src="images/tasks-unfinished.jpg">
+            <a class="studycenter-video-tasks-end-center-a video-icon-task-courselist" link="#courseStudy/<%= courseId %>" href="javascript:;">返回课程列表</a>
+            <a class="studycenter-video-tasks-end-center-button video-icon-task-continue" href="javascript:;">继续完成任务</a>
+        </div>
+        <div class="studycenter-video-tasks-end-center layout studycenter-video-tasks-finished hidden">
+            <img class="studycenter-video-tasks-finished" src="images/tasks-finished.jpg">
+            <img class="studycenter-video-tasks-master-degree" src="images/tasks-master-degree.jpg">
+            <div class="studycenter-video-tasks-stars-list">
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars" href="javascript:;"></a>
+            </div>
+            <a class="studycenter-video-tasks-end-center-a" href="javascript:;" style="cursor:text;">好样的！请继续加油</a>
+            <a class="studycenter-video-tasks-end-center-button video-icon-task-courselist" link="#courseStudy/<%= courseId %>" href="javascript:;">返回课程列表</a>
+        </div>
+    </div>
+    <div class="studycenter-video-main layout">
+        <div class="studycenter-video-main-left layout">
+            <div class="studycenter-video-play-center layout">
+                <!-- 视频DIV -->
+                <div class="video-play" style="display: block;height:100%;padding-bottom:38px;">
+                    <div class="dummy" style="height:0px;overflow:hidden;">load</div>
+                    <div class="content" style="height:100%;padding:10px;">
+                        <h3 style="display:block;color:#FFF;margin:20px;">正在加载课程信息...</h3>
+                        <h1>视频播放</h1>
+                    </div>
+                </div>
+                <!-- 试题 DIV -->
+                <div class="myExercises" style="display: block;height:100%;padding-bottom:32px;padding-bottom: 42px;padding-top:10px;width: 75%;margin: auto;" style="display: none">
+                    <div class="dummy" style="height:0px;overflow:hidden;"></div>
+                    <div class="content" style="height:100%;border-top:1px solid #000;border-bottom:1px solid #000;background-color:#FFF;">
+                        <iframe frameborder="0" height="100%" width="100%" id="exercisText" src=""></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="studycenter-video-periphery layout">
+                <!-- 控制条 -->
+                <div class="videoPeriphery">
+                    <div class="viosController">
+                        <!--提问列表-->
+                        <div class="ctrRight" style="width:133px;">
+                            <span class="ctrOption js-open-sidebar js-questions" control="quiz">
+                                <i class="navios c1"></i><i class="iosText">提问</i>
+                            </span>
+                            <span class="ctrOption js-open-sidebar js-node" control="note">
+                                <i class="navios c2"></i><i class="iosText">笔记</i>
+                            </span>
+                            <span class="ctrOption js-open-sidebar js-handout" control="handout">
+                                <i class="navios c3"></i><i class="iosText">讲义</i>
+                            </span>
+                            <!--<span class="js-close-sidebar">
+                                <i class="navios c4"></i>
+                            </span>-->
+                        </div>
+                        <div class="ctrLefts" style="margin-right:1px;">
+                            <!--视频控制栏-->
+                            <div class="ctrLeft1">
+                                <div class="playSpeeds">
+                                    <span class="waiSpeed">
+                                        <!--<small class="playSpeed">1X</i></small>-->
+                                    </span>
+                                    <div class="soundCtr">
+                                        <span class="soundIos"><i class="glyphicon glyphicon-volume-down"></i></span>
+                                        <div class="volumeCtr">
+                                            <div id="volumeCtrly"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="playBefore">
+                                    <span><i class="glyphicon glyphicon-pause plays"></i></span>
+                                    <div class="ControlBar">
+                                        <span class="beforeTime">0</span>
+                                        <span class="afterTime">100</span>
+                                        <div class="centralCtr">
+                                            <div id="playCtr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 试题 -->
+                            <div class="ctrLeft2" style="padding: 4px;">
+                                <!--<div class="frontBack">-->
+                                <!--<span class="prevs"><i class="prevIocn"></i>上一题</span>-->
+                                <!--<span class="nexts">下一题<i class="nextIocn"></i></span>-->
+                                <!--<span class="saveTest">交 卷</span>-->
+                                <!--</div>-->
+                                <div class="ctrIocn">
+                                    <span class="analysis"><i class="navios c5"></i><i class="iosText">解析</i></span>
+                                    <div class="leftController">
+                                        <span class="prev disableBut"><i class="glyphicon glyphicon-chevron-left"></i>上一题</span>
+                                        <span class="next readyBut">下一题<i class="glyphicon glyphicon-chevron-right"></i></span>
+                                        <div class="spanIocn">
+                                            <div class="spans" style="width: 560px; left: 0px;">
+                                                <span class="active">1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="studycenter-video-main-right layout">
+            <div class="studycenter-video-right studycenter-video-questions hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    提问
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="right-header">
+                        <div class="right-time-icon pull-left video-icon video-icon-time">
+                            <span class="right-time">234:13</span>
+                        </div>
+                        <a class="right-other pull-right studycenter-video-close1 video-icon-task-courselist" link="#courseAc/<%= courseId %>" href="javascript:;">
+                            查看他人提问
+                        </a>
+                      
+                    </div>
+                    <div class="right-main">
+                      <iframe id="ac-new-video" scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="" ></iframe>
+                    </div>
+                    
+                    <!-- 
+                    <div class="right-content right-row">
+                        <textarea class="right-content-textarea form-control" placeholder="内容描述"></textarea> 
+                    </div>
+                    <div class="imgUpLoad">
+                        <span class="selectBut"><i class="glyphicon glyphicon-picture"></i>图片上传</span>
+                        <div id="imgUpLoadQuiz" class="demo"></div>
+                    </div>
+                    -->
+                    
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-node hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    笔记
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="right-header">
+                        <div class="right-time-icon pull-left video-icon video-icon-time">
+                            <span class="right-time">234:13</span>
+                        </div>
+                        <a class="right-other pull-right studycenter-video-close1 video-icon-task-courselist" link="#courseNote/<%= courseId %>" href="javascript:;">
+                            查看他人笔记
+                        </a>
+                    </div>
+                    <div class="right-main-courseNode">
+
+                      <div class="node-content node-editor-content">
+                        <div class="node-editor-top">
+                          <div class="node-editor-top-left">
+                            <p class="node-editor-time">
+                                <span class="node-editor-time-text"><%= CAICUI.iGlobal.getLocalTime(new Date().getTime()) %></span>
+                            </p>
+                            <p class="node-editor-isOpen">
+                              <span class="node-editor-isOpen-text">私有</span>
+                              <a class="node-editor-isOpen-button" href="javascript:;">
+                                <i class="icon icon-open"></i><i class="icon icon-private"></i>
+                              </a>
+                            </p>
+                            
+                          </div>
+                          <div class="node-editor-top-middle">
+                            <textarea class="node-editor-textarea" id="node-editor-textarea" placeholder="请输入您的内容..."></textarea>
+                          </div>
+                          <div class="node-editor-top-bottom">
+                            <div class="node-editor-button">
+                              <a class="node-editor-cancel" href="javascript:;">取消</a>
+                              <a class="node-editor-confirm" href="javascript:;">发布</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="node-editor-bottom">
+                          <div class="add-photo-box">
+                            <form id="uploadForm" class="add-photo-form" enctype="multipart/form-data"> 
+                                <input type="hidden" name="filename" value= "upfile"/>
+                                <input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+                                <input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+                                <i class="icon icon-add-photo"></i>
+                            </form> 
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- <div class="right-title right-row">
+                        <input class="right-title-input form-control" type="text" placeholder="输入标题">
+                    </div> 
+                    <div class="right-content right-row">
+                        <textarea class="right-content-textarea form-control" placeholder="内容描述"></textarea>
+                    </div>
+                    <div class="imgUpLoad">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="notesOpens2" name="dxuan1" checked="true">
+                            <label for="notesOpens2" class="checked">公开笔记</label>
+                        </div>
+                        <span class="selectBut"><i class="glyphicon glyphicon-picture"></i>图片上传</span>
+                        <div id="imgUpLoadNote" class="demo"></div>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit js-save-note">完成</button>
+                    </div>-->
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-handout hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    讲义
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class=" thrHandouts">
+                        <div class="scanImg" id="scanImg">
+                            <img src="images/twoimg.jpg" />
+                        </div>
+                        <h3>扫描二维码在移动设备上打开</h3>
+                        <ul class="downloadList">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit">完成</button>
+                    </div>
+                </div>
+            </div>
+      <div class="studycenter-video-right studycenter-video-handout hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    设置
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="videoSetting">
+                            <div class="soundCtr">
+                <span>音量：</span>
+                                <span id="volumeCtrly" style="width:80%;margin-top:6px;"></span>
+              </div>
+              <div class="speedCtr" style="width:100%;clear:both;">
+                <span>倍速：</span>
+                                <span class="speedCtrBtn active" data-speed="4">1 X</span>
+                <span class="speedCtrBtn" data-speed="5">1.5 X</span>
+                <span class="speedCtrBtn" data-speed="6">2 X</span>
+                <span class="speedCtrBtn" data-speed="7">3 X</span>
+                <span class="speedCtrBtn" data-speed="8">4 X</span>
+                            </div>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit js-close-sidebar">完成</button>
+                    </div>
+                </div
+            </div>
+        </div>
+    </div>
+</div>
+</script>

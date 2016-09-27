@@ -1,0 +1,116 @@
+<script id="template-ac-desc" type="text/template">
+<% 
+	var bbstype,bbstypeClass,isPhoto,element=data.bbsdetail;
+	if(data.bbsdetail.bbstype == "0"){
+		bbstype = '讨论';
+		bbstypeClass = 'ac-list-type-1';
+		
+	}else{
+		bbstype = '问答';
+		bbstypeClass = 'ac-list-type-0';
+	}
+%>
+
+	<div class="ac-right-top">
+		<div class="ac-top-left">
+			<img class="ac-desc-avatar" src="<%= CAICUI.Common.host.img + data.bbsdetail.headImg %>">
+			<span class="ac-desc-user-name"><%= data.bbsdetail.nikeName %></span>
+			<span class="ac-desc-line"></span>
+			<span class="ac-desc-time"><%= CAICUI.iGlobal.getLocalTime(data.bbsdetail.updateTime) %></span>
+			<% if(data.bbsdetail.memberId ==  CAICUI.User.memberId){ %>
+				<span class="ac-desc-line"></span>
+				<span class="ac-desc-time ac-desc-remove" data-type="0">删除</span>
+			<% } %>
+
+		</div>
+		<div class="ac-top-right">
+			<a class="ac-desc-like-a" href="javascript:;"><i class="icon icon-desc-like"></i><span class="ac-desc-like-num"><%= data.bbsdetail.praiseCount %></span></a>
+			<a class="ac-desc-discuss-a" href="javascript:;"><i class="icon icon-desc-discuss"></i><span class="ac-desc-discuss-num"><%= data.bbsdetail.replyCount %></span></a>
+		</div>
+	</div>
+	<div class="ac-right-content">
+		<div id="wrapper-ac" class="wrapper">
+			<div id="scroller-ac" class="scroller">
+				<div class="ac-question">
+					<p class="ac-question-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>]</span><%= data.bbsdetail.title %></p>
+					<p class="ac-question-video">
+						
+						<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.chapterId && element.chapterId != ' ' && element.taskId && element.taskId != ' '){ %>
+							<% 
+								var return_render = '';
+								if(CAICUI.render.self){
+									return_render = 'myAc';
+								}else{
+									return_render = 'courseAc/' + CAICUI.render.courseId;
+								}
+							%>
+							<span class="ac-list-info-block"><a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=<%= return_render %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></span>
+							<span class="ac-question-video-title">
+								<%= element.chapterName %>
+								<% if(element.taskCount != "0"){ %>
+									X<%= element.taskCount %>
+								<% } %>
+								<% if(element.taskCurrent != "0"){ %>
+									- 任务<%= element.taskCurrent %>
+								<% } %>
+							</span>
+						<% } %>
+
+
+						</p>
+					<div class="ac-question-content"><pre><%= data.bbsdetail.contentHtml %></pre></div>
+          <% if(data.bbsdetail.imgPath && data.bbsdetail.imgPath !== 'imgpath'){%>
+            <div class="discussQA-imgPath">
+						<%
+					    var imgPath = '';
+					    data.bbsdetail.imgPath ? imgPath = data.bbsdetail.imgPath.split(',') : '';
+					    if(imgPath.length>0){
+					    	_.each(imgPath.slice(0,5),function(list){
+					        if(list){
+							    	var listImgPath = '';
+			              if(list.substr(0,4)!="http"){
+			                listImgPath = CAICUI.Common.host.img;
+			              }
+		            %>
+              <img layer-src="<%= listImgPath %><%= list %>" src="<%= listImgPath %><%= list %>" >
+            <%}})} %>
+            </div>
+          <%}%>
+				</div>
+					<div class="ac-answer">
+				<% if(data.bbsdetail.replys && data.bbsdetail.replys.length){ %>
+						<ul class="ac-answer-ul">
+							<% _.each(data.bbsdetail.replys,function(element, index, list){ %>
+								<li class="ac-answer-li">
+									<img class="ac-answer-avatar" src="<%= CAICUI.Common.host.img + element.headImg %>">
+									<div class="ac-answer-info">
+										<p class="ac-answer-info-top">
+											<span class="ac-answer-user-name"><%= element.nikeName %></span>
+											<span class="ac-answer-line"></span>
+											<span class="ac-answer-time"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span>
+											<% if(element.del_permission){ %>
+												<span class="ac-answer-line"></span>
+												<a id="replys-<%= element.pid %>" class="ac-answer-replys" data-pid="<%= element.pid %>" href="javascript:;" data-type="1">删除</a>
+											<% } %>
+											<span class="ac-answer-floor"><%= index+1 %></span>
+										</p>
+										<div class="ac-answer-info-desc"><pre><%= element.contentHtml %></pre></div>
+									</div>
+								</li>
+							<% }) %>
+						</ul>
+				<% } %>
+					</div>
+				<div class="ac-reply">
+					<div class="ac-reply-top">
+						<img class="ac-reply-avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>">
+						<span class="ac-reply-name"><%= CAICUI.User.nickName %></span>
+					</div>
+					<div class="ac-reply-content">
+						<iframe scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="script/libs/xneditor/ac-editor.html" ></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
