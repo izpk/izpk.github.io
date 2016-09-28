@@ -60,23 +60,7 @@
 					$('body .icon-handout-down').attr('href', CAICUI.Common.host.img + CAICUI.render.handout.path)
 				});
 				CAICUI.render.$this.courseInfoAjax(function(){
-					// var templateHtml = $('#template-courseStudy-courseInfo').html();
-					// var addHtml = CAICUI.iGlobal.getTemplate(templateHtml,{
-					// 	"data" : {
-					// 		"course_info" : CAICUI.render.course_info,
-					// 		"lastLearnChapter" : CAICUI.render.lastLearnChapter,
-					// 		"lastLearnChapterLink" : CAICUI.render.lastLearnChapterLink,
-					// 		"lastLearnChapterName" : CAICUI.render.lastLearnChapterName,
-					// 		"courseId" : CAICUI.render.courseId,
-					// 		"courseDetail" : CAICUI.render.courseDetail,
-					// 		"courseInfo" : CAICUI.render.courseInfo
-					// 	}
-					// });
-					// $('body .courseIndex-content-right').html(addHtml);
 					$('body .course-info-examTime').html(CAICUI.render.courseInfoExamTime);
-					
-
-					
 				});
 				CAICUI.render.$this.learningcourseAjax(function(){
 					$('body .course-info-dueTime').html(CAICUI.render.courseInfoDueTime);
@@ -85,9 +69,6 @@
 					$('body .course-progress-show').animate({
 						'width': CAICUI.render.percentage+'%'},
 						1000);
-
-
-
 					var templateHtml = $('#template-courseStudy-courseList').html();
 					var addHtml = CAICUI.iGlobal.getTemplate(templateHtml,{
 						"courseNameArray" : CAICUI.render.courseNameArray
@@ -96,25 +77,35 @@
 					
 					CAICUI.render.$this.courseDetailAjax(function(){
 						$('body .course-name').html(CAICUI.render.courseName);
-
 						CAICUI.render.$this.courseActiveStateAjax(function(){
-							var templateHtml = $('#template-courseStudy-taskList').html();
-							var addHtml = CAICUI.iGlobal.getTemplate(templateHtml,{
-								"data" : {
-									"courseId" : CAICUI.render.courseId,
-									"courseDetail" : CAICUI.render.courseDetail
-								}
-							});
-							$('body .scroller').html(addHtml);
-							window.CAICUI.myScroll = CAICUI.iGlobal.iScroll('body #wrapper');
-							CAICUI.render.courseIndexTips = setTimeout(function(){
-								$('body .courseIndex-content-tips').animate({
-									height: 0},
-									500, function() {
-										$('body .courseIndex-content-tips').remove();
-										window.CAICUI.myScroll.refresh();
+						
+							CAICUI.render.$this.getTasksProgressAjax(function(){
+								CAICUI.render.$this.setTasksProgress();
+								var templateHtml = $('#template-courseStudy-taskList').html();
+								var addHtml = CAICUI.iGlobal.getTemplate(templateHtml,{
+									"data" : {
+										"courseId" : CAICUI.render.courseId,
+										"courseDetail" : CAICUI.render.courseDetail
+									}
 								});
-							},20000)
+								$('body .scroller').html(addHtml);
+								window.CAICUI.myScroll = CAICUI.iGlobal.iScroll('body #wrapper');
+								CAICUI.render.courseIndexTips = setTimeout(function(){
+									$('body .courseIndex-content-tips').animate({
+										height: 0},
+										500, function() {
+											$('body .courseIndex-content-tips').remove();
+											window.CAICUI.myScroll.refresh();
+									});
+								},20000)
+
+								
+								$('.lastLearn').attr('href', CAICUI.render.lastLearnChapterLink);
+								$('.lastLearn').html(CAICUI.render.lastLearnChapterName);
+
+								$('.continue-learning').attr('href', CAICUI.render.lastLearnChapterLink);
+							});
+							
 						});
 
 						CAICUI.render.$this.courseVersionDataAjax(function(){
@@ -124,14 +115,6 @@
 								"courseActiveTime" : CAICUI.render.courseActiveTime
 							});
 							$('body .courseVersion-list').html(addHtml);
-						});
-
-						CAICUI.render.$this.getTasksProgressAjax(function(){
-							
-							$('.lastLearn').attr('href', CAICUI.render.lastLearnChapterLink);
-							$('.lastLearn').html(CAICUI.render.lastLearnChapterName);
-
-							$('.continue-learning').attr('href', CAICUI.render.lastLearnChapterLink);
 						});
 						
 					});
@@ -193,6 +176,7 @@
 				var isAjax = true;
 				var courseProgress = storage.get('courseProgress-'+CAICUI.render.courseId);
 				if(courseProgress){
+					CAICUI.render.courseDetail = courseProgress;
 					CAICUI.render.$this.courseDetailDone(courseProgress,callback);
 				}else{
 					CAICUI.Request.ajax({
@@ -201,16 +185,16 @@
 							'courseId' : CAICUI.render.courseId
 						},
 						done : function(data){
-							storage.setsingle('course-' + CAICUI.render.courseId, data.data[0]);
-							CAICUI.render.$this.courseDetailDone(data.data[0],callback);
+							CAICUI.render.courseDetail = data.data[0];
+							
+							CAICUI.render.$this.courseDetailDone(CAICUI.render.courseDetail,callback);
 						}
 					})
 				}
 			},
 			courseDetailDone : function(data,callback){
-				CAICUI.render.courseDetail = data;
+				
 				CAICUI.render.courseName = data.courseName;
-				CAICUI.render.courseDetail = data;
 				CAICUI.render.versionId = data.versionId;
 				if(callback){
 					callback();
@@ -229,7 +213,6 @@
 						}
 						CAICUI.CACHE.coursestatus = data.data;
 						CAICUI.render.$this.courseByInFo(data.data);
-						console.log(data.data[0].lockStatus)
 						
 						if(callback){callback()};
 					},
@@ -396,6 +379,7 @@
 							}
 						}
 					})
+					CAICUI.render.courseDetail = newCourseDetail;
 					storage.setsingle('courseProgress-' + CAICUI.render.courseId, newCourseDetail);
 				}
 				
@@ -421,7 +405,6 @@
 						}
 						
 					}
-					console.log(CAICUI.render.lockStatus)
 					if(CAICUI.render.lockStatus){
 						courseActiveState=4;
 					}
@@ -429,9 +412,8 @@
 				//course.getinitdata=true;
 				CAICUI.render.courseDetail.courseActiveState = courseActiveState;
 
-				console.log(CAICUI.render.courseDetail)
 				//更新缓存的课程数据
-				storage.setsingle('course-'+CAICUI.render.courseId,CAICUI.render.courseDetail);
+				//storage.setsingle('course-'+CAICUI.render.courseId,CAICUI.render.courseDetail);
 			},
 			openVideo : function(e){
 				var courseActiveState = CAICUI.render.courseDetail.courseActiveState;
