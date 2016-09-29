@@ -2343,7 +2343,7 @@ define([
 	//绑定message事件
 	window.addEventListener('message',function(e){
     var getdata=e.data;
-    WINAPI.log("获得iframe发送的消息:"+getdata);
+    // WINAPI.log("获得iframe发送的消息:"+getdata);
 		var getJsonData = JSON.parse(getdata);
 		switch(getJsonData.type){
 			case 1:

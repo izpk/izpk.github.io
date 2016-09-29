@@ -166,7 +166,6 @@ define(['jquery',  'common'],function($,  Common){
           }
 				},
 				error : function(data){
-
 				}
 			})
 		},

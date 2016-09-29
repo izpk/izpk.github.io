@@ -14,7 +14,6 @@
 				'click .index-course-a' : 'changeNav'
 			},
 			render : function(){
-
 				CAICUI.render.$this = this;
 				this.mycount();
 				this.capabilityAssessment();
@@ -36,12 +35,14 @@
 				window.CAICUI.myScroll = CAICUI.iGlobal.iScroll('body #wrapper');
 			},
 			mycount : function(){
+				console.log(111)
 				CAICUI.Request.ajax({
 					'server' : 'mycount',
 					'data' : {
 						'token' : CAICUI.User.token
 					},
 					done : function(data){
+						console.log(1)
 						CAICUI.render.$this.$mycount = data.data;
 						$('body .nodeNum').text(data.data.nodeNum);
 						$('body .acNum').text(data.data.questionNum + data.data.discuss);
