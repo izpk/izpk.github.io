@@ -145,7 +145,7 @@
 						}
 						if(CAICUI.Storage.getStorage('tryNum')<3){
 							setTimeout(function(){
-								//window.location.reload();
+								window.location.reload();
 							},3000)
 							
 						}else{
@@ -217,7 +217,7 @@
 						}
 						if(CAICUI.Storage.getStorage('tryNum')<3){
 							setTimeout(function(){
-								//window.location.reload();
+								window.location.reload();
 							},3000)
 							
 						}else{
