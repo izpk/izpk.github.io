@@ -44,8 +44,8 @@
 					done : function(data){
 						console.log(1)
 						CAICUI.render.$this.$mycount = data.data;
-						$('body .nodeNum').text(data.data.nodeNum);
-						$('body .acNum').text(data.data.questionNum + data.data.discuss);
+						$('body .nodeNum').html(data.data.nodeNum);
+						$('body .acNum').html(data.data.questionNum + data.data.discuss);
 					},
 					fail : function(data){
 						CAICUI.render.$this.$mycount = {};
@@ -63,7 +63,7 @@
 						CAICUI.render.serverNum ++;
 						CAICUI.render.$this.$capabilityAssessment = data.data[0];
 						var examNum = data.data[0] ? data.data[0].total : '0';
-						$('body .examNum').text(examNum);
+						$('body .examNum').html(examNum);
 					},
 					fail : function(data){
 						CAICUI.render.$this.$capabilityAssessment = {};
@@ -129,7 +129,7 @@
 						CAICUI.render.$this.$loginloglist = data.data[0];
 						var loginloglist = data.data[0] ? CAICUI.iGlobal.stringData(data.data[0].login_time/1000) : "第一次登陆";
 
-						$('body .loginloglist').text(loginloglist);
+						$('body .loginloglist').html(loginloglist);
 					},
 					fail : function(data){
 						CAICUI.render.$this.$loginloglist = {};
@@ -146,7 +146,7 @@
 						CAICUI.render.$this.$getExamDate = data.data[0];
 						var data = data.data[0];
 						var getExamDate = data ? data.categorySign +' '+ CAICUI.iGlobal.getDate(data.examinationDate) : "暂无考试";
-						$('body .getExamDate').text(getExamDate);
+						$('body .getExamDate').html(getExamDate);
 					},
 					fail : function(data){
 						CAICUI.render.$this.$getExamDate = {};
