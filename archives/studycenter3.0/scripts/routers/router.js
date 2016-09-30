@@ -127,13 +127,32 @@
 			on: function(args1) {
 
 				if(src == 'studycenterLogin'){
-					CAICUI.isNav = true;
-					require(['views/login'], function(Login) {
-						var login = new Login();
-						var preHash = '#studycenterIndex';
-						login.render(preHash);
-					});
-					return false;
+					try{
+						CAICUI.isNav = true;
+						require(['views/login'], function(Login) {
+							var login = new Login();
+							var preHash = '#studycenterIndex';
+							login.render(preHash);
+						});
+						return false;
+					}catch(e){
+						var tryNum = CAICUI.Storage.getStorage('tryNum');
+						if(tryNum){
+							tryNum++;
+							CAICUI.Storage.setStorage({tryNum : tryNum});
+						}else{
+							CAICUI.Storage.setStorage({tryNum : 1});
+						}
+						if(CAICUI.Storage.getStorage('tryNum')<3){
+							setTimeout(function(){
+								//window.location.reload();
+							},3000)
+							
+						}else{
+							window.localStorage.clear();
+							window.location.href = "http://www.caicui.com"
+						}
+					};
 				}
 				require(['views/layout','views/'+src], function(Layout, Dom) {
 
