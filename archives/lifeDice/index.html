@@ -2,16 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>lifeDice</title>
-    <style> [v-cloak] { display: none; } </style>
+    <title>vue2</title>
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
   </head>
   <body>
-    <div id="list-show" class="list-show">
-      <router-view class="view"></router-view>
-    </div>
-    <script src="http://izpk.github.io/archives/lifeDice/dist/build.js"></script>
+  	<div id="list-show" class="list-show">
+  	  <router-view class="view"></router-view>
+  	</div>
+    <div id="app"></div>
+    <script src="dist/build.js"></script>
+
   </body>
 </html>
