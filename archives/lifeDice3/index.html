@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>lifedice</title>
+  </head>
+  <body>
+    <div id="life-dice" class="life-dice">
+      <Vheader :title="title" :left-options="{showBack: showBack}" :right-options="{show : showRight, rightText: rightText,to : rightTo}" v-on:click-header-left="clickHeaderLeft" v-on:click-header-right="clickHeaderRight"></Vheader>
+      <router-view class="view" @init-list-show="initListShowData" @init-list="initListAddData" @list-new="listNew" @list-add="listAdd"></router-view>
+    </div>
+  	
+    <script src="/dist/build.js"></script>
+
+  </body>
+</html>
