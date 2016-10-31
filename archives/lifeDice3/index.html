@@ -9,8 +9,9 @@
   </head>
   <body>
     <div id="life-dice" class="life-dice">
-      <Vheader :title="title" :left-options="{showBack: showBack}" :right-options="{show : showRight, rightText: rightText,to : rightTo}" v-on:click-header-left="clickHeaderLeft" v-on:click-header-right="clickHeaderRight"></Vheader>
-      <router-view class="view" @init-list-show="initListShowData" @init-list="initListAddData" @list-new="listNew" @list-add="listAdd"></router-view>
+      <Vheader :title="this.$store.state.header.title" :left-options="{showBack: this.$store.state.header.leftShow}"  :right-options="{show : this.$store.state.header.showRight, rightText: this.$store.state.header.rightText,to : this.$store.state.header.rightTo,preventRightGo : this.$store.state.header.preventRightGo}" @click-header-left="headerLeft" @click-header-right="headerRight" @header-right-callback="headerRightCallback"></Vheader>
+      <router-view class="view" @list="initList" @item="initItem" @add="initAdd" @editor="initEditor" @list-add="listAdd" @dice="initDice" @click-new-list="headerRight"></router-view>
+
     </div>
   	
     <script src="dist/build.js"></script>
