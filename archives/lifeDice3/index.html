@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="life-dice" class="life-dice">
-      <Vheader :title="this.$store.state.header.title" :left-options="{showBack: this.$store.state.header.leftShow}"  :right-options="{show : this.$store.state.header.showRight, rightText: this.$store.state.header.rightText,to : this.$store.state.header.rightTo,preventRightGo : this.$store.state.header.preventRightGo}" @click-header-left="headerLeft" @click-header-right="headerRight" @header-right-callback="headerRightCallback"></Vheader>
+      <Vheader :title="this.$store.state.header.title" :left-options="{showBack: this.$store.state.header.leftShow}"  :right-options="{show : this.$store.state.header.showRight, rightText: this.$store.state.header.rightText,to : this.$store.state.header.rightTo,preventRightGo : this.$store.state.header.preventRightGo}" @click-header-left="headerLeft" @click-header-right="headerRight"></Vheader>
       <router-view class="view" @list="initList" @item="initItem" @add="initAdd" @editor="initEditor" @list-add="listAdd" @dice="initDice" @click-new-list="headerRight"></router-view>
 
     </div>
