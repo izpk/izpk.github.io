@@ -5669,7 +5669,7 @@ button.swiper-pagination-bullet {
 	border: none;
 	outline: none;
 }
-.questions-options .questions-hover.active,.questions-options .questions-hover:hover{
+.questions-options .questions-hover:hover{
 	border: 1px solid #00A184;
 }
 .questions-options .questions-hover input{
