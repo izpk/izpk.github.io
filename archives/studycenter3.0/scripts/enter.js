@@ -43,13 +43,13 @@ require.config({
 require(['jquery', 'cookie', 'backbone', 'underscore', 'router', 'iScroll', 'iGlobal', 'request', 'common','storage'],
 	function($, Cookie, Backbone, underscore, Router, iScroll, iGlobal, Request, Common, Storage){
 		var cookieUser = '';
-		if($.cookie('User')){
-			cookieUser = JSON.parse($.cookie('User'));
-			cookieUser.nickName = cookieUser.username || cookieUser.nickName;
-		}else if($.cookie('loginInfo')){
+		if($.cookie('loginInfo')){
 			cookieUser = JSON.parse($.cookie('loginInfo'));
 			cookieUser.username = cookieUser.nickName;
-		}
+		}else if($.cookie('User')){
+			cookieUser = JSON.parse($.cookie('User'));
+			cookieUser.nickName = cookieUser.username || cookieUser.nickName;
+		} 
 		window.clientType = "pc";
 		window.CAICUI = {
 			'defaultPageSize' : 999,

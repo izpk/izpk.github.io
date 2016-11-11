@@ -236,7 +236,9 @@
 				var courseProgress = storage.get('courseProgress-'+CAICUI.render.courseId);
 				if(courseProgress){
 					CAICUI.render.courseDetail = courseProgress;
+					CAICUI.render.knowledgePointIdTotal = CAICUI.render.courseDetail.knowledgePointId
 					CAICUI.render.$this.courseDetailDone(courseProgress,callback);
+					
 				}else{
 					CAICUI.Request.ajax({
 						'hostName' : 'http://192.168.10.112:8081',
