@@ -128,27 +128,8 @@
 					if(callback){callback()}
 				});
 			},
-			getExerciseId : function(src,callback){
-				this.createIframe(src);
-				this.getIframeData(function(data){
-					if(callback){callback(data)};
-				});
-			},
-			createIframe : function(src){
-				var iframe = $("<iframe>");
-				$(iframe).attr("src",CAICUI.render.exerciseFilename);
-				$(iframe).attr("name","iframe_name");
-				$(iframe).attr("id","iframe_name");
-				$("body .questions").append(iframe);
-			},
-			getIframeData : function(callback){
-				var iframeData =[];
-				$('#iframe_name').load(function(){
-					var iframeObj = $('body').find("#iframe_name").contents().find("body").html();
-					iframeData = $.trim(iframeObj.split("</script>").slice(2)[0].split(",")).split(",");
-					if(callback){callback(iframeData)}
-				})
-			},
+			
+			
 			userKnowledgePointExerciseListAjax: function(callback){
 				CAICUI.Request.ajax({
 					'hostName' : 'http://192.168.10.134:8080',
@@ -243,7 +224,7 @@
 
 				$('.exercise-done-count').text(CAICUI.render.exerciseDoneCount);
 				$('.exercise-nodone-count').text(CAICUI.render.exerciseNoDoneCount);
-				
+
 				CAICUI.render.exerciseRightCount = CAICUI.render.exerciseDoneCount-CAICUI.render.errorNum;
 
 				var correctRate = ((CAICUI.render.exerciseRightCount/CAICUI.render.exerciseCount)*100).toFixed(0)
@@ -776,7 +757,34 @@
 					return t;
 				}
 				
-			}
+			},
+			getExerciseId : function(src,callback){
+				this.createIframe(src);
+				this.getIframeData(function(data){
+					if(callback){callback(data)};
+				});
+			},
+			createIframe : function(src){
+				var iframe = $("<iframe>");
+				$(iframe).attr("src",CAICUI.render.exerciseFilename);
+				$(iframe).attr("name","iframe_name");
+				$(iframe).attr("id","iframe_name");
+				$("body .questions").append(iframe);
+			},
+			getIframeData : function(callback){
+				var iframeData =[];
+				$('#iframe_name').load(function(){
+					var iframeObj = $('body').find("#iframe_name").contents().find("body").html();
+					console.log(iframeObj.split("</script>"))
+					if(iframeObj.split("</script>").length>1){
+						iframeData = $.trim(iframeObj.split("</script>").slice(2)[0].split(",")).split(",");
+					}else{
+						iframeData = iframeObj.split(",");
+					}
+					
+					if(callback){callback(iframeData)}
+				})
+			},
 		});
 		return Studycenter;
 	});
