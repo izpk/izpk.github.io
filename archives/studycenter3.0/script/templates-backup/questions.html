@@ -1,0 +1,86 @@
+<script id="template-questions" type="text/template"><div class="questions">
+		<div class="questions-header">
+			<h3 class="questions-title"><%= CAICUI.render.chapterName %></h3>
+
+			<div class="questions-progress">
+				进度
+				<span class="questions-progress-box">
+					<span class="questions-progress-show" data-questions-progress="0" style="width: 0%;">
+						<i class="icon icon-questions-progress"></i>
+					</span>
+					<i class="icon icon-questions-no-progress"></i>
+				</span>
+				<span class="questions-percentage">0</span>%
+			</div>
+			<span class="questions-times">01:12:34</span>
+			<div class="questions-header-button">
+				<a href="javascript:;" class="questions-card-button">展开答题卡</a>
+				<a href="javascript:;" class="questions-exit">退出</a>
+			</div>
+			
+		</div>
+
+		<div class="questions-body">
+			<div id="wrapper" class="wrapper">
+				<div id="scroller" class="scroller">
+					
+
+				</div><!-- scroller -->
+			</div><!-- wrapper -->
+			
+		</div>
+		<div class="questions-footer">
+			<div class="questions-btn questions-btn-prev js-questions-btn-prev">上一题</div>
+
+			<div class="questions-btn questions-btn-analysis">解析</div>
+			<div class="questions-btn questions-btn-note">笔记</div>
+			<div class="questions-btn questions-btn-question">问答</div>
+
+			<div class="questions-btn questions-btn-next js-questions-btn-next">下一题</div>
+		</div>
+	</div></script><script id="template-questions-cards" type="text/template"><div class="questions-cards">
+		<div class="questions-cards-left">
+			<p>已做/未做</p>
+			<p><span class="exercise-done-count"></span>/<span class="exercise-nodone-count"></span></p>
+			<p>正确率</p>
+			<div class="questions-progress-round progress-round">
+				<span class="progress-round-border"></span>
+				<span class="progress-round-num"><span class="progress-round-count"></span><span class="progress-round-unit">%</span></span>
+				<canvas id="progress-round-question" class="progress-round-canvas" width="84" height="84" data-progress="0"></canvas>
+			</div>
+		</div>
+		<div class="questions-cards-right">
+			<ul class="questions-cards-desc-ul">
+				<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-success" disabled="disabled"></span>正确</li>
+				<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-danger" disabled="disabled"></span>错误</li>
+				<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-info" disabled="disabled"></span>未做</li>
+			</ul>
+			<ul class="questions-cards-ul"> <%
+					_.each(data,function(element,index){
+						if(0){
+							if(CAICUI.render.lastExerciseNid==element.nid){
+								CAICUI.render.exerciseId = element.exercise_id
+							}
+							var btnClass = 'btn-info';
+							if(element.status=='1'){
+								btnClass = 'btn-success';
+							}else if(element.status=='2'){
+								btnClass = 'btn-danger';
+							}
+						}
+				%> <li class="questions-cards-li "><a id="questions-card-<%= element %>" href="javascript:;"  class="js-card-btn questions-cards-info questions-cards-btn " data-index="<%= index %>" data-exerciseid="<%= element %>"><%= index+1 %></a></li> <% }) %> </ul>
+		</div>
+	</div></script><script id="template-questions-content" type="text/template"><div class="questions-content questions-content-<%= item.questionTypes %>" data-id="<%= item.id %>">
+			<p class="questions-index">第<%= +CAICUI.render.lastExerciseNid+1 %>题</p>
+			<div class="questions-title"><%= item.title %></div>
+			<div class="questions-background"><%= item.background %></div>
+			<div class="questions-options questions-options-<%= item.questionTypes %>"> <%= CAICUI.render.this.questions(item.questionTypes,item.context,item.answerResolution) %> </div><!-- questions-options -->
+			<div class="questions-answerResolution">
+				<p class="questions-answerResolution-p">解析</p> <% if(item.answerResolution){ %> <%= item.answerResolution %> <% }else{ %> 暂无解析 <% } %> </div>
+		</div><!-- questions-content --></script><script id="template-questions-contentssssss" type="text/template"> <% _.each(items,function(element, index, list){ %> <div class="questions-content questions-<%= element.questionTypes %>" data-id="<%= element.id %>">
+			<p class="questions-index"><%= index %></p>
+			<div class="questions-title"><%= element.title %></div>
+			<div class="questions-background"><%= element.background %></div>
+			<div class="questions-options questions-options-<%= element.questionTypes %>"> <%= CAICUI.render.this.questions(element.questionTypes,element.context) %> </div><!-- questions-options -->
+			<div class="questions-answerResolution"> <%= element.answerResolution %> </div>	
+		</div><!-- questions-content --> <% }) %> </script>

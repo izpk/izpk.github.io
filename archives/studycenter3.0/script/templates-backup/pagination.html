@@ -1,0 +1,40 @@
+<script id="template-pagination" type="text/template"><div class="pagination-box">
+	<ul class="pagination"> <% 
+			var pageTotal = Math.ceil(data.totalCount/data.pageSize);
+			var pageStart = data.pageNo;
+			var pagePrevs = 4;
+			var pageNexts = 4;
+			var pageStartI = 1;
+			var pageForNum = pageStartI+pagePrevs+pageNexts;
+			var pageNum = 0;
+			if(pageTotal>pageForNum){
+				if(pageStart<=pagePrevs){
+					pageStartI = 1;
+					pageForNum = pageForNum;
+				}else if(pageStart<pagePrevs+pageNexts){
+					pageForNum = pageForNum+2;
+					pageStartI = pagePrevs-pageStartI;
+				}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+					pageForNum = pageStart+pageNexts;
+					pageStartI = pageStart-pagePrevs;
+				}else if(pageStart>pageTotal-pageNexts){
+					pageForNum = pageTotal;
+					pageStartI = pageTotal-pagePrevs-pagePrevs;
+				}
+			}else{
+				pageForNum = pageTotal;
+				pageStartI = pageStartI;
+			}
+			if(+pageForNum>+pageTotal){
+				pageForNum = pageTotal;
+			}
+		%> <% if(pageStart>1){ %> <li class="pagination-li js-pagination-prev">
+			  <a class="pagination-a pagination-prev" href="javascript:;">
+			  &lt;
+			  </a>
+			</li> <% } %> <% if(pageStart>pagePrevs && pageStartI > 1){ %> <li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li> <% } %> <% if(data.totalCount>20){ %> <% for(var i=pageStartI;i<=pageForNum;i++){ %> <li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li> <% } %> <% } %> <% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %> <li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li> <% } %> <% if(pageStart<pageTotal){ %> <li class="pagination-li js-pagination-next">
+			  <a class="pagination-a pagination-next" href="javascript:;">
+			  &gt;
+			  </a>
+			</li> <% } %> </ul>
+</div></script>

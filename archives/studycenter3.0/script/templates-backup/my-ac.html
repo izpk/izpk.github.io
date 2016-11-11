@@ -1,0 +1,66 @@
+<script id="template-my-ac" type="text/template"><div class="ac-content myAc-content">
+		<div class="ac-left myAc-left">
+			<span class="myAc-shadow"></span>
+			<ul class="myAc-nav-ul">
+				<li class="myAc-nav-li <%= data.type ? '' : 'active' %>">
+					<a class="myAc-nav-a" href="javascript:;">我发起的</a>
+				</li>
+				<li class="myAc-nav-li <%= data.type ? 'active' : '' %>">
+					<a class="myAc-nav-a" href="javascript:;">我回复的</a>
+				</li>
+			</ul>
+			<div class="ac-left-top myAc-left-top">
+				<div class="ac-top-left">
+					<div class="ac-select-box">
+						<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">全部</span><span class="ac-select-triangle"></span></a>
+						<ul class="option-ul">
+							<li class="option-li option-li-render active" data-type="3"><a  class="option-a" href="javascript:;">全部</a></li>
+							<li class="option-li option-li-render" data-type="0"><a  class="option-a" href="javascript:;">讨论</a></li>
+							<li class="option-li option-li-render" data-type="1"><a  class="option-a" href="javascript:;">问答</a></li>
+						</ul>
+					</div>
+					<div class="ac-select-box">
+						<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">发帖时间</span><span class="ac-select-triangle"></span></a>
+						<ul class="option-ul">
+							<li class="option-li option-li-render active" data-ordertype="1"><a  class="option-a" href="javascript:;">发帖时间</a></li>
+							<li class="option-li option-li-render" data-ordertype="2"><a  class="option-a" href="javascript:;">最新回复</a></li>
+							<li class="option-li option-li-render" data-ordertype="4"><a  class="option-a" href="javascript:;">精华热帖</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="ac-top-middle">
+					<input class="ac-search" type="text">
+					<a class="ac-search-a" href="javascript:;"><i class="icon icon-search"></i></a>
+				</div>
+			</div>
+			<div class="ac-left-content">
+				<div id="wrapper" class="wrapper">
+					<div id="scroller" class="scroller">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ac-right">
+
+		</div>
+	</div>
+	<div id="remove-ac-load" class="remove-load">
+	    <div class="remove-load-body">
+	        <p class="remove-load-title">您确定要删除该贴吗？</p>
+	        <p class="remove-load-content">删除主贴后，回复内容也一并全部删除</p>
+	    </div>
+	    <div class="remove-load-footer">
+	        <a class="remove-load-btn remove-load-cancel js-ac-load-cancel" href="javascript:;">取消</a>
+	        <a class="remove-load-btn remove-load-confirm js-ac-load-confirm" href="javascript:;">确认</a>
+	    </div>
+	</div>
+	<div id="remove-acReply-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该评论吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel js-acReply-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm js-acReply-load-confirm" href="javascript:;">确认</a>
+    </div>
+</div></script>

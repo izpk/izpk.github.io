@@ -1,0 +1,109 @@
+<script id="template-studycenterIndex" type="text/template"><div class="index">
+		<div class="index-top">
+			<div class="index-top-left">
+				<img class="index-top-avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>">
+				<p class="index-top-p index-top-title"><%= CAICUI.User.nickName %></p>
+				<p class="index-top-p index-top-desc">
+					上次登录：<span class="loginloglist"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+				</p>
+				<p class="index-top-p index-top-desc">
+					近期考试：<span class="getExamDate"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+				</p>
+			</div>
+			<div class="index-top-right">
+				<span class="index-top-right-text">笔记</span>
+				<span class="index-top-right-span"><span class="nodeNum">
+					<span class="text-loader-content"><span class="text-loader"></span></span>
+				</span></span>
+				<span class="index-top-right-text">交流</span>
+				<span class="index-top-right-span"><span class="acNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+				<span class="index-top-right-text">做题</span>
+				<span class="index-top-right-span"><span class="examNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+			</div>
+		</div>
+		<div class="index-content">
+			<div id="wrapper" class="wrapper">
+				<div id="scroller" class="scroller">
+					<div class="index-course">
+						<p class="index-course-title">最近所学课程</p>
+						<ul class="index-course-ul loader-content">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</ul>
+					</div> <% if(false){ %> <div class="index-experience">
+							<p class="index-experience-title">最近试听</p>
+							<ul class="studyin-content-subject clearfloat loader-content" >
+								<div class="loader-box"><div class="loader">加载中。。。</div></div>
+							</ul>
+						</div> <% } %> <div class="index-activity">
+						<p class="index-activity-title">财萃活动</p>
+						<ul class="index-activity-ul loader-content">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div></script><script id="template-studycenterIndex-courseList" type="text/template"> <% if(RecentCourse.length){ 
+			var RecentCourseNum = 0;
+			for(var i = 0;i<RecentCourse.length;i++){
+				var index = i;
+				var element = RecentCourse[index];
+				var taskprogress = element.taskprogress ? parseInt(element.taskprogress) : 0;
+				var taskTotal = element.taskTotal ? parseInt(element.taskTotal) : 0;
+				var percentage = 0;
+				var lastProgress = element.lastProgress;
+				if(taskprogress && taskTotal){
+					var a = taskprogress/taskTotal;
+					if(a>0 && a<0.01){
+						a = 0.01
+					}
+					percentage = parseInt(a*100);
+				}else if(lastProgress){
+					percentage = 1;
+				}
+			%> <li class="index-course-li ">
+				<a class="index-course-a index-course-a-<%= index %>" href="#courseStudy/<%= element.courseId %>">
+					<p class="index-course-title"><%= element.courseName %></p>
+					<p class="index-course-p">考试时间：<%= CAICUI.iGlobal.getDate(element.lastmodifyTime) %></p>
+					<p class="index-course-p">课程到期：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></p>
+					<div class="index-course-progress">
+						<div class="progress-round">
+							<span class="progress-round-border"></span>
+							<span class="progress-round-num"><%= percentage %><span class="progress-round-unit">%</span></span>
+							<canvas id="progress-round-<%= index %>" class="progress-round-canvas" width="84" height="84" data-progress=<%= percentage %>></canvas>
+						</div>
+						<p class="index-course-num"><%= taskprogress %>/<%= taskTotal %></p>
+					</div>
+				</a>
+			</li> <% } %> <% }else{ %> <li class="index-course-li ">
+				<a class="index-course-a index-course-a-none" href="#courseStudyIn">
+					<span class="index-course-a-none-content">开始新课程<span class="arrow-right"></span></span>
+					
+				</a>
+			</li> <% } %> </script><script id="template-studycenterIndex" type="text/template"> <% if(data.experience && data.experience.length){ %> <% _.each(data.experience,function(element, index, list){ %> <li class="studyin-content-subjects">
+				<a class="js-course-notActivated" href="#courseStudy/<%= element.courseId %>" >
+					<div class="subject-lf">
+						<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+						<div class="subject-mask">
+							<span class="mask-lf">
+								再次体验
+							</span>
+							<span class="mask-rt">
+								→
+							</span>
+						</div>
+					</div>
+					<div class="subject-rt subject-rt-notactived">
+						<h3><%= element.courseName %></h3>
+						<div class="subject-line"></div>
+						<div class="subject-progress">
+							<img class="index-experience-teacherAvatar" src="<%= CAICUI.Common.host.img + element.teacherAvatar %>" alt="教师头像">
+							<p class="index-experience-teacherName"><%= element.teacherName %></p>
+						</div>
+					</div>
+				</a>
+			</li> <% }) %> <% } %> </script><script id="template-studycenterIndex-activityList" type="text/template"> <% if(slideList && slideList.length){ %> <% _.each(slideList,function(element, index, list){ %> <li class="index-activity-li">
+			<a class="index-activity-a" href="<%= element.url ? element.url : 'javascript:;' %>" target="_blank"> <% var imagePath = element.imagePath ? CAICUI.Common.host.img + element.imagePath : 'images/avatar.jpg' %> <img class="index-activity-img" src="<%= imagePath %>">
+				<p class="index-activity-name"></p>
+			</a>
+		</li> <% }) %> <% } %> </script>
