@@ -610,10 +610,10 @@
 				CAICUI.render.cacheKnowledgeLevel2Id = that.attr('data-cache-knowledge-level2-id');
 				CAICUI.render.cacheKnowledgePath = that.attr('data-cache-knowledge-path');
 
-				CAICUI.render.errorNum = that.attr('data-errornum')
-				CAICUI.render.lastExerciseNid = that.attr('data-last-exercise-nid');
-				CAICUI.render.ExerciseProgress = that.attr('data-exercise-progress');
-				CAICUI.render.ExerciseTotalTime = that.attr('data-exercise-total-time');
+				CAICUI.render.errorNum = that.attr('data-errornum') || 0;
+				CAICUI.render.lastExerciseNid = that.attr('data-last-exercise-nid') || 0;
+				CAICUI.render.ExerciseProgress = that.attr('data-exercise-progress') || 0;
+				CAICUI.render.ExerciseTotalTime = that.attr('data-exercise-total-time') || 0;
 
 				CAICUI.render.exerciseFilename = that.attr('data-exercise-filename');
 				CAICUI.render.exerciseCount = that.attr('data-exercise-count');
