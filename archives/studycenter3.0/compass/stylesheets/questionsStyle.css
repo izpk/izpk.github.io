@@ -58,7 +58,7 @@
 	right:300px;
 	font-size: 16px;
 	color: #fff;
-	background: url(../../images/time.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/time.png) no-repeat left center;
 	padding-left: 30px;
 }
 .questions .questions-header .questions-header-button{
@@ -78,7 +78,7 @@
 	padding-left: 42px;
 }
 .questions .questions-header .questions-header-button .questions-card-button{
-	background: url(../../images/dtk.png) no-repeat left bottom;
+	background: url(http://static.caicui.com/studycenterskin/images/dtk.png) no-repeat left bottom;
 	padding-left: 30px;
 }
 .questions .questions-header .questions-header-button .questions-exit::before{
@@ -137,6 +137,10 @@
 	padding: 5px 0;
 	vertical-align:middle;
 	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-box;
+	display: box;
 	padding-left: 5px;	
 	border: 1px solid transparent;
 	margin-top: -1px;
@@ -238,10 +242,10 @@
 	width: 20px;
     height: 20px;
     display: inline-block;
-	background: url(../../images/radio3.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/radio3.png) no-repeat left center;
 }
 .questions-options.questions-options-matrixRadio .questions-matrix-radio .questions-tr .questions-td input:checked{
-	background: url(../../images/radio4.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/radio4.png) no-repeat left center;
 }*/
 .questions-content-multiTask .questions-options-box{
 	margin-top: 20px;
@@ -369,15 +373,12 @@
 	color: #000;
 }
 .questions-cards-success{
+	color: #fff;
 	background: #727171;
 }
 .questions-cards-danger{
 	background: #FF5E8A;
 	color: #fff;
-}
-.questions-cards-info{
-	background-color: #E4E1E2;
-	color: #000;
 }
 
 
@@ -449,7 +450,7 @@
 	/*left: 40%;*/
 	left: 50%;
 	color:#fff;
-	background: url(../../images/jiexi.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/jiexi.png) no-repeat left center;
 	padding-left: 30px;
 }
 .questions .questions-footer .questions-btn-note{
@@ -457,7 +458,7 @@
 	top:10px;
 	left: 50%;
 	color:#fff;
-	background: url(../../images/biji.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/biji.png) no-repeat left center;
 	padding-left: 30px;
 	margin-left: -30px;
 	display: none;
@@ -467,7 +468,7 @@
 	top:10px;
 	right: 40%;
 	color:#fff;
-	background: url(../../images/wenda.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/wenda.png) no-repeat left center;
 	background-size: contain;
 	padding-left: 30px;
 	display: none;
@@ -483,10 +484,10 @@
 	width: 11px;
     height: 11px;
     display: inline-block;
-	background: url(../../images/radio1.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/radio1.png) no-repeat left center;
 }
 .active .questions-radio-input{
-	background: url(../../images/radio2.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/radio2.png) no-repeat left center;
 }
 .questions-checkbox-input{
 	-webkit-appearance:none;
@@ -496,10 +497,10 @@
     height: 10px;
     display: inline-block;
     vertical-align: middle;
-	background: url(../../images/checkbox1.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/checkbox1.png) no-repeat left center;
 }
 .active .questions-checkbox-input{
-	background: url(../../images/checkbox2.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/checkbox2.png) no-repeat left center;
 }
 .questions-matrix .questions-radio-input,.questions-content-multiTask .questions-radio-input{
 	-webkit-appearance:none;
@@ -508,10 +509,10 @@
 	width: 20px;
     height: 20px;
     display: inline-block;
-	background: url(../../images/radio3.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/radio3.png) no-repeat left center;
 }
 .questions-matrix .active .questions-radio-input,.questions-content-multiTask .active .questions-radio-input{
-	background: url(../../images/radio4.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/radio4.png) no-repeat left center;
 }
 .questions-matrix .questions-checkbox-input,.questions-content-multiTask .questions-checkbox-input{
 	-webkit-appearance:none;
@@ -520,10 +521,10 @@
 	width: 20px;
     height: 20px;
     display: inline-block;
-	background: url(../../images/checkbox3.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/checkbox3.png) no-repeat left center;
 }
 .questions-matrix .active .questions-checkbox-input,.questions-content-multiTask .active .questions-checkbox-input{
-	background: url(../../images/checkbox4.png) no-repeat left center;
+	background: url(http://static.caicui.com/studycenterskin/images/checkbox4.png) no-repeat left center;
 }
 
 .questions-answerResolution-p{

@@ -671,6 +671,7 @@ $courseWidthActive : 149px;
 		.course-list-info{
 			@include stretch(0,15px,0,initial);
 			color: #D8D8D8;
+			background-color: #fff;
 			.course-list-triangle{
 				display: inline-block;
 				@include WH(0,0);
@@ -689,28 +690,47 @@ $courseWidthActive : 149px;
 			}
 			.course-list-questions-box{
 				display: none;
+				margin-right: 10px;
 			}
 			.course-list-questions-box.active{
 				display: inline-block;
 			}
 		}
 	}
-	.course-questions{
-		padding: 1px 10px;
+	.course-questions,.course-video-open-btn{
+		display: none;
+		width: 46px;
+		height: 20px;
+		line-height: 18px;
+		text-align: center;
 		border: 1px solid #87ccc7;
 		color: #87ccc7;
 		font-size: 12px;
 		border-radius: 2px;
+		cursor: pointer;
 	}
-
+	.course-questions{
+		margin-right: 20px;
+	}
+	
 	.course-list-link:hover{
-		background-color: rgba(62,78,99,.05);
-
-		.course-questions{
+		// background-color: rgba(62,78,99,.05);
+		background-color: rgb(246,246,248);
+		.course-questions,.course-video-open-btn{
+			display: inline-block;
+			color: #87ccc7;
+			border: 1px solid #87ccc7;
+			background-color: #fff;
+		}
+		.course-questions:hover,.course-video-open-btn:hover{
 			color: #fff;
 			background-color: #87ccc7;
 		}
+		.course-list-info{
+			background-color: rgb(246,246,248);
+		}
 	}
+	
 	.course-list-link:active{
 		background-color: rgba(62,78,99,.1);
 
@@ -740,23 +760,23 @@ $courseWidthActive : 149px;
 			padding: 5px 10px 5px 47px;
 		}
 
-		.course-list-link.course-list-questions{
-			display: block;
-			padding: 5px 150px 5px 47px;
-			.icon-left{
-				@include stretch(10px,0,0,20px);
-			}
-			.course-list-desc{
-				height: 18px;
-				line-height: 18px;
-			}
-		}
-		.course-list-link-width.course-list-questions{
-			padding: 5px 180px 5px 47px;
-		}
-		.course-list-link-nowidth.course-list-questions{
-			padding: 5px 110px 5px 47px;
-		}
+		// .course-list-link.course-list-questions{
+		// 	display: block;
+		// 	padding: 5px 150px 5px 47px;
+		// 	.icon-left{
+		// 		@include stretch(10px,0,0,20px);
+		// 	}
+		// 	.course-list-desc{
+		// 		height: 18px;
+		// 		line-height: 18px;
+		// 	}
+		// }
+		// .course-list-link-width.course-list-questions{
+		// 	padding: 5px 180px 5px 47px;
+		// }
+		// .course-list-link-nowidth.course-list-questions{
+		// 	padding: 5px 110px 5px 47px;
+		// }
 	}
 	.course-list-two-ul{
 		
@@ -778,23 +798,23 @@ $courseWidthActive : 149px;
 			padding: 5px 10px 5px 63px;
 		}
 
-		.course-list-link.course-list-questions{
-			display: block;
-			padding: 0 150px 0 63px;
-			.icon-left{
-				@include stretch(7px,0,0,45px);
-			}
-			.course-list-desc{
-				height: 28px;
-				line-height: 28px;
-			}
-		}
-		.course-list-link-width.course-list-questions{
-			padding: 0 180px 0 63px;
-		}
-		.course-list-link-nowidth.course-list-questions{
-			padding: 5px 110px 5px 63px;
-		}
+		// .course-list-link.course-list-questions{
+		// 	display: block;
+		// 	padding: 0 150px 0 63px;
+		// 	.icon-left{
+		// 		@include stretch(7px,0,0,45px);
+		// 	}
+		// 	.course-list-desc{
+		// 		height: 28px;
+		// 		line-height: 28px;
+		// 	}
+		// }
+		// .course-list-link-width.course-list-questions{
+		// 	padding: 0 180px 0 63px;
+		// }
+		// .course-list-link-nowidth.course-list-questions{
+		// 	padding: 5px 110px 5px 63px;
+		// }
 	}
 	.course-list-three-ul{
 		.course-list-link{
@@ -815,23 +835,23 @@ $courseWidthActive : 149px;
 			padding: 5px 10px 5px 93px;
 		}
 
-		.course-list-link.course-list-questions{
-			display: block;
-			padding: 0 150px 0 93px;
-			.icon-left{
-				@include stretch(7px,0,0,75px);
-			}
-			.course-list-desc{
-				height: 28px;
-				line-height: 28px;
-			}
-		}
-		.course-list-link-width.course-list-questions{
-			padding: 0 180px 0 93px;
-		}
-		.course-list-link-nowidth.course-list-questions{
-			padding: 5px 110px 5px 93px;
-		}
+		// .course-list-link.course-list-questions{
+		// 	display: block;
+		// 	padding: 0 150px 0 93px;
+		// 	.icon-left{
+		// 		@include stretch(7px,0,0,75px);
+		// 	}
+		// 	.course-list-desc{
+		// 		height: 28px;
+		// 		line-height: 28px;
+		// 	}
+		// }
+		// .course-list-link-width.course-list-questions{
+		// 	padding: 0 180px 0 93px;
+		// }
+		// .course-list-link-nowidth.course-list-questions{
+		// 	padding: 5px 110px 5px 93px;
+		// }
 	}
 	.active>.course-list-two-ul,.active>.course-list-three-ul{
 		display: none;
