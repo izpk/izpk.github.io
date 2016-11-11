@@ -1,0 +1,130 @@
+<script id="template-course-studyIn" type="text/template">
+<div class="course">
+	<ul class="course-ul">
+		<li class="course-li active">
+			<a class="course-a" href="#courseStudyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#courseNotActivated">
+				<span class="course-text">未激活课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#courseActivated">
+				<span class="course-text">已过期课程</span>
+			</a>
+		</li>
+	</ul>
+	<div class="course-content">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+			<% if(data.courseLists.length && data.courseListNav.length){ %>
+				<div class="container container-list">
+					<div class="studyin"> 
+						<ul class="studyin-header clearfloat">
+							<% _.each(data.courseLists,function(element, index, list){ %>
+								<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+									<a href="javascript:;"><%= element.categoryName %></a>
+								</li>
+							<% }) %>
+						</ul>
+						
+						<div class="studyin-content">
+							<% _.each(data.courseLists,function(element, index, list){ %>
+							<div class="studyin-contents <%= index ? '' : 'active' %>">
+								<% _.each(element.newList,function(element, index, list){ %>
+
+								<div class="studyin-contents-list">
+									<div class="studyin-content-header clearfloat">
+										<div class="subject-type-lf">
+											<span class="subject-name"><%= element.subjectName %></span>
+											<% if(element.isU){ %>
+												<span class="u-icon"></span>
+											<% } %>
+										</div>
+										<div class="subject-type-rt stop">
+											<a class="u-icon" href="javascript:;"></a>
+										</div>
+									</div>
+									<ul class="studyin-content-subject clearfloat" >
+										<% _.each(element.list,function(element, index, list){ %>
+											<li class="studyin-content-subjects">
+												<a href="#courseStudy/<%= element.courseId %>">
+													<div class="subject-lf">
+														<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+														<span class="subject-time">有效期至：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></span>
+														<% if(element.isU == "true"){ %>
+															<span class="subject-u"><span class="subject-u-text">U+</span></span>
+														<% } %>
+														<div class="subject-mask">
+															<span class="mask-lf">
+																继续学习
+															</span>
+															<span class="mask-rt">
+																→
+															</span>
+														</div>
+													</div>
+													<div class="subject-rt">
+														<h3><%= element.courseName %></h3>
+														<div class="subject-line"></div>
+														<div class="subject-progress">
+															进度
+															<% 
+																var taskprogress = element.taskprogress ? parseInt(element.taskprogress) : 0;
+																var taskTotal = element.taskTotal ? parseInt(element.taskTotal) : 0;
+																var percentage = 0;
+																var lastProgress = element.lastProgress;
+																if(taskprogress && taskTotal){
+																	var a = taskprogress/taskTotal;
+																	if(a>0 && a<0.01){
+																		a = 0.01
+																	}
+																	percentage = parseInt(a*100);
+																}else if(lastProgress){
+																	percentage = 1;
+																}
+																
+															%>
+															<div class="total-progress">
+																<div class="current-progress" data-progress=<%= percentage %>></div>
+															</div>
+															<span>%</span>
+															<span> <%= percentage %> </span>
+														</div>
+													</div>
+												</a>
+											</li>
+										<% }) %>
+									</ul>
+									</div>
+								<% }) %>
+							</div>
+							<% }) %>
+						</div>
+						
+					</div>
+
+					
+				</div>
+			<% }else{ %>
+				<div class="studyin-nodata">
+						<div class="studyin-nodata-img u-icon"></div>
+						<div class="studyin-nodata-des">
+							您还未有购买课程
+						</div>
+						<div class="studyin-nodata-btn">
+							<a class="studycenter-buy" href="http://www.caicui.com/" target="_blank">
+								选课购买
+							</a>
+						</div>
+					</div>
+			<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</script>

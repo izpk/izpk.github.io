@@ -212,14 +212,14 @@
 			doneChange : function(){
 				var isDone = $('body .js-card-btn').eq(CAICUI.render.questionsIndex).attr('data-isdone');
 				if(isDone!="true"){
-					CAICUI.render.exerciseDoneCount = CAICUI.render.exerciseDoneCount + 1;
-					CAICUI.render.exerciseNoDoneCount = CAICUI.render.exerciseNoDoneCount - 1;
+					CAICUI.render.exerciseDoneCount = +CAICUI.render.exerciseDoneCount + 1;
+					CAICUI.render.exerciseNoDoneCount = +CAICUI.render.exerciseNoDoneCount - 1;
 					
 				}
 				if(CAICUI.render.status==1){
 
 				}else if(CAICUI.render.status==2){
-					CAICUI.render.errorNum = CAICUI.render.errorNum + 1;
+					CAICUI.render.errorNum = +CAICUI.render.errorNum + 1;
 				}
 
 				$('.exercise-done-count').text(CAICUI.render.exerciseDoneCount);
@@ -356,7 +356,7 @@
 					if(element.myChecked){
 						activeClass = 'active';
 					}
-					CAICUI.render.typeHtml += '<div data-number="'+num+'-'+index+'" class="questions-hover questions-checkbox js-questions-option-click '+activeClass+'"  data-mychecked='+element.myChecked+' data-ischecked='+element.isChecked+'><label><input class="questions-checkbox-input" type="checkbox"><div>'+element.title+'</div></label></div>'
+					CAICUI.render.typeHtml += '<div data-number="'+num+'-'+index+'" class="questions-hover questions-checkbox js-questions-option-click '+activeClass+'"  data-mychecked='+element.myChecked+' data-ischecked='+element.isChecked+'><label><span class="questions-checkbox-input"></span><div>'+element.title+'</div></label></div>'
 				})
 			},
 			radio : function(context,num){
@@ -365,7 +365,7 @@
 					if(element.myChecked){
 						activeClass = 'active';
 					}
-					CAICUI.render.typeHtml += '<div data-number="'+num+'-'+index+'" class="questions-hover questions-radio js-questions-option-click '+activeClass+'" data-mychecked='+element.myChecked+' data-ischecked='+element.isChecked+'><label><input class="questions-radio-input" type="radio"><div>'+element.title+'</div></label></div>'
+					CAICUI.render.typeHtml += '<div data-number="'+num+'-'+index+'" class="questions-hover questions-radio js-questions-option-click '+activeClass+'" data-mychecked='+element.myChecked+' data-ischecked='+element.isChecked+'><label><span class="questions-radio-input"></span><div>'+element.title+'</div></label></div>'
 				})
 			},
 			question : function(context,num){

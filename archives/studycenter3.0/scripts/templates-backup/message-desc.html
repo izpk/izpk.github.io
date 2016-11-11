@@ -1,0 +1,20 @@
+<script id="template-message-desc" type="text/template">
+	<div class="message-right-top">
+		<div class="message-top-left">
+			<img class="message-desc-avatar" src="<%=  element.headImg ? CAICUI.Common.host.img + element.headImg : 'images/avatar.jpg'  %>">
+			<span class="message-desc-user-name"><%= element.sender %></span>
+			<span class="message-desc-line"></span>
+			<span class="message-desc-time"><%=  CAICUI.iGlobal.getLocalTime(element.sentTime) %></span>
+		</div>
+	</div>
+	<div class="message-right-content">
+		<div id="wrapper-message-desc" class="wrapper">
+			<div id="scroller-message-desc" class="scroller">
+				<div class="message-question">
+					<p class="message-question-title"><%= element.title %></p>
+					<div class="message-question-content"><%= element.content %></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

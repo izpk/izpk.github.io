@@ -1,0 +1,173 @@
+<script id="template-my-exam" type="text/template">
+<% console.log(data) %>
+<div class="main-exam">
+	<div class="exam-top">
+		我的题库
+	</div>
+	<div class="exam-left">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+			<% if(data.examList && data.examList.length){ %>
+				<ul class="exam-list">
+					<% 
+						_.each(data.examList,function(element, index, list){ 
+							var time,timeClass;
+							time = element.testTime;
+							if(time == 'TODAY'){
+								timeClass = 'exam-list-time exam-list-today';
+							}else{
+								timeClass = 'exam-list-time';
+							}
+					%>
+						<li class="exam-list-item">
+							
+							<span class="<%= timeClass %>"><%= time %></span>
+							<ul class="exam-list-ul">
+								<% 
+								_.each(element.list,function(element, index, list){
+									var percentage='';
+									if(element.rightCount){
+										percentage = (element.rightCount/element.count).toFixed(2);
+									}else{
+										percentage = 0;
+									}
+								%>
+									<li class="exam-list-li">
+										<a class="exam-list-li-a" href="http://www.caicui.com/exam/examinationReport/analyze/<%= element.id %>" target="_blank">
+											<p class="exam-list-p"><%= element.type %></p>
+											<ul class="exam-list-info">
+												<li class="exam-list-info-li"><%= CAICUI.iGlobal.formatSeconds(element.time) %></li>
+												<li class="exam-list-info-li">题目：<%= element.count %>道</li>
+												<li class="exam-list-info-li">错题：<%= element.count - element.rightCount %>道</li>
+												<li class="exam-list-info-li">正确率：<%= percentage %>%</li>
+											</ul>
+										</a>
+									</li>
+								<% }) %>
+							</ul>
+							
+						</li>
+					<% }) %>
+
+					<div class="pagination-box">
+						<ul class="pagination">
+							<% 
+								var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+								var pageStart = +data.pageNo;
+								var pagePrevs = 4;
+								var pageNexts = 4;
+								var pageStartI = 1;
+								var pageForNum = pageStartI+pagePrevs+pageNexts;
+								var pageNum = 0;
+								if(pageTotal>pageForNum){
+									if(pageStart<=pagePrevs){
+										pageStartI = 1;
+										pageForNum = pageForNum;
+									}else if(pageStart<pagePrevs+pageNexts){
+										pageForNum = pageForNum+2;
+										pageStartI = pagePrevs-pageStartI;
+									}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+										pageForNum = pageStart+pageNexts;
+										pageStartI = pageStart-pagePrevs;
+									}else if(pageStart>pageTotal-pageNexts){
+										pageForNum = pageTotal;
+										pageStartI = pageTotal-pagePrevs-pagePrevs;
+									}
+								}else{
+									pageForNum = pageTotal;
+									pageStartI = pageStartI;
+								}
+								if(+pageForNum>+pageTotal){
+									pageForNum = pageTotal;
+								}
+							%>
+							<% if(pageStart>1){ %>
+								<li class="pagination-li js-pagination-prev">
+								  <a class="pagination-a pagination-prev" href="javascript:;">
+								  &lt;
+								  </a>
+								</li>
+							<% } %>
+							
+							<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+								<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+							<% } %>
+
+							<% if(data.totalCount>20){ %>
+								<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+									<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+								<% } %>
+							<% } %>
+
+							<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+								<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+							<% } %>
+
+							<% if(pageStart<pageTotal){ %>
+								<li class="pagination-li js-pagination-next">
+								  <a class="pagination-a pagination-next" href="javascript:;">
+								  &gt;
+								  </a>
+								</li>
+							<% } %>
+					  </ul>
+					</div>
+				</ul>
+			<% }else{ %>
+				<div class="no-data">
+					<i class="icon icon-no-data-node"></i>
+					<p class="no-data-p">你还一道题都没做过呢</p>
+				</div>
+			<% } %>
+			</div>
+		</div>
+	</div>
+	<div class="exam-right">
+		<div id="wrapper-exam-type" class="wrapper">
+			<div id="scroller-exam-type" class="scroller">
+				<ul class="exam-type-list">
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/memberExamination/list" target="_blank">
+							<i class="icon icon-exam-type-0"></i>
+							<span class="exam-type-list-a">历史答题记录</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/chapter" target="_blank">
+							<i class="icon icon-exam-type-1"></i>
+							<span class="exam-type-list-a">章节定向</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/real" target="_blank">
+							<i class="icon icon-exam-type-2"></i>
+							<span class="exam-type-list-a">真题重现</span>
+						</a>
+					</li>
+
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/simulated" target="_blank">
+							<i class="icon icon-exam-type-3"></i>
+							<span class="exam-type-list-a">模拟考试</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/knowledgePoint" target="_blank">
+							<i class="icon icon-exam-type-4"></i>
+							<span class="exam-type-list-a">考点特训</span>
+						</a>
+					</li>
+					<li class="exam-type-list-li">
+						<a href="http://www.caicui.com/exam/examenGeneration/strategy/intelligent" target="_blank">
+							<i class="icon icon-exam-type-5"></i>
+							<span class="exam-type-list-a">智能组卷</span>
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+</div>
+	
+</script>

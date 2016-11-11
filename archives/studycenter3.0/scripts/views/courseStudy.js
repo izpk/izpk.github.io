@@ -60,16 +60,16 @@
 				CAICUI.render.chaptersIdArray = [];
 
 				CAICUI.render.chapterName = '';
-				CAICUI.render.exerciseCount = '';
+				CAICUI.render.exerciseCount = 0;
 				CAICUI.render.exerciseKnowledgeMemberStatus = {};
 				CAICUI.render.knowledgepointid = '';
-				CAICUI.render.lastExerciseNid = '';
-				CAICUI.render.ExerciseProgress = '';
-				CAICUI.render.ExerciseTotalTime = '';
+				CAICUI.render.lastExerciseNid = 0;
+				CAICUI.render.ExerciseProgress = 0;
+				CAICUI.render.ExerciseTotalTime = 0;
 				CAICUI.render.cacheKnowledgeLevel1Id = '';
 				CAICUI.render.cacheKnowledgeLevel2Id = '';
 				CAICUI.render.cacheKnowledgePath = '';
-				CAICUI.render.errorNum = '';
+				CAICUI.render.errorNum = 0;
 				CAICUI.render.exerciseFilename = '';
 				CAICUI.render.questionsIndex = 0;
 				CAICUI.render.exerciseCount = '';

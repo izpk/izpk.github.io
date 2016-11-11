@@ -1,0 +1,307 @@
+<script id="template-course-ac" type="text/template">
+	<div class="courseIndex">
+		<ul class="option-ul course-change-ul">
+			<% 
+				var courseName;
+				_.each(data.learningcourse,function(element, index, list){ 
+					_.each(element.newList,function(element, index){
+						_.each(element.list,function(element, index){
+							if(element.courseId == data.courseId){
+								courseName = element.courseName;
+							}
+			%>
+							<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseAc/<%= element.courseId %>"><%= element.courseName %></a></li>
+				<%
+						})
+					})
+				}) %>
+		</ul>
+		<div class="courseIndex-header">
+			<div class="courseIndex-header-left">
+				<% if(courseName){ %>
+					<a class="course-change" href="javascript:;">
+						
+						<span class="course-name"><%= courseName %></span>
+						<i class="icon-triangle"></i>
+					</a>
+				<% }else{ %>
+					<span class="course-name"><%= data.courseBaseInfo.courseName %></span>
+				<% }  %>
+
+			</div>
+
+			<div class="courseIndex-header-right">
+				<ul class="courseIndex-ul">
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseStudy/<%= data.courseId %>">
+							<i class="icon icon-courseStudy"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseStudy-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseStudy/<%= data.courseId %>">
+									<i class="icon icon-courseStudy-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					
+					<li class="courseIndex-li active hover">
+						<a class="courseIndex-a" href="javascript:;">
+							<i class="icon icon-courseAc"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseAc-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="javascript:;">
+									<i class="icon icon-courseAc-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+					<li class="courseIndex-li">
+						<a class="courseIndex-a" href="#courseNote/<%= data.courseId %>">
+							<i class="icon icon-courseNote"></i>
+						</a>
+						<div class="courseIndex-active-box">
+							<div class="courseNote-box js-courseIndex-nav-box">
+								<a class="courseIndex-a-active" href="#courseNote/<%= data.courseId %>">
+									<i class="icon icon-courseNote-active"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="ac-content courseAc-content">
+			<div class="ac-left courseAc-left">
+				<div class="ac-left-top courseAc-left-top">
+					<div class="ac-top-left">
+						<div class="ac-select-box">
+							<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">全部</span><span class="ac-select-triangle"></span></a>
+							<ul class="option-ul">
+								<li class="option-li option-li-render active" data-type="3"><a  class="option-a" href="javascript:;">全部</a></li>
+								<li class="option-li option-li-render" data-type="0"><a  class="option-a" href="javascript:;">讨论</a></li>
+								<li class="option-li option-li-render" data-type="1"><a  class="option-a" href="javascript:;">问答</a></li>
+							</ul>
+						</div>
+						<div class="ac-select-box">
+							<a class="ac-select-a" href="javascript:;"><span class="ac-select-text">发帖时间</span><span class="ac-select-triangle"></span></a>
+							<ul class="option-ul">
+								<li class="option-li option-li-render active" data-ordertype="1"><a  class="option-a" href="javascript:;">发帖时间</a></li>
+								<li class="option-li option-li-render" data-ordertype="2"><a  class="option-a" href="javascript:;">最新回复</a></li>
+								<li class="option-li option-li-render" data-ordertype="4"><a  class="option-a" href="javascript:;">精华热帖</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="ac-top-middle">
+						<input class="ac-search" type="text">
+						<a class="ac-search-a" href="javascript:;"><i class="icon icon-search"></i></a>
+					</div>
+					<div class="ac-top-right">
+						<a class="ac-new" href="javascript:;"><i class="icon icon-new-course"></i></a>
+					</div>
+				</div>
+				<div class="ac-left-content">
+					<div id="wrapper" class="wrapper">
+						<div id="scroller" class="scroller">
+							<ul class="ac-list-ul">
+								<% 
+									_.each(data.bbslist,function(element, index, list){ 
+										var bbstype,bbstypeClass,isPhoto,isNew=false,isNewActive=true;
+										if(element.bbstype == "0"){
+											bbstype = '讨论';
+											bbstypeClass = 'ac-list-type-1';
+											
+										}else{
+											bbstype = '问答';
+											bbstypeClass = 'ac-list-type-0';
+										}
+										if(element.imgPath && element.imgPath.substr(1,7) == 'upload'){
+											isPhoto = 'active';
+										}
+										var acActive = CAICUI.Storage.getStorage('acActive');
+										for(var i in acActive){
+											if(acActive[i].id == element.id){
+												isNewActive = false;
+												break;
+											}
+										}
+										if(isNewActive){
+											for(var i in data.newtids){
+												if(data.newtids[i].id == element.id){
+													isNew = true;
+												}
+											}
+										}
+										if(!element.isAd){
+								%>
+									<li class="ac-list-li" data-id="<%= element.id %>">
+										<div class="ac-list-a" >
+											<a class="ac-list-li-content <%= isPhoto %> js-ac-list-active" data-id="<%= element.id %>" data-isme="<%= element.del_permission ? 'true' : 'false' %>" data-isnew="<%= isNew %>" href="javascript:;">
+												<% if(isPhoto){ %>
+													<img class="ac-list-img " src="<%= CAICUI.Common.host.img + element.imgPath %>">
+												<% } %>
+												
+												<p class="ac-list-title"><span class="<%= bbstypeClass %>">[<%= bbstype %>] </span><span class="ac-list-title-span"><%= element.title %></span>
+													<% if(element.toporder != '0'){ %>
+														<i class="icon icon-post-type-0"></i>
+													<% } %>
+													<% if(+element.replyCount > 10){ %>
+														<i class="icon icon-post-type-1"></i>
+													<% } %>
+													<% if(isNew){ %>
+															<i class="icon icon-post-type-2"></i>
+													<% } %>
+													<% if(element.userlevel == 4){ %>
+														<i class="icon icon-post-type-3"></i>
+													<% } %>
+
+												</p>
+											<p class="ac-list-desc"><%= element.contentSummary %></p>
+											</a>
+
+
+											<div class="ac-list-info">
+												<p class="ac-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.headImg %>"><span class="ac-list-info-span user-name"><%= element.nikeName %></span></p>
+												<ul class="ac-list-info-ul">
+													<%if(element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.chapterId && element.chapterId != ' ' && element.taskId && element.taskId != ' '){
+													%>
+														<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+														<li class="ac-list-info-li">
+															<a class="ac-list-info-span ac-list-info-video" link="#video/<%= element.courseId %>/<%= element.chapterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=courseAc/<%= CAICUI.render.courseId  %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-ac-time"></i><span class="ac-desc-video-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a>
+															
+														</li>
+													<% } %>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<li class="ac-list-info-li"><span class="ac-list-info-span ac-list-info-time"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span></li>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-discuss"></i><span class="ac-list-info-discuss-num"><%= element.replyCount %></span></span></li>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<li class="ac-list-info-li"><span class="ac-list-info-span"><i class="icon icon-like"></i><span class="ac-list-info-like-num"><%= element.praiseCount %></span></span></li>
+													<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<% if(element.del_permission){ %>
+														<li class="ac-list-info-li">
+															<span class="ac-list-info-span ac-list-remove"  data-type="0">删除</span>
+															</li>
+														<li class="ac-list-info-li"><span class="vertical-line">|</span></li>
+													<% } %>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<%}else{ %>
+										<% if(element.ad_discuss && element.ad_discuss.length){ %>
+											<li class="ac-list-li">
+												<div class="ac-Ad swiper-container ac-swiper-container">
+													<a class="ac-Ad-close" href="javascript:;">X</a>
+													<div class="swiper-wrapper">
+														<% _.each(element.ad_discuss,function(list,item){ %>
+															<div class="swiper-slide">
+																<img class="ac-Ad-img" data-id="<%= list.id %>" src="<%= CAICUI.Common.host.img + list.adpic %>">
+															</div>
+														<%})%>
+													</div>
+												</div>
+											</li>
+										<% } %>
+										
+									<% } %>
+								<% }) %>
+							
+								<div class="pagination-box">
+									<ul class="pagination">
+										<% 
+											var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+											var pageStart = +data.pageNo;
+											var pagePrevs = 4;
+											var pageNexts = 4;
+											var pageStartI = 1;
+											var pageForNum = pageStartI+pagePrevs+pageNexts;
+											var pageNum = 0;
+											if(pageTotal>pageForNum){
+												if(pageStart<=pagePrevs){
+													pageStartI = 1;
+													pageForNum = pageForNum;
+												}else if(pageStart<pagePrevs+pageNexts){
+													pageForNum = pageForNum+2;
+													pageStartI = pagePrevs-pageStartI;
+												}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+													pageForNum = pageStart+pageNexts;
+													pageStartI = pageStart-pagePrevs;
+												}else if(pageStart>pageTotal-pageNexts){
+													pageForNum = pageTotal;
+													pageStartI = pageTotal-pagePrevs-pagePrevs;
+												}
+											}else{
+												pageForNum = pageTotal;
+												pageStartI = pageStartI;
+											}
+											if(+pageForNum>+pageTotal){
+												pageForNum = pageTotal;
+											}
+										%>
+										<% if(pageStart>1){ %>
+											<li class="pagination-li js-pagination-prev">
+											  <a class="pagination-a pagination-prev" href="javascript:;">
+											  &lt;
+											  </a>
+											</li>
+										<% } %>
+										
+										<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+											<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+										<% } %>
+
+										<% if(data.totalCount>20){ %>
+											<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+												<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+											<% } %>
+										<% } %>
+
+										<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+											<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+										<% } %>
+
+										<% if(pageStart<pageTotal){ %>
+											<li class="pagination-li js-pagination-next">
+											  <a class="pagination-a pagination-next" href="javascript:;">
+											  &gt;
+											  </a>
+											</li>
+										<% } %>
+								  </ul>
+								</div>
+
+							</ul>
+
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="ac-right">
+			</div>
+		</div>
+	</div>
+
+	<div id="remove-ac-load" class="remove-load">
+	    <div class="remove-load-body">
+	        <p class="remove-load-title">您确定要删除该贴吗？</p>
+	        <p class="remove-load-content">删除主贴后，回复内容也一并全部删除</p>
+	    </div>
+	    <div class="remove-load-footer">
+	        <a class="remove-load-btn remove-load-cancel js-ac-load-cancel" href="javascript:;">取消</a>
+	        <a class="remove-load-btn remove-load-confirm js-ac-load-confirm" href="javascript:;">确认</a>
+	    </div>
+	</div>
+	<div id="remove-acReply-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该评论吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel js-acReply-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm js-acReply-load-confirm" href="javascript:;">确认</a>
+    </div>
+</div>
+</script>

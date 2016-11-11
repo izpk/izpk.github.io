@@ -237,16 +237,16 @@
 															examNum = examNum + 1;
 														}
 													});
-													// if(videoNum && examNum){
-													// 	courseListLink = 'course-list-link-width';
-													// }
+													if(videoNum && examNum){
+														courseListLink = 'course-list-link-width';
+													}
 												}else{
 													var link = 'javascript:;';
 													courseListType = 'icon-course-list-lock';
 													courseListLink = 'course-list-link-nowidth';
-												}
+												} 
 											%>
-											<div class="course-list-link <%= courseListLink %>" >
+											<a class="js-course-list-link course-list-link <%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2 +"|" + index %>" href="javascript:;">
 												<i class="icon icon-left <%= courseListType %>"></i>
 												<span class="course-list-desc"><%= element.chapterTitle %></span>
 												<div class="course-list-info">
@@ -260,14 +260,13 @@
 													<% if(videoNum){ %>
 														<span class="course-list-triangle"></span>X<%= videoNum %>
 													<% } %>
-													<% if(false && examNum){ %>
+													<% if(examNum){ %>
 														<i class="icon icon-course-exam"></i>X<%= examNum %>
 													<% } %>
-													<span class="js-course-list-link course-video-open-btn" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2 +"|" + index %>">看课</span>
-													</div>
+
 													
 												</div>
-											</div>
+											</a>
 										</li>
 										<% } }) %>
 									</ul>
@@ -334,16 +333,16 @@
 														examNum = examNum + 1;
 													}
 												});
-												// if(videoNum && examNum){
-												// 	courseListLink = 'course-list-link-width';
-												// }
+												if(videoNum && examNum){
+													courseListLink = 'course-list-link-width';
+												}
 											}else{
 												var link = 'javascript:;';
 												courseListType = 'icon-course-list-lock';
 												courseListLink = 'course-list-link-nowidth';
 											} 
 										%>
-										<div class="course-list-link <%= courseListLink %>">
+										<a class="js-course-list-link course-list-link <%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2  %>" href="javascript:;">
 											
 											<i class="icon icon-left <%= courseListType %>"></i>
 											<span class="course-list-desc"><%= element.chapterTitle %></span>
@@ -358,12 +357,9 @@
 												<% if(videoNum){ %>
 													<span class="course-list-triangle"></span>X<%= videoNum %>
 												<% } %>
-												<% if(false && examNum){ %>
+												<% if(examNum){ %>
 													<i class="icon icon-course-exam"></i>X<%= examNum %>
 												<% } %>
-
-												<span class="js-course-list-link course-video-open-btn" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2  %>">看课</span>
-
 											</div>
 										</a>
 
@@ -432,16 +428,16 @@
 											examNum = examNum + 1;
 										}
 									});
-									// if(videoNum && examNum){
-									// 	courseListLink = 'course-list-link-width';
-									// }
+									if(videoNum && examNum){
+										courseListLink = 'course-list-link-width';
+									}
 								}else{
 									var link = 'javascript:;';
 									courseListType = 'icon-course-list-lock';
 									courseListLink = 'course-list-link-nowidth';
 								} 
 						%>
-						<div class="course-list-link <%= courseListLink %>">
+						<a class="js-course-list-link course-list-link <%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex %>" href="javascript:;">
 
 							<i class="icon icon-left <%= courseListType %>"></i>
 							<span class="course-list-desc"><%= element.chapterTitle %></span>
@@ -456,13 +452,11 @@
 								<% if(videoNum){ %>
 									<span class="course-list-triangle"></span>X<%= videoNum %>
 								<% } %>
-								<% if(false && examNum){ %>
+								<% if(examNum){ %>
 									<i class="icon icon-course-exam"></i>X<%= examNum %>
 								<% } %>
-
-								<span class="js-course-list-link course-video-open-btn" link="<%= link %>" learning="learning" data-index="<%= chaptersindex %>">看课</span>
 							</div>
-						</div>
+						</a>
 						
 					<% } %>
 			</li>

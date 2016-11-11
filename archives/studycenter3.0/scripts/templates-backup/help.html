@@ -1,0 +1,129 @@
+<script id="template-help" type="text/template">
+	<div class="help">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+		<div class="help-video">
+			<% if(0){ %>
+			<iframe allowtransparency="true" width="848px" height="450px" scrolling="no" frameborder="0" src="player.html" ></iframe>
+			<% } %>
+			<ul class="help-video-ul">
+				<% _.each(helpVideoDate,function(element,item){ %>
+					<li class="help-video-li">
+						<a class="help-video-a" href="javascript:;" data-ccid="<%= element.ccid %>" data-videoTitle="<%= element.videoTitle %>">
+							<div class="help-video-img-content">
+								<img class="help-video-img" src="images/help-video-bg.png">
+								<span class="help-video-round hidden">
+									<span class="help-video-triangle"></span>
+								</span>
+							</div>
+						</a>
+						<p class="help-video-p"><%= element.videoTitle %></p>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<div class="help-question">
+			<p class="help-question-title">常见问题</p>
+			<div class="help-question-left">
+				<a class="help-feedback" href="javascript:;"><i class="icon icon-feedback"></i>意见建议</a>
+				<ul class="help-question-ul">
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q1学服老师我激活了F3U+网课，请老师给我邮寄讲义好吗？</p>
+						<span class="help-question-li-span">请把你的姓名和电话发给我，我先帮你查一下网课。已经确定你的F3U+网课已经激活了，请把你的地址发给我，今天会帮你邮寄纸质讲义</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q2请问老师16年网课有更新吗？可以适用9月份的考试吗？</p>
+						<span class="help-question-li-span">会在8月份之前更新F5F7F9P2P4的网课，但是每科具体更新的时间没有确定，近期可以多关注学员中心的系统消息，有网课更新都会在学习中心的系统消息里面提示大家，更新科目的具体章节和内容</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q3学服老师请，问电子版讲义如何进行下载？</p>
+						<span class="help-question-li-span">你需要使用电脑登录财萃网站，在学习中心在学课程里面找到需要下载讲义科目的网课，进入课程页面，在课程列表的右边可以下载完整版讲义</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q4学服老师我在手机上面无法登陆财萃网站？</p>
+						<span class="help-question-li-span">现在手机和ipad已经不能使用网页版观看网课了，你可以下载财萃APP观看和下载网课</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q5老师我是刚从APP下载的财萃课堂，为什么登陆用户名和密码以后却显示不了网课呀？</p>
+						<span class="help-question-li-span">我们新版APP在第一次登录账号以后需要上传一张自己的照片或是图片之后，才可以进入课程中心观看网课</span>
+					</li>
+				</ul>
+			</div>
+			<div class="help-question-right">
+				<ul class="help-question-ul">
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q6老师我购买的U+课程网课过期了怎么申请重听呢？</p>
+						<span class="help-question-li-span">登陆财萃官网进入学习中心—个人中心—成绩管理—成绩录入上传成绩单或者缺考证明就会有老师给你解决的吆。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q7老师我已报名了考试可以申请取消考试吗？</p>
+						<span class="help-question-li-span">在每季报考的常规报名时间截止前取消就可以操作。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q8老师ACCA阶段证书怎么申请呢？</p>
+						<span class="help-question-li-span">ACCA考完前3科完成道德测试即可获得初级商业会计证书，考完前9科完成道德测试即可获得高级商业会计证书。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q9老师我报考了ACCA准备考试，报考有什么顺序吗？</p>
+						<span class="help-question-li-span">ACCA课程分知识课程、技能课程、核心课程、选修课程4个模块，按模块顺序报考，模块内顺序可以打乱，前一个模块没有考完的科目报下一个模块考试必须带上前一个模块未考过的科目。</span>
+					</li>
+					<li class="help-question-li">
+						<p class="help-question-li-p">Q10我注册ACCA时没有达到免试要求，现在想追加免试，截止时间到什么时候呢？</p>
+						<span class="help-question-li-span">追加免试一年有2次机会，针对每年6月份或12月份考试，截止日分别为每年1月15日及7月15日，追加免试流程也可以发你吆！</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-help-video" type="text/template">
+	<div id="animate">
+		<div class="studycenter-video layout">
+			<div class="studycenter-video-header layout">
+		    <div class="studycenter-video-title">
+		    	<%= videoTitle %>
+		    </div>
+		    <a class="studycenter-video-close video-icon video-icon-task-close " href="javascript:;">
+		    </a>
+			</div>
+			<div id="studycenter-video-main" class="studycenter-video-main layout">
+
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-feedback" type="text/template">
+	<div id="help-feedback-pop" class="help-feedback-pop">
+		<span class="pop-shadow"></span>
+		<div class="pop-html">
+			<div class="pop-header">您的意见我会虚心接受的</div>
+			<div class="pop-body">
+				<div class="pop-radios">
+					<% _.each(feedbackType,function(element,item){ %>
+						<a class="pop-radio-label <%=!item ? 'active' : '' %>" href="javascript:;">
+							<span class="pop-radio"><span class="pop-radio-round"></span></span>
+							<span class="pop-radio-span"><%= element %></span>
+						</a>
+					<% }) %>
+				</div>
+				<div class="pop-textarea-content">
+					<textarea class="pop-textarea" placeholder="亲爱的同学：小财非常欢迎你向小财反馈产品的意见建议和体验感受。我们一定会认真调整，及时反馈。根据你的建议，不断完善和优化我们的产品，为你提供更舒适的学习体验。"></textarea>
+				</div>
+
+			</div>
+			<div class="pop-footer">
+				<div class="pop-tel">
+					联系方式
+					<input class="pop-input-tel" type="text">
+				</div>
+				<div class="pop-button">
+					<a class="pop-button-cancel" href="javascript:;">取消</a>
+					<a class="pop-button-confirm" href="javascript:;">提交</a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</script>
