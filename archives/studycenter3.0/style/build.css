@@ -6128,6 +6128,10 @@ button.swiper-pagination-bullet {
 	padding: 5px 0;
 	vertical-align:middle;
 	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-box;
+	display: box;
 	padding-left: 5px;	
 	border: 1px solid transparent;
 	margin-top: -1px;
@@ -6367,7 +6371,6 @@ button.swiper-pagination-bullet {
 	background: #FF5E8A;
 	color: #fff;
 }
-
 
 
 .questions-cards::after{
