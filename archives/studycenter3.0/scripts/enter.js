@@ -1,5 +1,5 @@
 'use strict';
-var libsOrigin = 'http://libjs.caicui.com/libjs/';
+var libsOrigin = 'libjs/';
 if(window.location.origin==='http://www.caicui.com'){
 	libsOrigin = 'http://libjs.caicui.com/libjs/';
 }

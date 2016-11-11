@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){"use strict";var i=n.View.extend({el:"body",template:t.template(e("#template-questionsStyle").html()),events:{"click .questions-card-button":"toggleCards","click .questions-exit":"exit"},render:function(e){this.$el.append(this.template())}});return i});

@@ -70,6 +70,22 @@
 			});
 			return false;
 		};
+		var questions = function(knowledgepointid){
+			CAICUI.Loading = true;
+			require(['views/questions'], function(dom) {
+				var dom = new dom();
+				dom.render(knowledgepointid);
+			});
+			return false;
+		};
+		var questionsStyle = function(){
+			CAICUI.Loading = true;
+			require(['views/questionsStyle'], function(dom) {
+				var dom = new dom();
+				dom.render();
+			});
+			return false;
+		};
 		var pagination = function(){
 			src = 'pagination';
 		};
@@ -94,6 +110,8 @@
 			'/video/:courseId/:chapterId' : video,
 			'/video/:courseId/:chapterId/:taskId' : videoTask,
 			'/video/:courseId/:chapterId/:taskId/:taskprogress' : videoProgress,
+			'/questions/:knowledgepointid' : questions,
+			'/questionsStyle' : questionsStyle,
 			'/pagination' : pagination,
 			'/help' : help
 		};
@@ -146,7 +164,7 @@
 						if(CAICUI.Storage.getStorage('tryNum')<3){
 							setTimeout(function(){
 								window.location.reload();
-							},3000)
+							},1000)
 							
 						}else{
 							window.localStorage.clear();
@@ -218,7 +236,7 @@
 						if(CAICUI.Storage.getStorage('tryNum')<3){
 							setTimeout(function(){
 								window.location.reload();
-							},3000)
+							},1000)
 							
 						}else{
 							window.localStorage.clear();

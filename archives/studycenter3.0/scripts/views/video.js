@@ -190,7 +190,6 @@ define([
 				videoController.addAnimate(function(){
 					//开始显示任务
 					videoController.initDom();
-
 				});
 			}else{
 				window.location.href = "#/courseIndex/"+courseId;
@@ -209,7 +208,7 @@ define([
 						//CAICUI.render.$this.$courseActiveState = data.data;
 
 						if(data.state=="success"){
-							if(data.data[0].lockStatus !== 0){
+							if(data.data[0] && data.data[0].lockStatus !== 0){
 								CAICUI.render.lockStatus = true;
 							}
 							var courseinfo=data.data;

@@ -859,7 +859,6 @@
 				<a class="courseVersion-list-a" href="#courseStudy/<%= element.id %>" title="<%= element.title %>"> <%= element.title %> </a>
 			</li> <% } %> <% }) %> </script><script id="template-courseStudy-taskList" type="text/template"> <% if(data.courseDetail.availability && $.trim(data.courseDetail.availability) != ''){ %> <div class="courseIndex-content-tips" title="<%= data.courseDetail.availability %>"> <%= data.courseDetail.availability %> </div> <% } %> <ul class="course-list-one-ul"> <% 
 		var hasTask = false;
-		console.log(data.courseDetail)
 		_.each(data.courseDetail.chapters,function(element, index, list){
 			var courseActiveState = element.courseActiveState;
 
@@ -914,15 +913,15 @@
 														break;
 												}
 										%> <li> <% 
-												var vidwoIsFree = false;
+												var videoIsFree = false;
 												if(data.courseDetail.courseActiveState===4){
-													vidwoIsFree = false;
+													videoIsFree = false;
 												}else if(data.courseDetail.courseActiveState===3  || element.isFree=='true'){
 												//if(element.isFree=='false' && data.courseDetail.courseActiveState!=3){
-													vidwoIsFree = true;
+													videoIsFree = true;
 												}
-												if(vidwoIsFree){
-													courseListLink = 'js-course-list-link course-list-link';
+												if(videoIsFree){
+													courseListLink = '';
 													var link = '#video/'+data.courseId+'/'+element.chapterId+'?return_link=courseStudy/'+ data.courseId+'&return_hash=on';
 													var videoNum = 0;
 													var examNum = 0;
@@ -935,17 +934,24 @@
 														}
 													});
 													if(videoNum && examNum){
-														courseListLink = 'js-course-list-link course-list-link course-list-link-width';
+														courseListLink = 'course-list-link-width';
 													}
 												}else{
 													var link = 'javascript:;';
 													courseListType = 'icon-course-list-lock';
-													courseListLink = 'js-course-list-link course-list-link course-list-link-nowidth';
+													courseListLink = 'course-list-link-nowidth';
 												} 
-											%> <a class="<%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2 +"|" + index %>" href="javascript:;">
+											%> <a class="js-course-list-link course-list-link <%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2 +"|" + index %>" href="javascript:;">
 												<i class="icon icon-left <%= courseListType %>"></i>
 												<span class="course-list-desc"><%= element.chapterTitle %></span>
-												<div class="course-list-info"> <% if(videoNum){ %> <span class="course-list-triangle"></span>X<%= videoNum %> <% } %> <% if(examNum){ %> <i class="icon icon-course-exam"></i>X<%= examNum %> <% } %> </div>
+												<div class="course-list-info">
+													<div id="course-list-questions-box-<%= element.knowledgePointId %>" class="course-list-questions-box">
+													<i class="icon icon-course-exam icon-course-questions"></i>
+													<span class="">
+														<span class="knowledge-point-number-<%= element.knowledgePointId %>">0</span><span>/</span><span class="knowledge-point-total-<%= element.knowledgePointId %>"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+														</span>
+													<span id="knowledge-point-btn-<%= element.knowledgePointId %>" class="js-course-questions course-questions" data-chapterId="<%= element.chapterId %>" data-chapterName="<%= element.chapterTitle %>" data-knowledgepointid="<%= element.knowledgePointId %>">做题</span>
+													</div> <% if(videoNum){ %> <span class="course-list-triangle"></span>X<%= videoNum %> <% } %> <% if(examNum){ %> <i class="icon icon-course-exam"></i>X<%= examNum %> <% } %> </div>
 											</a>
 										</li> <% } }) %> </ul> <% 
 										}else if(element.tasks && element.tasks.length){
@@ -988,15 +994,15 @@
 													break;
 											}
 									%> <% 
-											var vidwoIsFree = false;
+											var videoIsFree = false;
 												if(data.courseDetail.courseActiveState===4){
-													vidwoIsFree = false;
+													videoIsFree = false;
 												}else if(data.courseDetail.courseActiveState==3  || element.isFree=='true'){
 												//if(element.isFree=='false' && data.courseDetail.courseActiveState!=3){
-													vidwoIsFree = true;
+													videoIsFree = true;
 												}
-											if(vidwoIsFree){
-												courseListLink = 'js-course-list-link course-list-link';
+											if(videoIsFree){
+												courseListLink = '';
 												var link = '#video/'+data.courseId+'/'+element.chapterId+'?return_link=courseStudy/'+ data.courseId+'&return_hash=on';
 												var videoNum = 0;
 												var examNum = 0;
@@ -1009,17 +1015,25 @@
 													}
 												});
 												if(videoNum && examNum){
-													courseListLink = 'js-course-list-link course-list-link course-list-link-width';
+													courseListLink = 'course-list-link-width';
 												}
 											}else{
 												var link = 'javascript:;';
 												courseListType = 'icon-course-list-lock';
-												courseListLink = 'js-course-list-link course-list-link course-list-link-nowidth';
+												courseListLink = 'course-list-link-nowidth';
 											} 
-										%> <a class="<%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2  %>" href="javascript:;">
+										%> <a class="js-course-list-link course-list-link <%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex + "|" + chaptersindex2  %>" href="javascript:;">
+											
 											<i class="icon icon-left <%= courseListType %>"></i>
 											<span class="course-list-desc"><%= element.chapterTitle %></span>
-											<div class="course-list-info"> <% if(videoNum){ %> <span class="course-list-triangle"></span>X<%= videoNum %> <% } %> <% if(examNum){ %> <i class="icon icon-course-exam"></i>X<%= examNum %> <% } %> </div>
+											<div class="course-list-info">
+												<div id="course-list-questions-box-<%= element.knowledgePointId %>" class="course-list-questions-box">
+													<i class="icon icon-course-exam icon-course-questions"></i>
+													<span class="">
+														<span class="knowledge-point-number-<%= element.knowledgePointId %>">0</span><span>/</span><span class="knowledge-point-total-<%= element.knowledgePointId %>"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+													</span>
+													<span  id="knowledge-point-btn-<%= element.knowledgePointId %>" class="js-course-questions course-questions" data-chapterId="<%= element.chapterId %>" data-chapterName="<%= element.chapterTitle %>" data-knowledgepointid="<%= element.knowledgePointId %>">做题</span>
+												</div> <% if(videoNum){ %> <span class="course-list-triangle"></span>X<%= videoNum %> <% } %> <% if(examNum){ %> <i class="icon icon-course-exam"></i>X<%= examNum %> <% } %> </div>
 										</a> <% } %> </li> <% }) %> </ul> <% }else if(element.tasks && element.tasks.length){ %> <% 
 								var courseListLink = 'course-list-link';
 								var courseListType = 'icon-course-list-default'; 
@@ -1058,15 +1072,15 @@
 										courseListType = 'icon-course-list-completed';
 										break;
 								}
-								var vidwoIsFree = false;
+								var videoIsFree = false;
 								if(data.courseDetail.courseActiveState===4){
-									vidwoIsFree = false;
+									videoIsFree = false;
 								}else if(data.courseDetail.courseActiveState==3  || element.isFree=='true'){
 								//if(element.isFree=='false' && data.courseDetail.courseActiveState!=3){
-									vidwoIsFree = true;
+									videoIsFree = true;
 								}
-								if(vidwoIsFree){
-									courseListLink = 'js-course-list-link course-list-link';
+								if(videoIsFree){
+									courseListLink = '';
 									var link = '#video/'+data.courseId+'/'+element.chapterId+'?return_link=courseStudy/'+ data.courseId+'&return_hash=on';
 									var videoNum = 0;
 									var examNum = 0;
@@ -1079,17 +1093,25 @@
 										}
 									});
 									if(videoNum && examNum){
-										courseListLink = 'js-course-list-link course-list-link course-list-link-width';
+										courseListLink = 'course-list-link-width';
 									}
 								}else{
 									var link = 'javascript:;';
 									courseListType = 'icon-course-list-lock';
-									courseListLink = 'js-course-list-link course-list-link course-list-link-nowidth';
+									courseListLink = 'course-list-link-nowidth';
 								} 
-						%> <a class="<%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex %>" href="javascript:;">
+						%> <a class="js-course-list-link course-list-link <%= courseListLink %>" link="<%= link %>" learning="learning" data-index="<%= chaptersindex %>" href="javascript:;">
+
 							<i class="icon icon-left <%= courseListType %>"></i>
 							<span class="course-list-desc"><%= element.chapterTitle %></span>
-							<div class="course-list-info"> <% if(videoNum){ %> <span class="course-list-triangle"></span>X<%= videoNum %> <% } %> <% if(examNum){ %> <i class="icon icon-course-exam"></i>X<%= examNum %> <% } %> </div>
+							<div class="course-list-info">
+								<div id="course-list-questions-box-<%= element.knowledgePointId %>" class="course-list-questions-box">
+									<i class="icon icon-course-exam icon-course-questions"></i>
+									<span class="">
+										<span class="knowledge-point-number-<%= element.knowledgePointId %>">0</span><span>/</span><span class="knowledge-point-total-<%= element.knowledgePointId %>"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+									</span>
+									<span id="knowledge-point-btn-<%= element.knowledgePointId %>" class="js-course-questions course-questions" data-chapterId="<%= element.chapterId %>" data-chapterName="<%= element.chapterTitle %>" data-knowledgepointid="<%= element.knowledgePointId %>">做题</span>
+								</div> <% if(videoNum){ %> <span class="course-list-triangle"></span>X<%= videoNum %> <% } %> <% if(examNum){ %> <i class="icon icon-course-exam"></i>X<%= examNum %> <% } %> </div>
 						</a> <% } %> </li> <%  } }) %> </ul></script><script id="template-course-notActivated" type="text/template"><div class="course">
 	<ul class="course-ul">
 		<li class="course-li ">
@@ -2089,7 +2111,94 @@
 			  &gt;
 			  </a>
 			</li> <% } %> </ul>
-</div></script><script id="template-studycenterIndex" type="text/template"><div class="index">
+</div></script><script id="template-questions" type="text/template"><div class="questions">
+		<div class="questions-header">
+			<h3 class="questions-title"><%= CAICUI.render.chapterName %></h3>
+
+			<div class="questions-progress">
+				进度
+				<span class="questions-progress-box">
+					<span class="questions-progress-show" data-questions-progress="0" style="width: 0%;">
+						<i class="icon icon-questions-progress"></i>
+					</span>
+					<i class="icon icon-questions-no-progress"></i>
+				</span>
+				<span class="questions-percentage">0</span>%
+			</div>
+			<span class="questions-times">01:12:34</span>
+			<div class="questions-header-button">
+				<a href="javascript:;" class="questions-card-button">展开答题卡</a>
+				<a href="javascript:;" class="questions-exit">退出</a>
+			</div>
+			
+		</div>
+
+		<div class="questions-body">
+			<div id="wrapper" class="wrapper">
+				<div id="scroller" class="scroller">
+					
+
+				</div><!-- scroller -->
+			</div><!-- wrapper -->
+			
+		</div>
+		<div class="questions-footer">
+			<div class="questions-btn questions-btn-prev js-questions-btn-prev">上一题</div>
+
+			<div class="questions-btn questions-btn-analysis">解析</div>
+			<div class="questions-btn questions-btn-note">笔记</div>
+			<div class="questions-btn questions-btn-question">问答</div>
+
+			<div class="questions-btn questions-btn-next js-questions-btn-next">下一题</div>
+		</div>
+	</div></script><script id="template-questions-cards" type="text/template"><div class="questions-cards">
+		<div class="questions-cards-left">
+			<p>已做/未做</p>
+			<p><span class="exercise-done-count"></span>/<span class="exercise-nodone-count"></span></p>
+			<p>正确率</p>
+			<div class="questions-progress-round progress-round">
+				<span class="progress-round-border"></span>
+				<span class="progress-round-num"><span class="progress-round-count"></span><span class="progress-round-unit">%</span></span>
+				<canvas id="progress-round-question" class="progress-round-canvas" width="84" height="84" data-progress="0"></canvas>
+			</div>
+		</div>
+		<div class="questions-cards-right">
+			<ul class="questions-cards-desc-ul">
+				<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-success" disabled="disabled"></span>正确</li>
+				<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-danger" disabled="disabled"></span>错误</li>
+				<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-info" disabled="disabled"></span>未做</li>
+			</ul>
+			<ul class="questions-cards-ul"> <%
+					_.each(data,function(element,index){
+						if(0){
+							if(CAICUI.render.lastExerciseNid==element.nid){
+								CAICUI.render.exerciseId = element.exercise_id
+							}
+							var btnClass = 'btn-info';
+							if(element.status=='1'){
+								btnClass = 'btn-success';
+							}else if(element.status=='2'){
+								btnClass = 'btn-danger';
+							}
+						}
+				%> <li class="questions-cards-li "><a id="questions-card-<%= element %>" href="javascript:;"  class="js-card-btn questions-cards-info questions-cards-btn " data-index="<%= index %>" data-exerciseid="<%= element %>"><%= index+1 %></a></li> <% }) %> </ul>
+		</div>
+	</div></script><script id="template-questions-content" type="text/template"><div class="questions-content questions-content-<%= item.questionTypes %>" data-id="<%= item.id %>">
+			<p class="questions-index">第<%= +CAICUI.render.lastExerciseNid+1 %>题</p>
+			<div class="questions-title"><%= item.title %></div>
+			<div class="questions-background"><%= item.background %></div>
+			<div class="questions-options questions-options-<%= item.questionTypes %>"> <%= CAICUI.render.this.questions(item.questionTypes,item.context,item.answerResolution) %> </div><!-- questions-options -->
+			<div class="questions-answerResolution">
+				<p class="questions-answerResolution-p">解析</p> <% if(item.answerResolution){ %> <%= item.answerResolution %> <% }else{ %> 暂无解析 <% } %> </div>
+		</div><!-- questions-content --></script><script id="template-questions-contentssssss" type="text/template"> <% _.each(items,function(element, index, list){ %> <div class="questions-content questions-<%= element.questionTypes %>" data-id="<%= element.id %>">
+			<p class="questions-index"><%= index %></p>
+			<div class="questions-title"><%= element.title %></div>
+			<div class="questions-background"><%= element.background %></div>
+			<div class="questions-options questions-options-<%= element.questionTypes %>"> <%= CAICUI.render.this.questions(element.questionTypes,element.context) %> </div><!-- questions-options -->
+			<div class="questions-answerResolution"> <%= element.answerResolution %> </div>	
+		</div><!-- questions-content --> <% }) %> </script><script id="template-questionsStyle" type="text/template"><div class="questions">
+		
+	</div></script><script id="template-studycenterIndex" type="text/template"><div class="index">
 		<div class="index-top">
 			<div class="index-top-left">
 				<img class="index-top-avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>">

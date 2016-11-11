@@ -193,7 +193,7 @@ define([],function(){
             }*/
             return result;
         },
-        canvasRound : function(dom){
+        canvasRound : function(dom,str){
         	var canvas = document.getElementById(dom);
         	if(canvas && canvas.getContext){
         		var width = canvas.width;
@@ -203,18 +203,59 @@ define([],function(){
         			return false;
         		}
         		var cxt=canvas.getContext("2d");
-    				var canvasTimerTotal = 20;
-    				var canvasNum = 1;
+            var canvasTimerTotal = 20;
+            var canvasNum = 1;
+
+            if(str && str.bg){
+              
+              cxt.beginPath();
+              cxt.arc(width/2,height/2,(width/2)-1,1.5*Math.PI,100,false);
+              cxt.lineWidth=1;
+              cxt.strokeStyle='#f00';
+              cxt.stroke();
+              
+            }
+    				
+
     				var canvasTimer = setInterval(function(){
     					if(canvasNum>canvasTimerTotal){
     						clearInterval(canvasTimer);
     					}else{
-    						cxt.clearRect(0, 0, width, height) 
+    						
+                cxt.clearRect(0, 0, width, height)
+                if(str && str.bg){
+                  
+                  cxt.beginPath();
+                  cxt.arc(width/2,height/2,(width/2)-1,1.5*Math.PI,100,false);
+                  if(str && str.bgBorderWidth){
+                    cxt.lineWidth=str.bgBorderWidth;
+                  }else{
+                    cxt.lineWidth=1;
+                  }
+                  if(str && str.bgBorderColor){
+                      cxt.strokeStyle=str.bgBorderColor;
+                  }else{
+                      cxt.strokeStyle='#fff';
+                  }
+                  cxt.stroke();
+                  
+                }
+                
+
     						var endRad = Math.PI*(( ( (progress/canvasTimerTotal)*canvasNum ) /100)*2-0.5);
     						cxt.beginPath();
     						cxt.arc(width/2,height/2,(width/2)-1,1.5*Math.PI,endRad,false);
-    						cxt.lineWidth = 2;
-    						cxt.strokeStyle='#fff';
+                if(str && str.borderWidth){
+                  cxt.lineWidth=str.borderWidth;
+                }else{
+                  cxt.lineWidth=2;
+                }
+
+                if(str && str.borderColor){
+                    cxt.strokeStyle=str.borderColor;
+                }else{
+                    cxt.strokeStyle='#fff';
+                }
     						cxt.stroke();
     						cxt.closePath();
     					}

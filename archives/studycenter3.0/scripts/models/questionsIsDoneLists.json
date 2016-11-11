@@ -1,0 +1,21 @@
+{
+	"state":"success",
+	"msg":"",
+	"data":[{
+		"context" : [{"title":"<p>\n\tThe candidate may get in trouble when questioned randomly\n</p>","isChecked":false,"myChecked":true},{"title":"<p>\n\tIt is easy to get an agreement&nbsp;on the best candidate\n</p>","isChecked":true,"myChecked":true},{"title":"<p>\n\tThe candidate performs better in selection board interview than in a paper test\n</p>","isChecked":true},{"title":"<p>\n\tInterviewers can share opinions on a single meeting\n</p>","isChecked":false}],
+		"nid":"29",
+		"create_date":"2016-11-08 15:49:07",
+		"modify_date":"2016-11-08 15:49:14",
+		"subject_id":null,
+		"category_id":null,
+		"course_id":null,
+		"chapter_id":null,
+		"member_id":"8a22cc685215de9f01521b37b748020f",
+		"cache_knowledge_level1_id":null,
+		"cache_knowledge_level2_id":null,
+		"cache_knowledge_path":"123",
+		"exercise_id":"123",
+		"status":"1"
+	}]
+}
+

@@ -1,4 +1,4 @@
-define(['jquery',  'common'],function($,  Common){
+define(['jquery',  'common', 'layer'],function($,  Common, layer){
 	'user strict';
 	var server = {
 		'token' : {
@@ -129,33 +129,67 @@ define(['jquery',  'common'],function($,  Common){
 		},
 		'version' : {
 			'url' : '/api/course/courselist/version/v3/'
+		},
+		'exercisePointCountCache' : {
+			'url' : '/api/extendapi/examen/get_exercise_point_count_cache',
+			'type' : 'POST'
+		},
+		'exerciseKnowledgeMemberStatus' : {
+			'url' : '/api/userAction/examen/get_exercise_knowledge_member_status',
+			'type' : 'POST'
+		},
+		'userKnowledgePointExerciseList' : {
+			'url' : '/api/userAction/examen/get_user_knowledge_point_exercise_list'
+		},
+		'setMemberExerciseLog' : {
+			'url' : '/api/userAction/examen/setMemberExerciseState'
+		},
+		'getNidExerciseDetail' : {
+			'url' : '/api/teachsource/examen/getNidExerciseDetail'
 		}
 	};
 	
 	return {
 		ajax : function(args){
-			var thatServer = server[args.server];
+			
 			// var hostName = "";
 			// if(thatServer.hostName){
 			// 	hostName = thatServer.hostName;
 			// }else{
 			// 	hostName = Common.host.name;
 			// }
-			var hostName = thatServer.hostName?thatServer.hostName:Common.host.name;
-			var url = hostName + thatServer.url  + "?verTT=" + new Date().getTime();
-			var type = thatServer.type || 'get';
-			var data = thatServer.data || args.data;
+			
+			var url = '';
+			var type = 'get';
+			var data = '';
+			if(args.url){
+				url = args.url
+			}else{
+				var thatServer = server[args.server];
+				var hostName = args.hostName?args.hostName:Common.host.name;
+				if(args.hostName){
+					hostName = args.hostName;
+				}
+				url = hostName + thatServer.url  + "?verTT=" + new Date().getTime();
+				type = thatServer.type;
+				data = thatServer.data || args.data;
+			}
+			
+			
 			//var thatServerData = thatServer.data ? thatServer.data : args.data;
 			$.ajax({
 				url : url,
 				type : type,
 				data : data,
 				success : function(data){
+
 					if (typeof data == "string") {
 					  data = JSON.parse(data);
 					}
 					if (data.msg == "nologin") {
-						window.location.href = CAICUI.Common.loginLink;
+						layer.msg('Sorry~ 您的账号在其它地方登录', function() {
+							window.location.href = CAICUI.Common.loginLink;
+						});
 
           } else if (data.state == "success") {
             args.done(data)
