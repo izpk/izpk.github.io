@@ -738,7 +738,7 @@
 				window.CAICUI.myScroll.refresh();
 			},
 			clockTime : function(){
-				var timer = null,num=0,clock = this.$el.find(".questions-times");
+				var timer = null,num=CAICUI.render.ExerciseTotalTime,clock = this.$el.find(".questions-times");
 				clock.text("00:00:00");
 				timer = setInterval(function(){
 					num++;
