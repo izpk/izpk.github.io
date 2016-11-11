@@ -1,0 +1,532 @@
+*{margin:0;padding:0;}
+.questions{
+	padding: 42px 0;
+	padding: 0 168px;
+	background: #374E5D;
+	min-width: 768px;
+}
+/*头部*/
+.questions .questions-header{
+	background-color:#00A184;
+	height: 42px;
+	position: fixed;
+}
+.questions .questions-header .questions-title{
+	position: absolute;
+	top: 10px;
+	left: 36px;
+	font-size: 16px;
+	color: #fff;
+	overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 20em;
+}
+.questions .questions-header .questions-progress{
+	margin:0 auto;
+	display: block;
+	color: #fff;
+	width: 232px;
+	float: none;
+	font-size: 14px;
+	padding-top: 10px;
+
+}
+.questions .questions-header .questions-progress .questions-progress-box{
+	width: 100px;
+	height: 12px;
+	vertical-align: middle;
+	margin:0 10px;
+}
+.questions-progress .questions-progress-box .questions-progress-show{
+	border-radius: 6px;
+	height: 12px;
+}
+.questions .questions-header .questions-progress .questions-progress-box .icon-questions-progress{	
+	background: #B2E3DA;
+	height: 12px;
+}
+.questions-progress .questions-progress-box .icon-questions-no-progress{
+	background: #fff;
+	border-radius: 6px;
+	width: 100%;
+	height: 12px;
+}
+.questions-header .questions-times{
+	position: absolute;
+	top:9px;
+	right:300px;
+	font-size: 16px;
+	color: #fff;
+	background: url(../../images/time.png) no-repeat left center;
+	padding-left: 30px;
+}
+.questions .questions-header .questions-header-button{
+	position: absolute;
+	right: 16px;
+	top:5px;
+
+}
+.questions .questions-header .questions-header-button .questions-card-button,.questions .questions-header .questions-header-button .questions-exit{
+	display: inline-block;
+	border: none;
+	outline: none;
+	background: #00A184;
+	color:#fff;
+	width: 110px;
+	padding-top: 6px;
+	padding-left: 42px;
+}
+.questions .questions-header .questions-header-button .questions-card-button{
+	background: url(../../images/dtk.png) no-repeat left bottom;
+	padding-left: 30px;
+}
+.questions .questions-header .questions-header-button .questions-exit::before{
+	content: "";
+	width: 1px;
+	height: 18px;
+	position: absolute;
+	background-color: #fff;
+	left: 140px;
+	top:7px;
+}
+.questions .questions-header .questions-header-button .questions-card-button::after{
+	content: "";
+	display: block;
+	width: 0px;
+	height: 0px;
+	border: 8px solid transparent;
+	border-top:8px solid #fff;
+	position: absolute;
+	top:12px;
+	right:98px; 
+}
+.questions .questions-header .questions-header-button .questions-card-button.active::after{
+	border: 8px solid transparent;
+	border-bottom:8px solid #fff;
+	top:3px;
+}
+/*中间内容*/
+.questions-content{
+	padding:98px 46px;
+}
+.questions-content .questions-index{
+	color: #00A184;
+	font-weight: bold;
+}
+.questions-content .questions-title{
+	padding-top: 10px;
+	line-height: 24px;
+}
+.questions-content .questions-title p{
+	line-height: 24px;
+}
+.questions-content .questions-background{
+	line-height: 24px;
+}
+
+.questions-options{
+	padding-top: 30px;
+}
+.questions-options-box label{
+	display: inherit;
+}
+.questions-options .questions-hover{
+	display: block;
+	cursor: pointer;
+	padding: 5px 0;
+	vertical-align:middle;
+	display: -webkit-box;
+	padding-left: 5px;	
+	border: 1px solid transparent;
+	margin-top: -1px;
+}
+.questions-options .questions-options-box .questions-blank input{
+	border: none;
+	outline: none;
+	width: 196px;
+	height: 40px;
+	border: 1px solid #00A184;
+	padding-left: 10px;
+}
+.questions-options-box .questions-table .questions-td input{
+	border: none;
+	outline: none;
+	border: 1px solid #00A184;
+	padding-left: 10px;
+}
+.questions-options-box .questions-table .questions-td input.questions-checkbox-input{
+	border: none;
+	outline: none;
+}
+.questions-options-box .questions-table .questions-td input.questions-radio-input{
+	border: none;
+	outline: none;
+}
+.questions-options .questions-hover.active,.questions-options .questions-hover:hover{
+	border: 1px solid #00A184;
+}
+.questions-options .questions-hover input{
+	/*vertical-align:middle;*/
+}
+
+.questions-options .questions-hover div{
+	padding-left:20px;
+	padding-right: 10px;
+}
+.questions-options .questions-hover div p{
+	line-height: 24px;
+	margin:0;
+}
+
+
+
+
+.questions-options .questions-question textarea{
+	width: 100%;
+	height: 110px;
+	border: none;
+	outline: none;
+	border: 1px solid #00A184;
+	padding: 10px;
+}
+.questions-table.questions-matrix-blank .questions-tbody .questions-tr .questions-td{
+	border: 1px solid #ccc;
+}
+
+
+.questions-options.questions-options-multiTask .questions-radio label div{
+	padding-top: 3px;
+}
+.questions-options-multiTask .questions-options-title{
+	padding-bottom: 10px;
+}
+.questions-options-multiTask .gapStatement{
+	padding: 10px 0;
+}
+.questions-content.questions-blank .questions-options .questions-blank input[type=input]{
+	width: 194px;
+	height: 40px;
+	border: none;
+	outline: none;
+	border: 1px solid #00A184;
+	padding-left: 10px;
+}
+.questions-options .questions-matrix{
+	width: 100%;
+	border: none;
+}	
+.questions-options .questions-matrix tr td{
+	text-align: center;	
+}
+.questions-options .questions-matrix tr td:nth-child(1){
+	text-align: left;
+	padding-left: 10px;
+}
+.questions-table .questions-tbody .questions-tr .questions-td{
+	border: none;
+	border-bottom: 1px solid #ccc;
+	padding:10px 5px;
+}
+.questions-table .questions-tbody .questions-tr:last-child .questions-td{
+	/*border: none;*/
+}
+/*.questions-options.questions-options-matrixRadio .questions-matrix-radio .questions-tr .questions-td input{
+	-webkit-appearance:none;
+	border: none;
+	outline: none;
+	width: 20px;
+    height: 20px;
+    display: inline-block;
+	background: url(../../images/radio3.png) no-repeat left center;
+}
+.questions-options.questions-options-matrixRadio .questions-matrix-radio .questions-tr .questions-td input:checked{
+	background: url(../../images/radio4.png) no-repeat left center;
+}*/
+.questions-content-multiTask .questions-options-box{
+	margin-top: 20px;
+}
+.questions-options.questions-options-matrixCheckbox table{
+	width: 100%;
+	border: none;
+}	
+.questions-options.questions-options-matrixCheckbox table tr td{
+	text-align: center;	
+}
+.questions-options.questions-options-matrixCheckbox table tr td:nth-child(1){
+	text-align: left;
+	padding-left: 10px;
+}
+
+
+
+
+.questions-content.questions-matrixBlank table{
+	width: 100%;
+}	
+.questions-content.questions-matrixBlank table.questions-table .questions-tbody .questions-tr .questions-td{
+	text-align: center;	
+	border: 1px solid #ccc;
+}
+.questions-content.questions-matrixBlank table.questions-table .questions-tbody .questions-tr .questions-td:nth-child(1){
+	text-align: left;
+	padding-left: 10px;
+}
+.questions-content.questions-matrixBlank table.questions-table .questions-tbody .questions-tr .questions-td:nth-child(2) input{
+	width: 80%;
+	height: 30px;
+	border: none;
+	outline: none;
+	border: 1px solid #00A184;
+	padding-left: 10px;
+}
+.questions-content.questions-multiTask .questions-blank{
+	padding: 5px 0;
+}
+.questions-content.questions-multiTask .questions-blank input{
+	width: 200px;
+	height: 30px;
+	border: none;
+	outline: none;
+	border: 1px solid #00A184;
+	padding-left: 10px;
+}
+/*解析*/
+.questions-content .questions-answerResolution{
+	margin: 30px 0;
+}
+
+/*答题卡*/
+.questions-cards{
+	right: 116px;
+	overflow: visible;
+	border: 1px solid #BFBFBF;
+	top:34px;
+	padding-top: 8px;
+	border: 1px solid transparent;
+	border: none;
+}
+.questions-cards .questions-cards-left{
+	text-align: center;
+	padding-top: 22px;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.questions-cards .questions-cards-right{
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.questions-cards .questions-cards-left p:nth-child(2){
+	font-size: 36px;
+	color:#00A184;
+	padding: 15px 0 18px 0;
+}
+.questions .questions-cards-left .questions-progress-round {
+    position: absolute;
+    top: 170px;
+    bottom: 0;
+    left: 36px;
+    width: 74px;
+    height: 74px;
+    line-height: 84px;
+    text-align: center;
+}
+.questions-progress-round .progress-round-num,.questions-progress-round  .progress-round-unit{
+	color: #00A184;
+	opacity: 1;
+}
+.questions-cards .questions-cards-right .questions-cards-desc-ul{
+	width: 100%;
+	height: 54px;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.questions-cards-desc-ul .questions-cards-desc-li{
+	float: left;
+	line-height: 40px;
+	padding-left: 10px;
+}
+.questions-cards-desc-btn{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	background: #ccc;
+	vertical-align: middle;
+	margin-right: 5px;
+	border: none;
+	outline: none;
+	opacity: 1;
+	padding: 0;
+
+}
+.questions-cards-btn{
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	line-height: 24px;
+	background-color: #E4E1E2;
+	color: #000;
+}
+.questions-cards-success{
+	background: #727171;
+}
+.questions-cards-danger{
+	background: #FF5E8A;
+	color: #fff;
+}
+.questions-cards-info{
+	background-color: #E4E1E2;
+	color: #000;
+}
+
+
+.questions-cards::after{
+	content: "";
+	display: block;
+	width: 0px;
+	height: 0px;
+	border: 8px solid transparent;
+	border-bottom:8px solid #fff;
+	position: absolute;
+	top: -8px;
+    right: 50px; 
+	
+}
+.questions-cards::before {
+    content: "";
+    display: block;
+    width: 102%;
+    height: 8px;
+    position: absolute;
+    top: 0;
+    left: -5px;
+    background: #00A184;
+}
+/*底部*/
+.questions .questions-footer{
+	height: 42px;
+	background: #00A184;
+}
+.questions .questions-footer .questions-btn{
+	cursor: pointer;
+}
+.questions .questions-footer .questions-btn-prev{
+	float: left;
+	width: 90px;
+	height: 24px;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 22px;
+	margin:10px 0 0 143px;
+	color:#fff;
+}
+.questions .questions-footer .questions-btn-prev::before{
+	content: "<";
+	color:#fff;
+	padding-right: 5px;
+}
+.questions .questions-footer .questions-btn-next{
+	float: right;
+	width: 90px;
+	height: 24px;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 22px;
+	margin:10px 143px 0 0;
+	color:#fff;
+}
+.questions .questions-footer .questions-btn-next::after{
+	content: ">";
+	color:#fff;
+	padding-left: 5px;
+}
+.questions .questions-footer .questions-btn-analysis{
+	position: absolute;
+	top:10px;
+	/*left: 40%;*/
+	left: 50%;
+	color:#fff;
+	background: url(../../images/jiexi.png) no-repeat left center;
+	padding-left: 30px;
+}
+.questions .questions-footer .questions-btn-note{
+	position: absolute;
+	top:10px;
+	left: 50%;
+	color:#fff;
+	background: url(../../images/biji.png) no-repeat left center;
+	padding-left: 30px;
+	margin-left: -30px;
+	display: none;
+}
+.questions .questions-footer .questions-btn-question{
+	position: absolute;
+	top:10px;
+	right: 40%;
+	color:#fff;
+	background: url(../../images/wenda.png) no-repeat left center;
+	background-size: contain;
+	padding-left: 30px;
+	display: none;
+
+}
+
+
+
+.questions-radio-input{
+	-webkit-appearance:none;
+	border: none;
+	outline: none;
+	width: 11px;
+    height: 11px;
+    display: inline-block;
+	background: url(../../images/radio1.png) no-repeat left center;
+}
+.active .questions-radio-input{
+	background: url(../../images/radio2.png) no-repeat left center;
+}
+.questions-checkbox-input{
+	-webkit-appearance:none;
+	border: none;
+	outline: none;
+	width: 10px;
+    height: 10px;
+    display: inline-block;
+    vertical-align: middle;
+	background: url(../../images/checkbox1.png) no-repeat left center;
+}
+.active .questions-checkbox-input{
+	background: url(../../images/checkbox2.png) no-repeat left center;
+}
+.questions-matrix .questions-radio-input,.questions-content-multiTask .questions-radio-input{
+	-webkit-appearance:none;
+	border: none;
+	outline: none;
+	width: 20px;
+    height: 20px;
+    display: inline-block;
+	background: url(../../images/radio3.png) no-repeat left center;
+}
+.questions-matrix .active .questions-radio-input,.questions-content-multiTask .active .questions-radio-input{
+	background: url(../../images/radio4.png) no-repeat left center;
+}
+.questions-matrix .questions-checkbox-input,.questions-content-multiTask .questions-checkbox-input{
+	-webkit-appearance:none;
+	border: none;
+	outline: none;
+	width: 20px;
+    height: 20px;
+    display: inline-block;
+	background: url(../../images/checkbox3.png) no-repeat left center;
+}
+.questions-matrix .active .questions-checkbox-input,.questions-content-multiTask .active .questions-checkbox-input{
+	background: url(../../images/checkbox4.png) no-repeat left center;
+}
+
+.questions-answerResolution-p{
+	  font-size: 22px;
+    margin-bottom: 10px;
+}

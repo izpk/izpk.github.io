@@ -1,0 +1,20 @@
+@import "normalize";
+@import "compass/css3";
+div,a{
+	@include box-sizing(border-box);
+}
+a{
+	color : #fff;
+	text-decoration: none;
+}
+ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+pre{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+

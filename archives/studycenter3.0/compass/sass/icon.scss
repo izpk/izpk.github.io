@@ -1,0 +1,341 @@
+@mixin WH($width : 100%,$height: 100%) {
+  width : $width;
+  height : $height;
+}
+.icon{
+	display : inline-block;
+	background : url('http://static.caicui.com/studycenterskin/images/studycenter-icon.png') no-repeat;
+}
+.icon-logo{
+  @include WH(267px,40px);
+  background-position: -759px -722px;
+}
+.icon-download{
+	@include WH(16px,16px);
+	background-position: -60px -94px;
+}
+.download-app:hover .icon-download{
+	background-position: -208px -94px;
+}
+.download-app:active .icon-download{
+	background-position: -346px -94px;
+}
+.icon-comment{
+	@include WH(16px,16px);
+	background-position: -60px -131px;
+}
+.icon-comment:hover{
+	background-position: -208px -131px;
+}
+.icon-comment:active{
+	background-position: -346px -131px;
+}
+.icon-exit-bg{
+	@include WH(130px,100px);
+	background-position: -933px -1331px;
+}
+
+.icon-home{
+	@include WH(21px,21px);
+	background-position: -60px -167px;
+}
+.nav-li:hover .icon-home,.nav-li.active .icon-home{
+	background-position: -484px -167px;
+}
+.icon-course{
+	@include WH(21px,21px);
+	background-position: -60px -207px;
+}
+.nav-li:hover .icon-course,.nav-li.active .icon-course{
+	background-position: -484px -207px;
+}
+.icon-exam{
+	@include WH(21px,21px);
+	background-position: -60px -246px;
+}
+.nav-li:hover .icon-exam,.nav-li.active .icon-exam{
+	background-position: -484px -246px;
+}
+.icon-note{
+	@include WH(21px,21px);
+	background-position: -60px -287px;
+}
+.nav-li:hover .icon-note,.nav-li.active .icon-note{
+	background-position: -484px -287px;
+}
+.icon-ac{
+	@include WH(21px,21px);
+	background-position: -60px -326px;
+}
+.nav-li:hover .icon-ac,.nav-li.active .icon-ac{
+	background-position: -484px -326px;
+}
+
+
+.icon-course-title{
+	@include WH(20px,13px);
+	margin-right: 10px;
+	background-position: -60px -492px;
+}
+.icon-courseStudy{
+	//@include WH(34px,34px);
+	//background-position: -60px -686px;
+	@include WH(149px,35px);
+	background-position: -165px -524px;
+}
+.icon-courseStudy-active{
+	@include WH(149px,35px);
+	background-position: -483px -524px;
+}
+.icon-courseNote{
+	//@include WH(34px,34px);
+	//background-position: -60px -740px;
+	@include WH(149px,35px);
+	background-position: -165px -578px;
+}
+.icon-courseNote-active{
+	@include WH(149px,35px);
+	background-position: -483px -578px;
+}
+.icon-courseAc{
+	//@include WH(34px,34px);
+	//background-position: -60px -794px;
+	@include WH(149px,35px);
+	background-position: -165px -632px;
+}
+.icon-courseAc-active{
+	@include WH(149px,35px);
+	background-position: -483px -632px;
+}
+
+
+.icon-arrow-top{
+	@include WH(15px,15px);
+	background-position: -946px -1173px;
+}
+.icon-arrow-right{
+	@include WH(15px,15px);
+	background-position: -62px -909px;
+}
+.icon-arrow-bottom{
+	@include WH(15px,15px);
+	background-position: -60px -878px;
+}
+.icon-arrow-bottom-two{
+	@include WH(15px,15px);
+	background-position: -60px -947px;
+}
+.icon-arrow-left{
+	@include WH(15px,15px);
+	background-position: -60px -909px;
+}
+
+
+.icon-course-list-lock{
+	@include WH(10px,15px);
+	background:url('http://static.caicui.com/studycenterskin/images/lock.png') no-repeat;
+
+}
+.icon-course-list-completed{
+	@include WH(13px,12px);
+	background-position: -59px -1075px;
+}
+.icon-course-list-learning{
+	@include WH(13px,12px);
+	background-position: -59px -1044px;
+}
+.icon-course-list-default{
+	@include WH(13px,12px);
+	background-position: -59px -1014px;
+}
+
+.icon-course-arrow-right{
+	@include WH(15px,13px);
+	background-position: -59px -1105px;
+}
+.icon-handout-down{
+	@include WH(164px,28px);
+	background-position: -2174px -40px;;
+}
+.icon-course-progress{
+	@include WH(230px,8px);
+	background-position: -1058px -1088px;
+}
+.icon-course-no-progress{
+	@include WH(230px,8px);
+	background-position: -775px -1088px;
+}
+.icon-questions-progress{
+	@include WH(230px,8px);
+	background-position: -1058px -1088px;
+}
+.icon-questions-no-progress{
+	@include WH(230px,8px);
+	background-position: -775px -1088px;
+}
+.icon-new-course{
+	@include WH(21px,21px);
+	background-position: -59px -1258px;
+}
+.icon-search{
+	@include WH(21px,20px);
+	background-position: -59px -1217px;
+}
+
+.icon-discuss,.ac-list-li.active .ac-list-reply .icon-discuss{
+	@include WH(15px,13px);
+	background-position: -59px -1580px;
+}
+.ac-list-li.active .icon-discuss{
+	@include WH(15px,13px);
+	background-position: -59px -1648px;
+}
+.icon-like,.ac-list-li.active .ac-list-reply .icon-like{
+	@include WH(15px,13px);
+	background-position: -59px -1614px;
+}
+.ac-list-li.active .icon-like{
+	@include WH(15px,13px);
+	background-position: -59px -1682px;
+}
+
+.icon-desc-discuss{
+	@include WH(21px,18px);
+	background-position: -59px -1178px;
+}
+.icon-desc-like{
+	@include WH(21px,20px);
+	background-position: -59px -1140px;
+}
+.icon-post-type-0{
+	@include WH(19px,19px);
+	background-position: -776px -942px;
+}
+.icon-post-type-1{
+	@include WH(19px,19px);
+	background-position: -837px -942px;
+}
+.icon-post-type-2{
+	@include WH(23px,19px);
+	background-position: -893px -942px;
+}
+.icon-post-type-3{
+	@include WH(54px,19px);
+	background-position: -957px -942px;
+}
+
+.icon-node-time{
+	@include WH(20px,20px);
+	background-position: -775px -1175px;
+}
+.icon-ac-time{
+	@include WH(20px,20px);
+	background-position: -775px -1175px;
+}
+.icon-open{
+	@include WH(35px,20px);
+	background-position: -60px -1980px;
+}
+.icon-open-mini{
+	@include WH(32px,16px);
+	background-position: -96px -1981px;
+}
+.icon-private{
+	@include WH(35px,20px);
+	background-position: -346px -1980px;
+}
+.icon-private-mini{
+	@include WH(32px,16px);
+	background-position: -383px -1981px;
+}
+
+.icon-add-photo{
+	@include WH(120px,90px);
+	background-position: -775px -1333px;
+}
+.icon-add-remove{
+	@include WH(21px,21px);
+	background-position: -101px -372px;
+}
+
+.icon-u-add{
+	@include WH(31px,17px);
+	background-position: -1096px -945px;
+}
+
+.icon-message-close{
+	@include WH(33px,33px);
+	background-position: -59px -365px;
+}
+.icon-message-close:hover{
+	background-position: -207px -365px;
+}
+.icon-message-close:active{
+	background-position: -345px -365px;
+}
+
+.icon-editor-select{
+	@include WH(86px,28px);
+	background-position: -59px -2146px;
+}
+.ac-editor-select:hover .icon-editor-select{
+	background-position: -207px -2146px;
+}
+
+.icon-exam-type-0{
+	@include WH(140px,140px);
+	background-position: -1567px -1189px;
+}
+.icon-exam-type-1{
+	@include WH(140px,140px);
+	background-position: -1775px -1189px;
+}
+.icon-exam-type-2{
+	@include WH(141px,144px);
+	background-position: -1977px -1189px;
+}
+
+.icon-exam-type-3{
+	@include WH(142px,143px);
+	background-position: -1568px -1427px;
+}
+.icon-exam-type-4{
+	@include WH(146px,140px);
+	background-position: -1775px -1430px;
+}
+.icon-exam-type-5{
+	@include WH(140px,140px);
+	background-position: -1983px -1433px;
+}
+
+.icon-no-data-node{
+	@include WH(140px,140px);
+	background-position: -1567px -987px;
+}
+.icon-no-data-ac{
+	@include WH(140px,140px);
+	background-position: -1748px -987px;
+}
+
+.icon-pagination-prev{
+	@include WH(24px,24px);
+	background-position: -775px -1279px;
+}
+.icon-pagination-next{
+	@include WH(24px,24px);
+	background-position: -1172px -1279px;
+}
+
+.icon-course-exam{
+	@include WH(10px,14px);
+	background-position: -775px -1635px;
+}
+
+.icon-help{
+	@include WH(21px,21px);
+	background-position: -809px -1632px;
+}
+.icon-feedback{
+	@include WH(11px,14px);
+	background-position: -775px -1635px;
+}
