@@ -4,10 +4,10 @@ $(function(){
 	var today = new Date();
 	var myTime = today.getTime();
 	var activeTime = new Date(2016,8,21,0,0,0);
-	if(today.getTime()-activeTime.getTime()>=0){
-		$("body").html("<h1 style='color:#f00;font-size:25px'>挑战赛已经结束</h1>");
-		return;
-	}
+	// if(today.getTime()-activeTime.getTime()>=0){
+	// 	$("body").html("<h1 style='color:#f00;font-size:25px'>挑战赛已经结束</h1>");
+	// 	return;
+	// }
 	window.test = {
 		examUserInfo : {},
 		activityLogData : {
@@ -33,16 +33,19 @@ $(function(){
 			this.index = this.getCookie("qid") ? parseInt(this.getCookie("qid")) : 0;
 			this.times = this.getCookie("qtime") ? parseInt(this.getCookie("qtime")) : 0;
 			this.examUserInfo = this.getCookie("examUserInfo");
-			if(this.examUserInfo){
-				$(".login").hide();	
-				$(".test").show();
-				this.initDom();
-				this.initEvent();
-			}else{
-				$(".login").show();	
-				$(".test").hide();
-				this.login();
-			}
+			// if(this.examUserInfo){
+			// 	$(".login").hide();	
+			// 	$(".test").show();
+			// 	this.initDom();
+			// 	this.initEvent();
+			// }else{
+			// 	$(".login").show();	
+			// 	$(".test").hide();
+			// 	this.login();
+			// }
+			$(".test").show();
+			this.initDom();
+			this.initEvent();
 		},
 		login : function(){
 			var _this = this;
