@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone","collections/lists"],function(e,t,n,l){"use strict";return n.View.extend({el:"body",template:t.template(e("#template-note").html()),events:{"click body":"layout"},nav:"",render:function(){this.$el.append(this.template())},layout:function(){}})});

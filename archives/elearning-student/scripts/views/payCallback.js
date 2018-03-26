@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){"use strict";return n.View.extend({el:"body",template:t.template(e("#template-payCallback").html()),events:{},type:"",render:function(e){this.$el.html(this.template())}})});

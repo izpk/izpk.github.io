@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){"use strict";return n.View.extend({el:"body #right",template:t.template(e("#template-studyReport").html()),events:{},render:function(){this.$el.html(this.template())}})});

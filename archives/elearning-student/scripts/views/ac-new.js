@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){"use strict";return n.View.extend({tagName:"div",className:"ac-right",template:t.template(e("#template-ac-new").html()),events:{},type:"",render:function(){return this.$el.html(this.template()),this}})});

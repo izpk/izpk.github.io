@@ -1,0 +1,40 @@
+<!doctype html><html class="no-js"><head><meta charset="utf-8"><title>学习中心</title><meta http-equiv="X-UA-Compatible" content="IE=11;IE=10;IE=9;IE=8;IE=7;IE=EDGE"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta name="apple-mobile-web-app-capable" content="yes"></head><body><script type="text/javascript" src="http://exlibjs.zbgedu.com/libjs/jquery/2.0.3/jquery.min.js"></script><script type="text/javascript" src="http://exlibjs.zbgedu.com/libjs/jquery.cookie/1.4.1/jquery.cookie.js"></script><script type="text/javascript">$(function(){
+        var token = GetQueryString('token');
+        var origin = window.location.origin;
+        var url = '';
+        if(origin == "http://demo.caicui.com"){
+          url = 'http://demo.caicui.com';
+        }else if(origin == "http://www.caicui.com"){
+          url = 'http://api.caicui.com';
+        }else{
+          url = 'http://api.zbgedu.com';
+        }
+        if(token){
+          $.ajax({
+            url : url+'/api/zbids/member/getmemberinfo?token='+token,
+            success : function(data){
+              console.log(data)
+              var user = '{"memberId":"' + data.data.id + '","nickname":"' + data.data.nickName + '","nickName":"' + data.data.nickName + '","token":"' + token + '","avatar":"' + data.data.avatar + '"}';
+              $.cookie('User', user, {
+                path: '/',
+                expires: 36500
+              });
+              $.cookie('loginInfo', user, {
+                path: '/',
+                expires: 36500
+              });
+              // window.location.href=origin+"/studycenter/#studycenterIndex"
+            },
+            error : function(data){
+
+            }
+          });
+        }else{
+          console.log("没有获取到token！");
+        }
+        function GetQueryString(name){
+          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if(r!=null)return  unescape(r[2]); return null;
+        }
+      });</script></body></html>

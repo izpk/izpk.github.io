@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,s){"use strict";return s.View.extend({tagName:"div",className:"message-right-box",template:t.template(e("#template-message-desc").html()),events:{},type:"",render:function(e){return this.$el.html(this.template({element:e})),this}})});
