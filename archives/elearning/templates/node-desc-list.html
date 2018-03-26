@@ -1,0 +1,183 @@
+<script id="template-node-desc-list" type="text/template">
+<div class="node-top">
+	<div class="node-top-left">
+		笔记详情
+	</div>
+	<% if(data.type){ %>
+		<div class="node-top-right">
+			<a class="node-new" href="javascript:;"><i class="icon icon-new-course"></i></a>
+		</div>
+	<% } %>
+	
+</div>
+<div class="node-content node-desc-content">
+	<div id="wrapper-node" class="wrapper">
+		<div id="scroller-node" class="scroller">
+			<ul class="node-desc-ul">
+				
+				<% 
+					if(data.data && data.data.length){ 
+
+				%>
+				<% 
+					_.each(data.data,function(element, index, list){
+						var imgPathArray = [];
+						if(element.imgPath){
+							imgPathArray = element.imgPath.split(',');
+						}
+				%>
+				<li class="node-desc-li <%= imgPathArray.length ? '' : 'noPhoto' %>" data-id="<%= element.id %>" data-updateTime="<%= CAICUI.iGlobal.getLocalTime(element.updateTime) %>" data-taskId="<%= element.taskId %>" data-taskprogress="<%= element.taskprogress %>" data-contentSummary="<%= element.contentSummary %>" data-imgPath="<%= element.imgPath %>" data-isPublic="<%= element.isPublic %>" data-charpterId="<%= element.charpterId %>">
+					<div class="node-desc-li-content">
+						<% if(imgPathArray.length){ %>
+							<img class="node-desc-img" src="<%= CAICUI.Common.host.img + imgPathArray[0] %>">
+						<% } %>
+						<p class="node-desc-p">
+							<span class="node-desc-span">
+							<%= CAICUI.iGlobal.cutstr(CAICUI.iGlobal.html_decode(element.contentSummary),120) %>
+							</span>
+							<% if(element.contentSummary.length > 120 || imgPathArray.length){ %>
+								<a class="node-desc-show"  href="javascript:;">［展开］</a>
+							<% } %>
+						</p>
+					</div>
+					<% if(imgPathArray.length){ %>
+						<div class="node-desc-show-photo">
+							<div class="show-photo-box">
+								<img class="show-photo-img-big" src="<%= CAICUI.Common.host.img + imgPathArray[0] %>">
+							</div>
+							<ul class="show-photo-ul">
+								<% _.each(imgPathArray,function(element, index){ %>
+									<li class="show-photo-li <%= index ? '' : 'active' %>"><img class="show-photo-img" src="<%= CAICUI.Common.host.img + element %>"></li>
+								<% }) %>
+							</ul>
+						</div>
+					<% } %>
+					<div class="node-list-info">
+						<p class="node-list-info-user"><img class="avatar" src="<%= CAICUI.Common.host.img + element.headImg %>"><span class="node-list-info-span user-name"><%= element.nikeName %></span></p>
+						<ul class="node-list-info-ul">
+							<%if(element.taskType == 'video' &&element.taskprogress != '-1' && element.courseId && element.courseId != ' ' && element.charpterId && element.charpterId != ' ' && element.taskId && element.taskId != ' '){ %>
+								<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+								<% 
+									var return_render = '';
+									if(CAICUI.render.nodeType){
+										return_render = 'courseNote/' + CAICUI.render.courseId;
+									}else{
+										return_render = 'myNote';
+									}
+								%>
+								<li class="node-list-info-li"><a class="node-list-info-span node-list-desc-link" link="#video/<%= element.courseId %>/<%= element.charpterId %>/<%= element.taskId %>/<%= element.taskprogress %>?return_link=<%= return_render %>&return_render=on&return_hash=on" href="javascript:;"><i class="icon icon-node-time"></i><span class="node-desc-time"><%= CAICUI.iGlobal.formatSeconds(element.taskprogress) %></span></a></li>
+							<% } %>
+							<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+							<li class="node-list-info-li"><span class="node-list-info-span"><%= CAICUI.iGlobal.stringData(element.updateTime) %></span></li>
+							<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+
+							<% if(element.memberId == CAICUI.User.memberId){ %>
+								<% if(CAICUI.render.noEditor){ %>
+									<% if(!CAICUI.render.nodeType){ %>
+										<li class="node-list-info-li">
+											<span class="node-list-info-span node-editor-isOpen-text"><%= element.isPublic=='1' ? '私有' : '公开' %></span>
+											<a class="node-editor-isOpen-button <%= element.isPublic=='1' ? '' : 'active' %>" href="javascript:;">
+												<i class="icon icon-open-mini"></i><i class="icon icon-private-mini"></i>
+											</a>
+										</li>
+										<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+									<% } %>
+									
+									
+
+									<li class="node-list-info-li"><a class="node-lsit-editor" href="javascript:;"><span class="node-list-info-span">修改</span></a></li>
+									<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+								<% } %>
+								<% console.log(CAICUI.render.noEditor);if(CAICUI.render.noEditor){ %>
+									<li class="node-list-info-li"><a class="node-lsit-remove" href="javascript:;"><span class="node-list-info-span">删除</span></a></li> 
+									<li class="node-list-info-li"><span class="vertical-line">|</span></li>
+								<% } %>
+							<% } %>
+							<a class="node-desc-hide" href="javascript:;">［收起］</a>
+						</ul>
+					</div>
+				</li>
+
+				<% }) %>
+				<div class="pagination-box">
+					<ul class="pagination">
+						<% 
+							var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+							var pageStart = +data.pageNo;
+							var pagePrevs = 4;
+							var pageNexts = 4;
+							var pageStartI = 1;
+							var pageForNum = pageStartI+pagePrevs+pageNexts;
+							var pageNum = 0;
+							if(pageTotal>pageForNum){
+								if(pageStart<=pagePrevs){
+									pageStartI = 1;
+									pageForNum = pageForNum;
+								}else if(pageStart<pagePrevs+pageNexts){
+									pageForNum = pageForNum+2;
+									pageStartI = pagePrevs-pageStartI;
+								}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+									pageForNum = pageStart+pageNexts;
+									pageStartI = pageStart-pagePrevs;
+								}else if(pageStart>pageTotal-pageNexts){
+									pageForNum = pageTotal;
+									pageStartI = pageTotal-pagePrevs-pagePrevs;
+								}
+							}else{
+								pageForNum = pageTotal;
+								pageStartI = pageStartI;
+							}
+							if(+pageForNum>+pageTotal){
+								pageForNum = pageTotal;
+							}
+						%>
+						<% if(pageStart>1){ %>
+							<li class="pagination-li js-pagination-prev">
+							  <a class="pagination-a pagination-prev" href="javascript:;">
+							  &lt;
+							  </a>
+							</li>
+						<% } %>
+						
+						<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+							<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+						<% } %>
+
+						<% if(data.totalCount>20){ %>
+							<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+								<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+							<% } %>
+						<% } %>
+
+						<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+							<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+						<% } %>
+
+						<% if(pageStart<pageTotal){ %>
+							<li class="pagination-li js-pagination-next">
+							  <a class="pagination-a pagination-next" href="javascript:;">
+							  &gt;
+							  </a>
+							</li>
+						<% } %>
+				  </ul>
+				</div>
+				<% }else{ %>
+					<div class="no-data">
+						<i class="icon icon-no-data-node"></i>
+						<% if(data.type){ %>
+							<p class="no-data-p">做笔记可是好习惯哦</p>
+							<a class="no-data-a node-new" href="javascript:;">新建笔记</a>
+						<% }else{ %>
+							<p class="no-data-p">做笔记可是好习惯哦</p>
+						<% } %>
+					</div>
+				<% } %>
+			</ul>
+		</div>
+	</div>
+</div>
+
+	
+	
+</script>

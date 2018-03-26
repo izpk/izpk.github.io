@@ -1,0 +1,54 @@
+
+<script id="template-course" type="text/template">
+	<div id="courses" class="courses">
+		<nav class="course-nav">
+			<a href="#myCourse/studyIn" class="course-nav-a course-nav-my <%= courseType ? '' : 'active' %>">我的课程</a>
+			<a href="#classCourse/studyIn" class="course-nav-a course-nav-class <%= courseType ? 'active' : '' %>">班级课程</a>
+		</nav>
+		
+			<% if(courseType){ %>
+			<ul class="course-ul">
+				<li class="course-li <%= courseStatus == 'studyIn' ? 'active' : '' %>">
+					<a class="course-a" href="#classCourse/studyIn">
+						<span class="course-text">正在学习</span>
+					</a>
+				</li>
+				<li class="course-li <%= courseStatus == 'notStart' ? 'active' : '' %>">
+					<a class="course-a" href="#classCourse/notStart">
+						<span class="course-text">未开始</span>
+					</a>
+				</li>
+				<li class="course-li <%= courseStatus == 'activated' ? 'active' : '' %>">
+					<a class="course-a" href="#classCourse/activated">
+						<span class="course-text">已过期</span>
+					</a>
+				</li>
+			</ul>
+			<div class="loader-box"><div class="loader">加载中。。。</div></div>
+			<% }else{ %>
+			<ul class="course-ul">
+				<li class="course-li <%= courseStatus == 'studyIn' ? 'active' : '' %>">
+					<a class="course-a" href="#myCourse/studyIn">
+						<span class="course-text">正在学习</span>
+					</a>
+				</li>
+				<li class="course-li <%= courseStatus == 'notActivated' ? 'active' : '' %>">
+					<a class="course-a" href="#myCourse/notActivated">
+						<span class="course-text">未激活</span>
+					</a>
+				</li>
+				
+				<li class="course-li <%= courseStatus == 'activated' ? 'active' : '' %>">
+					<a class="course-a" href="#myCourse/activated">
+						<span class="course-text">已过期</span>
+					</a>
+				</li>
+			</ul>
+			<% } %>
+		
+			
+	</div>
+</script>
+<script id="template-myCourse" type="text/template">
+
+</script>

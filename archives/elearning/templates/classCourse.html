@@ -1,0 +1,333 @@
+<script id="template-classCourse" type="text/template">
+	<div>
+		班级课程
+	</div>
+	
+</script>
+<script id="template-teachingPlan-info-left" type="text/template">
+  <% if(isClassCourseStart){ %>
+    <div class="teachingPlan">
+      <div class="teachingPlan-info">
+        <div class="teachingPlan-info-link">
+          <p class="teachingPlan-info-p teachingPlan-info-title">您本周的学习活动（共<%= classCourseDetail.taskTotal %>项活动）<%= classCourseDetail.weekTime %></p>
+          <p class="teachingPlan-info-p teachingPlan-info-item">
+            <i class="icon-learning-plan icon-learning-plan-videoing"></i>
+            <!-- <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i> -->
+            共<%= classCourseDetail.videoTotal %>条视频，已完成<%= classCourseDetail.videoCompleted %>条，未完成<%= classCourseDetail.videoOngoing %>条
+          </p>
+          <p class="teachingPlan-info-p teachingPlan-info-item">
+            <i class="icon-learning-plan icon-learning-plan-examing"></i>
+            <!-- <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i> -->
+            共<%= classCourseDetail.examTotal %>道习题，已完成<%= classCourseDetail.examCompleted %>道，未完成<%= classCourseDetail.examOngoing %>道
+          </p>
+          <p class="teachingPlan-info-p teachingPlan-info-item">
+            <i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+            <!-- <i class="icon-learning-plan icon-learning-plan-openCourse"></i> -->
+            <!-- <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i> -->
+            测试
+            <% if(classCourseDetail.evaluationStatus == 0){ %>
+              未开始
+            <% }else if(classCourseDetail.evaluationStatus == 1){ %>
+              已完成
+            <% }else if(classCourseDetail.evaluationStatus == 2){ %>
+              未完成
+            <% } %>
+          </p>
+          <p class="teachingPlan-info-p teachingPlan-info-span">
+            <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i>
+            直播
+            <% if(classCourseDetail.liveStatus == 0){ %>
+              未开始
+            <% }else if(classCourseDetail.liveStatus == 1){ %>
+              已完成
+            <% }else if(classCourseDetail.liveStatus == 2){ %>
+              未完成
+            <% } %>
+            &nbsp;&nbsp;&nbsp;&nbsp;<%= classCourseDetail.liveTime %>开讲
+          </p>
+        </div>
+      </div>
+    </div>
+    <% if(!isStudycenterIndex){ %>
+      <div class="studyin-content">
+              <div class="studyin-contents active">
+                  <div class="studyin-contents-list">
+                      <div class="studyin-content-header clearfloat">
+                          <div class="subject-type-lf">
+                              <span class="subject-name"><%= courseInfo.categoryName %></span> </div>
+                          <div class="subject-type-rt stop">
+                              <a class="u-icon" href="javascript:;"></a>
+                          </div>
+                      </div>
+                      <ul class="studyin-content-subject clearfloat">
+                          <li class="studyin-content-subjects">
+                              <a href="#classCourseStudy/8a2a5fa451c0c3ad0151c2950ccf0080">
+                                  <div class="subject-lf">
+                                      <img src="<%= courseInfo.courseImage %>" alt="课程图片">
+                                      <div class="subject-mask">
+                                          <span class="mask-lf">
+                                    继续学习
+                                  </span>
+                                          <span class="subject-time">有效期至：<%= courseInfo.expirationTime %></span>
+                                      </div>
+                                  </div>
+                                  <div class="subject-rt">
+                                      <h3><%= courseInfo.courseName %></h3>
+                                      <span class="last-study-chapter">上次学到：<%= courseInfo.lastLearn %></span>
+                                      <p class="extendName"> </p>
+                                      <div class="subject-progress">
+                                          <div class="total-progress">
+                                              <div class="current-progress active" data-progress="<%= courseInfo.courseProgress %>"></div>
+                                          </div>
+                                          <span>%</span>
+                                          <span> <%= courseInfo.courseProgress %> </span> </div>
+                                  </div>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+    <% } %>
+  <% }else{ %>
+    <div class="teachingPlan-noStart">
+      <p class="teachingPlan-p">------2017年02月05日正式开课------</p>
+      <p class="teachingPlan-p">
+        距离开课还有
+        <span class="teachingPlan-span">0</span>
+        <span class="teachingPlan-span">2</span>
+        <span class="teachingPlan-span">9</span>
+        天
+      </p>
+    </div>
+  <% } %>
+</script>
+<script id="template-classCourse-studyIn" type="text/template">
+	<div class="classCourse-header">
+		<!-- <span class="text-loader-content"><span class="text-loader"></span></span> -->
+    <nav class="teachingPlan-nav">
+      <% _.each(classCourseList,function(element, index){ %>
+        <a class="teachingPlan-a <%= index == classIndex ? 'active' : '' %>" href="javascript:;"><%= element.className %></a>
+      <% }) %>
+    </nav>
+    <nav class="teachingPlan-course-nav">
+      <% _.each(classCourseList[classIndex].classCourse,function(element, index){ %>
+        <a class="teachingPlan-course-a <%= index == classCourseIndex ? 'active' : '' %>" href="javascript:;"><%= element.courseName %></a>
+      <% }) %>
+    </nav>
+      
+	</div>
+  <div class="classCourse-body">
+    <div class="loader-box"><div class="loader">加载中。。。</div></div>
+  </div>
+</script>
+<script id="template-classCourse-studyIn-body" type="text/template">
+  <% 
+    var weekingInfo = data.planInfo[parseInt(data.weekIngNum)];
+
+  %>
+  <div class="classCourse-left">
+    <div id="wrapper-classCourse-left" class="wrapper">
+      <div id="scroller-classCourse-left" class="scroller">
+        <% if(courseStatus !== "notStart"){ %>
+          <div class="teachingPlan">
+            <div class="teachingPlan-info">
+            
+              <p class="teachingPlan-info-p teachingPlan-info-title">您本周的学习活动（共<%= weekingInfo.taskTotal %>项活动）<%= weekingInfo.weekTime %></p>
+              <p class="teachingPlan-info-p teachingPlan-info-item">
+                <i class="icon-learning-plan icon-learning-plan-videoing"></i>
+                <!-- <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i> -->
+                共<%= weekingInfo.videoTotal %>条视频，已完成<%= weekingInfo.videoCompleted %>条，未完成<%= weekingInfo.videoOngoing %>条
+              </p>
+              <p class="teachingPlan-info-p teachingPlan-info-item">
+                <i class="icon-learning-plan icon-learning-plan-examing"></i>
+                <!-- <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i> -->
+                共<%= weekingInfo.examTotal %>道习题，已完成<%= weekingInfo.examCompleted %>道，未完成<%= weekingInfo.examOngoing %>道
+              </p>
+              <!-- <p class="teachingPlan-info-p teachingPlan-info-item">
+                <i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+                <%= weekingInfo.evaluationStatus %>测试已完成
+              </p>
+              <p class="teachingPlan-info-p teachingPlan-info-span">
+                <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i>
+                <%= weekingInfo.liveStatus %>直播尚未开始&nbsp;&nbsp;&nbsp;&nbsp;<%= weekingInfo.liveTime %>
+              </p> -->
+
+              <p class="teachingPlan-info-p teachingPlan-info-item">
+                <i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+                <!-- <i class="icon-learning-plan icon-learning-plan-openCourse"></i> -->
+                <!-- <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i> -->
+                测试
+                <% if(weekingInfo.evaluationStatus == 0){ %>
+                  未开始
+                <% }else if(weekingInfo.evaluationStatus == 1){ %>
+                  已完成
+                <% }else if(weekingInfo.evaluationStatus == 2){ %>
+                  未完成
+                <% } %>
+              </p>
+              <p class="teachingPlan-info-p teachingPlan-info-span">
+                <i class="icon-teachingPlan icon-teachingPlan-live-notbegin"></i>
+                直播
+                <% if(weekingInfo.liveStatus == 0){ %>
+                  未开始
+                <% }else if(weekingInfo.liveStatus == 1){ %>
+                  已完成
+                <% }else if(weekingInfo.liveStatus == 2){ %>
+                  未完成
+                <% } %>
+                &nbsp;&nbsp;&nbsp;&nbsp;<%= weekingInfo.liveTime %>开讲
+              </p>
+            </div>
+          </div>
+          <% if(!isStudycenterIndex){ %>
+            <div class="studyin-content">
+              <div class="studyin-contents active">
+                  <div class="studyin-contents-list">
+                      <div class="studyin-content-header clearfloat">
+                          <div class="subject-type-lf">
+                              <span class="subject-name"><%= data.courseInfo.categoryName %></span> </div>
+                          <div class="subject-type-rt stop">
+                              <a class="u-icon" href="javascript:;"></a>
+                          </div>
+                      </div>
+                      <ul class="studyin-content-subject clearfloat">
+                          <li class="studyin-content-subjects">
+                              <a href="#classCourseStudy/<%= classCourse.classCourse[CAICUI.render.classCourseIndex].courseId %>">
+                                  <div class="subject-lf">
+                                      <img src="<%= data.courseInfo.courseImage %>" alt="课程图片">
+                                      <div class="subject-mask">
+                                          <span class="mask-lf">
+                                    继续学习
+                                  </span>
+                                          <span class="subject-time">有效期至：<%= data.courseStatus.courseExpirationTime %></span>
+                                      </div>
+                                  </div>
+                                  <div class="subject-rt">
+                                      <h3><%= data.courseInfo.courseName %></h3>
+                                      <span class="last-study-chapter">
+                                      <% if(data.lastLearn.isLastLearn){ %>
+                                        上次学到：
+                                      <% } %>
+                                      <%= data.lastLearn.title %></span>
+                                      <p class="extendName"> </p>
+                                      <div class="subject-progress">
+                                          <div class="total-progress">
+                                              <div class="current-progress active" data-progress="<%= data.studyInfo.studyProgressTotal %>"></div>
+                                          </div>
+                                          <span>%</span>
+                                          <span> <%= data.studyInfo.studyProgressTotal %> </span> </div>
+                                  </div>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+          <% } %>
+        <% }else{ %>
+          <div class="teachingPlan-noStart">
+            <p class="teachingPlan-p">------<%= classCourse.startTime %>正式开课------</p>
+            <p class="teachingPlan-p">
+              距离开课还有
+              <span class="teachingPlan-span"><%= classCourse.nowToOpeningTimeArray[0] %></span>
+              <span class="teachingPlan-span"><%= classCourse.nowToOpeningTimeArray[1] %></span>
+              <span class="teachingPlan-span"><%= classCourse.nowToOpeningTimeArray[2] %></span>
+              天
+            </p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="classCourse-right">
+    <div id="wrapper-classCourse-right" class="wrapper">
+      <div id="scroller-classCourse-right" class="scroller">
+
+        <div class="classCourse-info">
+          <div class="classCourse-info-title"><i class="icon-teachingPlan icon-teachingPlan-class"></i>班级信息</div>
+          <ul class="classCourse-ul">
+            <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">班级</span><span class="classCourse-span classCourse-span-two"><%= classCourse.className %></span></li>
+            <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">讲师</span><span class="classCourse-span classCourse-span-two"><%= classCourse.lecturer %></span></li>
+            <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">班主任</span><span class="classCourse-span classCourse-span-two"><%= classCourse.headmaster %></span></li>
+            <% _.each(classCourse.assistant,function(element, index){ %>
+              <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">助教</span><span class="classCourse-span classCourse-span-two"><%= element %></span></li>
+            <% }) %>
+            
+          </ul>
+          <div class="classCourse-weixin"><img src="<%= classCourse.QRCode %>" alt="" class="classCourse-weixin-QRCode"><span class="classCourse-weixin-text">班级讨论微信群</span></div>
+        </div>
+        <div class="classCourse-info <%= courseStatus !== 'notStart' ? '' : 'classCourse-info-noStart' %>">
+          <div class="classCourse-info-title"><i class="icon-teachingPlan icon-teachingPlan-study"></i>学习信息</div>
+          <ul class="classCourse-ul">
+            <li class="classCourse-li">
+              <span class="classCourse-span classCourse-span-one">总学习进度</span><span class="classCourse-span classCourse-span-two">
+                <div class="classCourse-progress">
+                  <div class="classCourse-total-progress">
+                    <div class="classCourse-current-progress active" data-progress="<%= data.studyInfo.studyProgressTotal %>"></div>
+                  </div>
+                  <span class="classCourse-progress-span">%</span>
+                  <span class="classCourse-progress-span"> <%= data.studyInfo.studyProgressTotal %> </span> 
+                </div>
+              </span>
+            </li>
+            <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">总周数</span><span class="classCourse-span classCourse-span-two classCourse-span-color"><%= data.weeksSummary.total %></span></li>
+            <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">已完成周数</span><span class="classCourse-span classCourse-span-two"><%= data.weeksSummary.completed %></span></li>
+            <li class="classCourse-li"><span class="classCourse-span classCourse-span-one">未完成周数</span><span class="classCourse-span classCourse-span-two"><%= parseInt(data.weeksSummary.ongoing) + parseInt(data.weeksSummary.notstarted) %></span></li>
+          </ul>
+        </div>
+        <div class="classCourse-info <%= courseStatus !== 'notStart' ? '' : 'classCourse-info-noStart' %>">
+          <div class="classCourse-info-title"><i class="icon-teachingPlan icon-teachingPlan-studyPlan"></i>学习计划完成情况概述</div>
+          <ul class="classCourse-ul">
+            <% _.each(data.planInfo, function(element, index){ %>
+
+            
+            <li class="classCourse-li">
+              <span class="classCourse-span classCourse-span-one"><%= element.weekName %></span>
+              <span class="classCourse-span classCourse-span-two">
+                <% if(element.isOpen == "true" && courseStatus !== 'notStart'){ %>
+                  <a href="javascript:;" class="classCourse-a">
+                  完成<%= element.weekProgress %>%
+                    <div class="classCourse-weekInfo">
+                      <span class="classCourse-weekInfo-trans"></span>
+                      <ul class="classCourse-weekInfo-ul">
+                        
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">课程视频</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><div class="subject-progress">
+                          <div class="total-progress">
+                              <div class="current-progress active" data-progress="<%= element.videoProgress %>"></div>
+                          </div>
+                          <span>/<%= element.videoTotal %></span>
+                          <span><%= element.videoCompleted %> </span> </div></span></li>
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">作业习题</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><div class="subject-progress">
+                          <div class="total-progress">
+                              <div class="current-progress active" data-progress="<%= element.examProgress %>"></div>
+                          </div>
+                          <span>/<%= element.examTotal %></span>
+                          <span><%= element.examCompleted %> </span> </div></span></li>
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">直播视频</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><%= element.liveStatusText %></span></li>
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">观看视频用时</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><%= element.videoTime %></span></li>
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">作业用时</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><%= element.examTime %></span></li>
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">测试用时</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><%= element.evaluationTime %></span></li>
+                        <li class="classCourse-weekInfo-li"><span class="classCourse-weekInfo-span classCourse-weekInfo-span-one">本周总学习用时</span><span class="classCourse-weekInfo-span classCourse-weekInfo-span-two"><%= element.totalTime %></span></li>
+                      </ul>
+                    </div>
+                  </a>
+                  </span>
+                  <span class="classCourse-span classCourse-span-three">查看学习报告</span>
+                <% }else{ %>
+                  未开启
+              </span>
+              <span class="classCourse-span classCourse-span-three">去学习</span>
+                <% } %>
+              
+            </li>
+            <% }) %>
+            
+            
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</script>

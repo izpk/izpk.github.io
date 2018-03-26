@@ -1,0 +1,76 @@
+<script id="template-question-bank" type="text/template">
+  <div class="question-bank">
+  	<div class="question-bank-title">中博题库</div>
+  	<div class="question-bank-main">
+  		<div class="question-bank-left">
+  			<ul class="question-bank-ul">
+  				<% 
+  				_.each(data, function(element,index){ 
+						var clickActiveClass = '';
+						if(index == 0){
+						clickActiveClass = 'active';
+						}
+  				%>
+  				<li class="question-bank-li question-bank-li-<%= element.certificateName %> <%= clickActiveClass %>">
+  					<a href="javascript:;" class="question-bank-a">
+  						<div class="question-bank-a-left">
+				  			<h3 class="question-bank-a-left-h3"><%= element.certificateName %></h3>
+				  			<span class="question-bank-a-left-span"><%= element.certificateNameInfo %></span>
+  						</div>
+  						<div class="question-bank-a-right">
+  							<h3 class="question-bank-a-right-h3"><%= element.certificateName %>题库</h3>
+  							<p class="question-bank-a-right-p">
+	  							<span class="question-bank-a-right-span">模考 <span class="question-bank-span-count  question-bank-<%= element.certificateName %>-realCount"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+	  							<span class="question-bank-a-right-span">真题 <span class="question-bank-span-count question-bank-<%= element.certificateName %>-imitateCount"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+	  							
+	  						
+	  						<span class="question-bank-a-right-span">考题 <span class="question-bank-span-count question-bank-<%= element.certificateName %>-exerciseCount"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+	  						</p>
+  						</div>
+  					</a>
+  				</li>
+  				<% }) %>
+  			</ul>
+  		</div>
+  		<div class="question-bank-right"><div class="question-bank-selectType-tips">请选择你的练习类型</div>
+			<ul class="question-bank-right-ul">  <li class="question-bank-right-li  active"><a href="javascript:;" class="question-bank-right-a">F1</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F2</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F3</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F4</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F5</a></li>  <li class="question-bank-right-li  clear"><a href="javascript:;" class="question-bank-right-a">F6</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F7</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F8</a></li>  <li class="question-bank-right-li"><a href="javascript:;" class="question-bank-right-a">F9</a></li>  <li class="question-bank-right-li  clear question-bank-right-li3"><a href="javascript:;" class="question-bank-right-a">P1</a></li>  <li class="question-bank-right-li  question-bank-right-li3"><a href="javascript:;" class="question-bank-right-a">P2</a></li>  <li class="question-bank-right-li  question-bank-right-li3"><a href="javascript:;" class="question-bank-right-a">P3</a></li>  <li class="question-bank-right-li  question-bank-right-li3"><a href="javascript:;" class="question-bank-right-a">P4</a></li>  <li class="question-bank-right-li  question-bank-right-li3"><a href="javascript:;" class="question-bank-right-a">P5</a></li>  <li class="question-bank-right-li  question-bank-right-li3"><a href="javascript:;" class="question-bank-right-a">P7</a></li>  </ul>
+			<div class="question-bank-btn-box">
+				<a class="question-bank-btn question-bank-btn-real " href="javascript:;"><i class="icon icon-real"></i>真题模考</a>
+				<a class="question-bank-btn question-bank-btn-imitate" href="javascript:;"><i class="icon icon-imitate"></i>考点特训</a>
+			</div></div>
+  	</div>
+  </div>
+</script>
+<script id="template-question-bank-right" type="text/template">
+	<div class="question-bank-selectType-tips hidden">请选择你的练习科目</div>
+	<ul class="question-bank-right-ul">
+		<% 
+			var questionBankType = '';
+			_.each(list,function(element, index){
+			var addClass = "";
+			if(name == "ACCA"){
+				if(index == 5 || index == 9){
+					addClass += " clear"
+				}
+				if(index >= 9){
+					addClass += " question-bank-right-li3"
+				}
+			}
+			if(name == "CMA"){
+				addClass += " question-bank-right-li-CMA";
+				if(index == 2){
+					addClass += " clear";
+				}
+			}
+		%>
+			<li class="question-bank-right-li <%= addClass %>"><a href="javascript:;" class="question-bank-right-a"><%= element.subjectName %></a></li>
+		<% }) %>
+	</ul>
+	<div class="question-bank-btn-box">
+		<a class="question-bank-btn question-bank-btn-real " href="javascript:;"><i class="icon icon-real"></i>真题模考</a>
+		
+			<a class="question-bank-btn question-bank-btn-imitate" href="javascript:;"><i class="icon icon-imitate"></i>考点特训</a>
+		
+		
+	</div>
+</script>

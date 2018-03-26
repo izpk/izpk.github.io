@@ -1,0 +1,74 @@
+<script id="template-question-bank-list" type="text/template">
+	<% console.log(subjectId) %>
+  <div class="question-bank ">
+  	<div class="question-bank-title">题库<span class="question-bank-span"><%= title %></span></div>
+  	<div class="question-bank-main questionBankList">
+  		<div class="question-bank-left questionBankList-left">
+  			<div id="wrapper" class="wrapper">
+  				<div id="scroller" class="scroller">
+  					<div class="loader-content questionBankList-loader-content">
+  						<div class="loader-box"><div class="loader">加载中。。。</div></div>
+  					</div>
+
+  				</div><!-- scroller -->
+  			</div><!-- wrapper -->
+  			
+  		</div>
+  		<div class="question-bank-right questionBankList-right">
+					<!-- <p class="questionBankList-right-title">测试内容</p> -->
+					<div class="questionBankList-right-type-box">
+						<a href="javascript:;" class="questionBankList-type-btn questionBankList-type-btn-real <%= type ? '' : 'active' %>"><i class="icon icon-real"></i><p>真题模考</p></a>
+						<% if(subjectId !== 'ff808081486933e601489c799f0f0868' && subjectId !== 'ff808081486933e601489c7a1aa20869'){ %>
+							<a href="javascript:;" class="questionBankList-type-btn questionBankList-type-btn-imitate <%= type ? 'active' : '' %>"><i class="icon icon-imitate"></i><p>考点特训</p></a>
+						<% } %>
+					</div>
+					<div class="questionBankList-right-btn-box"><a href="#myExam/0" class="questionBankList-right-btn"><i class="icon icon-problem-record"></i>做题记录<span class="questionBankList-right-btn-train"></span></a><a href="#myExam/1" class="questionBankList-right-btn"><i class="icon icon-wrong-question"></i>错题本<span class="questionBankList-right-btn-train"></span></a></div>
+  		</div>
+  	</div>
+  </div>
+</script>
+<script id="template-question-bank-imitate" type="text/template">
+	<% if(data && data.length){ %>
+		<h3 class="questionBankList-title questionBankList-imitate-title">
+			<i class="icon icon-imitate-hover"></i>考点特训
+		</h3>
+		<ul class="questionBankList-ul">
+			<% _.each(data,function(element, index){ %>
+				<li class="questionBankList-li" data-index="<%= index %>">
+					<p class="questionBankList-p"><%= element.title %></p>
+					<div class="questionBankList-pos">
+						<i class="icon icon-course-exam"></i><%= element.number %>
+					
+						<a href="javascript:;" class="js-questionBankList-a questionBankList-a" data-index="<%= index %>" data-id="<%= element.knowledgePointId %>">做题</a>
+					</div>
+				</li>
+			<% }) %>
+		</ul>
+	<% }else{ console.log(data)%>
+		<h3 class="questionBankList-title">
+			<i class="icon icon-imitate-hover"></i>暂无数据
+		</h3>
+	<% } %>
+</script>
+
+<script id="template-question-bank-real" type="text/template">
+	<% if(data && data.length){ %>
+	<h3 class="questionBankList-title questionBankList-real-title">
+		<i class="icon icon-real-hover"></i>真题模考
+	</h3>
+	<ul class="questionBankList-real-ul">
+		<% _.each(data,function(element, index){ %>
+			
+			<li class="questionBankList-real-li" data-index="<%= index %>">
+				<p class="questionBankList-real-title"><%= element.title %></p>
+				<p class="questionBankList-real-p"><span class="questionBankList-real-span">时长<%= element.time %>分钟</span><span class="questionBankList-real-span">难度 <%= element.difficultyId %></span></p>
+				<a href="javascript:;" class="js-questionBankList-a questionBankList-real-a" data-index="<%= index %>">立即考试</a>
+			</li>
+		<% }) %>
+	</ul>
+	<% }else{ %>
+		<h3 class="questionBankList-title">
+			<i class="icon icon-imitate-hover"></i>暂无数据
+		</h3>
+	<% } %>
+</script>

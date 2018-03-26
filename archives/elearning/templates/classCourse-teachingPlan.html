@@ -1,0 +1,208 @@
+
+<script id="template-teachingPlan-overview" type="text/template">
+	<div class="teachingPlan-overview">
+		<div class="teachingPlan-overview-header">
+			<a href="javascript:;" class="teachingPlan-overview-return studycenter-video-return video-icon-task-courselist">返回</a>
+			教学计划
+		</div>
+		<div class="teachingPlan-overview-body">
+			<div class="teachingPlan-overview-content">
+				<div id="wrapper" class="wrapper">
+					<div id="scroller" class="scroller teachingPlan-overview-list classCourse-tree">
+
+						<% _.each(teachingPlan,function(element, index){ %>
+							<ul class="ul chapter-ul">
+								<li class="li chapter-li">
+									<div class="div chapter-div">
+										<p class="title chapter-title"><%= element.chapterTitle %></p>
+									</div>
+									<ul class="ul section-ul">
+									<% if(element.children && element.children.length){ 
+										var sectionLength = element.children.length;
+									%>
+									<% _.each(element.children, function(element, index){ 
+									%>
+										<li class="li section-li section-li-notlast">
+											<div class="div section-div">
+												<p class="title chapter-title">
+												<% if(element.taskType == "examReport"){ %>
+													<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+												<% }else{ %>
+													<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+												<% } %>
+													<%= element.chapterTitle %>
+												</p>
+											</div>
+										<% if(element.tasks && element.tasks.length){ %>
+											<ul class="ul task-ul">
+													<% _.each(element.tasks, function(element, index){ %>
+														<li class="li task-li">
+															<div class="div task-div">
+																<p class="title task-title">
+																	<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+																	<span class="task-title-text"><%= element.title %></span>
+																</p>
+															</div>
+														</li>
+													<% }) %>
+											</ul>
+
+										<% }else{ %>
+
+											
+										<% } %>
+										</li>
+									<%	}) } %>
+									<% if(element.tasks && element.tasks.length){
+										_.each(element.tasks, function(element, index){ %>
+											<li class="li section-li section-li-notlast">
+												<div class="div section-div">
+													<p class="title task-title">
+													<% if(element.taskType == "exam" && element.taskLevel == "core"){ %>
+														<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+													<% }else{ %>
+														<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+													<% } %>
+														<%= element.title %>
+													</p>
+												</div>
+											</li>
+									<%	})
+									} %>
+									</ul>
+								</li>
+							</ul>
+						<% }) %>
+
+						<% teachingPlan = [] %>
+						<% _.each(teachingPlan,function(element, index){ %>
+							<ul class="ul chapter-ul">
+								<li class="li chapter-li">
+									<div class="div chapter-div">
+										<p class="title chapter-title"><%= element.name %></p>
+									</div>
+									<ul class="ul section-ul">
+									<% if(element.children && element.children.length){ 
+										var sectionLength = element.children.length;
+									%>
+									<% _.each(element.children, function(element, index){ 
+									%>
+										<li class="li section-li <%= (sectionLength-1) == index ? '' : 'section-li-notlast' %>">
+											<div class="div section-div">
+												<p class="title <%= element.type %>-title">
+												<% if(element.taskType == "examReport"){ %>
+													<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+												<% }else{ %>
+													<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+												<% } %>
+													<%= element.name %>
+												</p>
+											</div>
+										<% if(element.children && element.children.length){ %>
+											<ul class="ul task-ul">
+													<% _.each(element.children, function(element, index){ %>
+														<li class="li task-li">
+															<div class="div task-div">
+																<p class="title task-title">
+																	<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+																	<span class="task-title-text"><%= element.name %></span>
+																</p>
+															</div>
+														</li>
+													<% }) %>
+											</ul>
+
+										<% }else{ %>
+
+											
+										<% } %>
+										</li>
+									<%	}) } %>
+									</ul>
+								</li>
+							</ul>
+						<% }) %>
+						<!--
+						<ul class="ul chapter-ul">
+							<li class="li chapter-li">
+								<div class="div chapter-div">
+									<p class="title chapter-title">章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章章</p>
+								</div>
+								<ul class="ul section-ul">
+									<li class="li section-li section-li-notlast">
+										<div class="div section-div">
+											<p class="title section-title">节1节1节1节1节1节1节1节1节1节1节1节1节1节1节1节1节1节1节1节1</p>
+										</div>
+										<ul class="ul task-ul">
+											<li class="li task-li">
+												<div class="div task-div">
+													<p class="title task-title">
+														<i class="icon-learning-plan icon-learning-plan-video-hover"></i>
+														<span class="task-title-text">任务1</span>
+													</p>
+												</div>
+											</li>
+											<li class="li task-li">
+												<div class="div task-div">
+													<p class="title task-title">
+														<i class="icon-learning-plan icon-learning-plan-exam-hover"></i>
+														<span class="task-title-text">任务2</span>
+													</p>
+												</div>
+											</li>
+											<li class="li task-li">
+												<div class="div task-div">
+													<p class="title task-title">
+														<i class="icon-learning-plan icon-learning-plan-openCourse-hover"></i>
+														<span class="task-title-text">任务3</span>
+													</p>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="li section-li section-li-notlast">
+										<div class="div section-div">
+											<p class="title section-title">节2</p>
+										</div>
+										<ul class="ul task-ul">
+											<li class="li task-li">
+												<div class="div task-div">
+													<p class="title task-title">
+														<i class="icon-learning-plan icon-learning-plan-video-hover"></i>
+														<span class="task-title-text">任务1</span>
+													</p>
+												</div>
+											</li>
+											<li class="li task-li">
+												<div class="div task-div">
+													<p class="title task-title">
+														<i class="icon-learning-plan icon-learning-plan-exam-hover"></i>
+														<span class="task-title-text">任务2</span>
+													</p>
+												</div>
+											</li>
+											<li class="li task-li">
+												<div class="div task-div">
+													<p class="title task-title">
+														<i class="icon-learning-plan icon-learning-plan-openCourse-hover"></i>
+														<span class="task-title-text">任务3</span>
+													</p>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="li section-li">
+										<div class="div section-div">
+											<p class="title task-title">节3</p>
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

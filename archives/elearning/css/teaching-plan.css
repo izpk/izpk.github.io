@@ -1,0 +1,1015 @@
+/*教学计划*/
+/*教学计划 图标*/
+.icon-teachingPlan{
+  display: inline-block;
+  background: url('../images/icon-teaching-plan.png') no-repeat;
+  
+}
+.icon-teachingPlan-live-notbegin{
+  width: 19px;
+  height: 19px;
+  background-position: 0 0;
+  vertical-align: -4px;
+  margin-right: 10px;
+
+}
+.icon-teachingPlan-class{
+  width: 22px;
+  height: 22px;
+  background-position: -87px 0;
+  vertical-align: -4px;
+  margin-right: 10px;
+}
+.icon-teachingPlan-study{
+  width: 22px;
+  height: 22px;
+  background-position: -111px 0;
+  vertical-align: -4px;
+  margin-right: 10px;
+}
+.icon-teachingPlan-study-notbegin{
+  width: 22px;
+  height: 22px;
+  background-position: -159px 0;
+  vertical-align: -4px;
+  margin-right: 10px;
+}
+.icon-teachingPlan-studyPlan{
+  width: 22px;
+  height: 22px;
+  background-position: -135px 0;
+  vertical-align: -4px;
+  margin-right: 10px;
+}
+.icon-teachingPlan-studyPlan-notbegin{
+  width: 22px;
+  height: 22px;
+  background-position: -184px 0;
+  vertical-align: -4px;
+  margin-right: 10px;
+}
+/*学习报告*/
+
+.courses{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding-top: 112px;
+}
+.courses .course{
+	padding-top: 0px;
+}
+.courses .course-ul{
+	top: 72px;
+}
+.courses .course-content{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.course-nav{
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	width: 368px;
+	margin-left: -184px;
+	overflow: hidden;
+}
+.course-nav-a{
+	float: left;
+	display: inline-block;
+	width: 184px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	font-size: 14px;
+	color: #3e4e63;
+	border: 1px solid #3e4e63;
+	background-color: #fff;
+}
+.course-nav-my{
+	border-top-left-radius: 16px;
+	border-bottom-left-radius: 16px;
+}
+.course-nav-class{
+	border-top-right-radius: 16px;
+	border-bottom-right-radius: 16px;
+}
+.course-nav-a.active{
+	color: #fff;
+	border: 1px solid #3e4e63;
+	background-color: #3e4e63;
+}
+/*班级课程*/
+.classCourse{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.classCourse-left{
+	position: relative;
+	float: left;
+	width: 50%;
+	height: 100%;
+	border-right: 1px solid #E9E9E9;
+	overflow: hidden;
+}
+.classCourse-right{
+	position: relative;
+	float: right;
+	width: 50%;
+	height: 100%;
+	overflow: hidden;
+}
+.classCourse-info{
+	position: relative;
+	padding: 0 30px;
+	margin: 20px 0 10px 0;
+}
+.classCourse-info-title{
+	font-size: 14px;
+	color: #3e4d64;
+	font-weight: bold;
+}
+.classCourse-weixin{
+	position: absolute;
+	top: 30px;
+	left: 300px; 
+}
+.classCourse-weixin-QRCode{
+	width: 90px;
+	height: 90px;
+	float: left;
+}
+.classCourse-weixin-text{
+	display: block;
+	font-size: 12px;
+	color: #666;
+}
+.classCourse-ul{
+	
+}
+.classCourse-li{
+	position: relative;
+}
+
+.classCourse-span{
+	display: inline-block;
+	height: 28px;
+	line-height: 28px;
+	font-size: 14px;
+	color: #666;
+}
+.classCourse-span-color{
+	color: #ffa854;
+}
+.classCourse-span-one{
+	width: 100px;
+	text-align: left;
+}
+.classCourse-span-two{
+	width: 160px;
+	text-align: right;
+}
+.classCourse-span-three{
+	width: 120px;
+	text-align: right;
+	color: #fc3a6f;
+}
+.classCourse-weekInfo-ul .subject-progress{
+	border-top: none;
+	/*color: #ffa854;*/
+}
+.classCourse-weekInfo-ul .total-progress{
+	width: 80px;
+	margin-right: 5px;
+	/*color: #ffa854;*/
+}
+.classCourse-progress{
+
+}
+
+
+.classCourse-progress {
+    height: 18px;
+    line-height: 18px;
+    font-size: 12px;
+    color: #ffa854;
+    padding-top: 3px;
+}
+
+.classCourse-progress-span{
+  float: right;
+  color: #ffa854;
+	margin-right: 1px;
+	vertical-align: top;
+}
+
+.classCourse-total-progress {
+	position: relative;
+	display: inline-block;
+	width: 120px;
+	height: 10px; 
+	background-color:  #f2f2f2;
+	border-radius: 5px;
+
+	margin-right: 10px;
+	color: #ffa854;
+}
+.classCourse-current-progress{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+	height: 100%;
+	background-color:  #ffa854;
+	border-radius: 5px;
+}
+.classCourse-current-progress.active{
+	display: inline-block;
+}
+.classCourse-weekInfo{
+	position: absolute;
+	top: -205px;
+	left: 90px;
+
+}
+.classCourse-weekInfo-trans{
+	position: absolute;
+	right: 70px;
+	bottom: -19px;
+	width: 20px;
+	height: 20px;
+	/*background-color: #000;*/
+}
+.classCourse-weekInfo-trans::before,.classCourse-weekInfo-trans::after{
+	content: "";
+	position: absolute;
+	
+	left: 0;
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border: 10px solid;
+
+	
+}
+.classCourse-weekInfo-trans::before{
+	top: 1px;
+	border-color: #E9E9E9 transparent transparent transparent;
+}
+.classCourse-weekInfo-trans::after{
+	top: 0;
+	border-color: #fff transparent transparent transparent;
+}
+.classCourse-weekInfo-ul{
+	
+	width: 240px;
+	height: 196px;
+	padding: 14px;
+	border: 1px solid #E9E9E9;
+	border-radius: 4px;
+	box-shadow: 0px 0px 10px #E9E9E9;
+	background-color: #fff;
+	
+}
+.classCourse-weekInfo-li{
+
+}
+.classCourse-weekInfo-span{
+	display: inline-block;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	color: #666;
+}
+.classCourse-weekInfo-span-one{
+	width: 100px;
+}
+.classCourse-weekInfo-span-two{
+	width: 135px;
+	text-align: right;
+	margin-left: -30px;
+}
+
+/*学习报告*/
+.studyReport{
+  width: 100%;
+  height: 100%;
+  padding: 0 30px 20px 30px;
+  background-color: #f7f7f7;
+  color: #666666;
+  position: relative;
+  padding-top: 66px;
+}
+.studyReport .studyReport-menu{
+	width: 100%;
+	font-size: 12px;
+	padding: 20px 0 10px 0;
+    margin-left: -10px;
+    position:absolute;
+    top: 0;
+}
+.studyReport .studyReport-menu li{
+	display: inline-block;
+	padding: 4px 10px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	border:1px solid #ff366d;
+	border-radius: 20px;
+	color: #ff366d;
+	cursor: pointer;
+}
+.studyReport .studyReport-menu li.active{
+	background-color: #ff366d;
+	color: #fff;
+}
+.studyReport-content{
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	border:1px solid #efefef;
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+	padding-top: 65px;
+}
+.studyReport-content-title{
+	width: 100%;
+	height: 65px;
+	line-height: 65px;
+	padding-left: 20px;
+	color: #3e4d64;
+	border-bottom: 1px solid #efefef;
+	position: absolute;
+	top: 0;
+}
+.studyReport-content-title h2{
+	float: left;
+	font-size: 16px;
+}
+.studyReport-content-title .studyReport-content-all{
+	position: absolute;
+	right: 16px;
+	top: 16px;
+	width: 100px;
+	height: 32px;
+	text-align: center;
+	line-height: 32px;
+	color: #fff;
+	font-size: 14px;
+	background-color: #ff366d;
+	border-radius: 5px;
+}
+.studyReport-content-main{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	padding-left: 126px;
+}
+.studyReport-content-left{
+	width: 126px;
+	height: 100%;
+	border-right: 1px solid #efefef;
+	text-align: center;
+	padding: 0 20px;
+	position: absolute;
+    left: 0;
+	overflow: hidden;
+}
+.studyReport-content-left .wrapper .scroller{
+	padding: 0 20px;
+}
+.studyReport-content-left li{
+	width: 100%;
+	height: 35px;
+	margin-top: 16px;
+	cursor: pointer;
+	line-height: 36px;
+}
+.studyReport-content-left li.active,.studyReport-content-left li:hover{
+	background-color: #ffd7e2;
+	color: #ff366d;
+	border-radius: 5px;
+}
+.studyReport-content-right{
+	width: 100%;
+	height: 100%;
+    position: relative;
+    padding-top: 103px;
+}
+.studyReport-content-right h3{
+	padding:30px 35px 24px 35px;
+	font-size: 14px;
+	color:#666666;
+	position: absolute;
+    top: 0;
+}
+.studyReport-content-list{
+	width: 100%;
+	height: 30px;
+	border-bottom: 1px solid #efefef;
+	position: absolute;
+    top: 73px;
+}
+.studyReport-content-list li{
+	height: 30px;
+	line-height: 30px;
+	padding:0 15px;
+	display: inline-block;
+	position:relative;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.studyReport-content-list li.active{
+	background-color: #ff366d;
+	border-radius: 5px;
+	transform-origin: bottom;
+	color: #fff;
+    transform: scaleY(1.3) perspective(.9em) rotateX(5deg);
+}
+.studyReport-content-detail{
+	width: 100%;
+	height: 100%;
+	padding:28px 30px;
+	position: relative;
+	overflow: hidden;
+}
+.studyReport-type{
+	display: none;
+}
+.studyReport-content-detail .wrapper .scroller{
+	padding: 28px 30px;
+}
+.studyReport-type.active{
+	display: block;
+}
+.studyReport-type .classRanking-left,.studyReport-type .knowledge-left,.learnActivity-left,.assessmentResult-left{
+	width: 380px;
+	height: 290px;
+	padding: 30px 46px;
+	border-radius: 5px;
+	box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	-webkit-box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	-moz-box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	float: left;
+	margin:0 20px 20px 0;
+}
+.studyReport-type .classRanking-right,.studyReport-type .knowledge-right,.learnActivity-right{
+	width: 530px;
+	height: 290px;
+	padding: 30px 32px;
+	border-radius: 5px;
+	box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	display: inline-block;
+}
+
+.studyReport-content-classRanking .classRanking-left li{
+	font-size: 14px;
+	line-height: 30px;
+}
+.studyReport-content-classRanking .classRanking-left li p{
+	display: inline-block;
+	width: 160px;
+}
+.studyReport-content-classRanking .classRanking-left li p em{
+	font-style: normal;
+}
+.studyReport-content-classRanking .classRanking-left li span{
+	padding-left:18px;
+}
+.studyReport-content-classRanking .classRanking-left li:first-child strong{
+	font-weight: normal;
+    margin-top: -10px;
+    display: block;
+    color: #999999;
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+.studyReport-content-classRanking .classRanking-left li b{
+	padding-right: 18px;
+}
+.studyReport-content-classRanking .classRanking-left li b.ranking-up{
+	color: #009b21;
+}
+.studyReport-content-classRanking .classRanking-left li b.ranking-down{
+	color: #ff1345;
+}
+
+.studyReport-content-knowledge .knowledge-left li{
+	line-height: 34px;
+}
+.studyReport-content-knowledge .knowledge-left li p{
+	display: inline-block;
+	width: 160px;
+}
+.knowledge-master p img,.knowledge-strengthen p img{
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.knowledge-master ul,.knowledge-strengthen ul{
+	padding:10px 0 0 15px;
+}
+.knowledge-master ul li,.knowledge-strengthen ul li{
+	line-height: 26px;
+	padding: 0 10px;
+	cursor: pointer;
+}
+.knowledge-strengthen{
+	padding-top: 24px;
+}
+.knowledge-strengthen .icon-learning-plan-video{
+	background-position: -254px -50px;
+	margin-right: 8px;
+}
+.learnActivity-left,.learnActivity-right{
+	height: 380px;
+}
+.learnActivity-left li{
+	line-height: 34px;
+}
+.learnActivity-left li{
+	line-height: 30px;
+}
+.learnActivity-left li p{
+	display: inline-block;
+	width: 120px;
+}
+.activity-progress{
+	display: inline-block;
+    width: 160px;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
+}
+.activity-total-progress{
+	width: 100%;
+	height: 20px;
+	border-radius: 10px;
+	background: #f7f7f7;
+}
+.activity-current-progress{
+	height: 20px;
+	background-color: #faaac0; 
+	border-radius: 10px;
+}
+.activity-progress-text{
+	position: absolute;
+	font-size: 12px;
+	width: 100%;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    top: 0;
+    color: #666666;
+}
+.progress-padding{
+	padding-bottom: 16px;
+}
+.assessmentResult-left{
+	width: 100%;
+	height: auto;
+	float: none;
+	
+}
+.assessmentResult-left > li{
+	line-height: 34px;
+}
+.assessmentResult-left > li{
+	line-height: 30px;
+}
+.assessmentResult-left > li p{
+	display: inline-block;
+}
+.assessmentResult-left > li:first-child strong{
+	font-weight: normal;
+    margin-top: -10px;
+    display: block;
+    color: #999999;
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+.studyReport-card{
+	width: 100%;
+}
+.studyReport-card li{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	font-size: 12px;
+	color: #fff;
+	display: inline-block;
+	background-color: #4ac989;
+	border-radius: 5px;  
+	margin:5px 10px 10px 0;
+	cursor: pointer;
+}
+.studyReport-card .card-cut{
+	width: 270px;
+	display: inline-block;
+}
+.studyReport-card li.card-error{
+	background-color: #ff8891;
+}
+.result-btn{
+	width: 300px;
+	height: 36px;
+	margin:25px auto;
+}
+.result-btn p{
+	display: inline-block;
+	width: 120px;
+	height: 36px;
+	text-align: center;
+	line-height: 36px;
+	color: #fff;
+	background-color: #4ac989;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.result-btn p:first-child{
+	margin-right: 50px;
+}
+.studyReport-all{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+    left: 0；;
+    left: 0;
+    top: 0;
+}
+.studyReport-all-mask{
+    position: fixed;
+	top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.5;
+    z-index: 100;
+}
+.studyReport-all-box{
+	position: fixed;
+	top: 9%;
+    left: 50%;
+	min-width: 1080px;
+	height: 86%;
+	background-color: #fff;
+	border-radius: 10px;
+	z-index: 101;
+	margin-left: -540px;
+	overflow: hidden;
+}
+.studyReport-all-box h2{
+	width: 100%;
+	height: 90px;
+	text-align: center;
+	line-height: 90px;
+	font-size: 20px;
+	border-bottom: 1px solid #efefef;
+	position: relative;
+}
+.studyReport-all-box .box-close{
+	position: absolute;
+	right: 26px;
+	top: -10px;
+}
+.studyReport-all-content{
+	width: 100%;
+	padding:20px 100px;
+}
+.studyReport-all-userInfo{
+	
+}
+.studyReport-all-userInfo p{
+	line-height: 26px;
+	font-size:16px;
+}
+.studyReport-all-userInfo p:last-child{
+	font-size: 14px;
+}
+.studyReport-all-classRanking,.studyReport-all-knowledge,.studyReport-all-learnActivity,.studyReport-all-assessmentResult{
+	width: 100%;
+	height: 320px;
+	padding: 26px 20px;
+	border-radius: 5px;
+	box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	-webkit-box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	-moz-box-shadow:0 0 30px 0px rgba(0,0,0, 0.1);
+	margin-top: 26px;
+}
+.studyReport-all-content h3{
+	font-size:16px;
+	color:#ff366d;
+}
+
+.studyReport-all-box .wrapper{
+	top: 90px;
+	overflow: hidden;
+}
+.studyReport-all-classRanking ul{
+	padding:22px 0 22px 26px;
+	float: left;
+}
+.studyReport-all-classRanking ul li{
+	font-size: 14px;
+	line-height: 30px;
+}
+.studyReport-all-classRanking ul li p{
+	display: inline-block;
+	width: 160px;
+}
+.studyReport-all-classRanking ul li p em{
+	font-style: normal;
+}
+.studyReport-all-classRanking ul li span{
+	padding-left:18px;
+}
+.studyReport-all-classRanking ul li:first-child strong{
+	font-weight: normal;
+    margin-top: -10px;
+    display: block;
+    color: #999999;
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+.studyReport-all-classRanking ul li b{
+	padding-right: 18px;
+}
+.studyReport-all-classRanking ul li b.ranking-up{
+	color: #009b21;
+}
+.studyReport-all-classRanking ul li b.ranking-down{
+	color: #ff1345;
+}
+.classRanking-echart{
+	margin-left:138px;
+	width: 380px;
+	display: inline-block;
+}
+.studyReport-all-knowledge{
+	height: 180px;
+}
+.studyReport-all-knowledge ul{
+	padding:12px 0 22px 26px;
+	float: left;
+}
+.studyReport-all-knowledge ul li{
+	line-height: 34px;
+}
+.studyReport-all-knowledge ul li p{
+	display: inline-block;
+	width: 160px;
+}
+.studyReport-all-learnActivity{
+	height: 400px;
+}
+.studyReport-all-learnActivity ul{
+	padding:22px 0 22px 26px;
+	float: left;
+}
+.studyReport-all-learnActivity ul li{
+	line-height: 34px;
+}
+.studyReport-all-learnActivity ul li{
+	line-height: 30px;
+}
+.studyReport-all-learnActivity ul li p{
+	display: inline-block;
+	width: 120px;
+}
+.learnActivity-echart{
+	margin-left:120px;
+	width: 380px;
+	display: inline-block;
+}
+.clearTop{
+	height: 90px;
+}
+.studyReport-all-assessmentResult{
+	height: 190px;
+}
+.result-table{
+	margin-top: 22px;
+}
+.result-table tr:last-child{
+	border-top: 1px solid #efefef;
+}
+.result-table tr td{
+	padding:12px 25px;
+	text-align: center;
+	border-left: 1px solid #efefef;
+}
+.result-table tr td:first-child{
+	border-left: none;
+}
+
+/*测评成绩报告*/
+.examReport{
+	width: 100%;
+	height: 100%;
+	background-color: #f7f7f7;
+	position: fixed;
+  left: 0;
+  top: 0;
+  padding-top: 60px;
+}
+.examReport .header{
+	width: 100%;
+	height: 60px;
+	position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+.examReport .header-content{
+	height: 44px;
+	text-align: center;
+	line-height: 44px;
+	background-color: #fff;
+}
+.examReport .header h1{
+	font-size: 16px;
+}
+.examReport .header a{
+	position: absolute;
+	left: 26px;
+	color: #333333;
+}
+.examReport .header a img{
+	vertical-align: middle;
+	padding-right: 10px;
+}
+.examReport .header a span{
+	vertical-align: middle;
+}
+
+.examReport-body{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding: 0 120px 20px 120px;
+	overflow: hidden;
+}
+.examReport-main{
+	width: 100%;
+	position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+}
+
+.examReport-main .wrapper .scroller{
+	/*padding:20px 125px;*/
+}
+.examReport-content{
+	position: relative;
+	width: 100%;
+	padding-top: 58px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+.examReport-content-title{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	color: #333;
+}
+.examReport-content-circle{
+	width: 180px;
+	height: 180px;
+	border: 2px solid #f2f2f2;
+	border-radius: 50%;
+	margin:0 auto;
+	position: relative;
+}
+.examReport-content-circle .circle{
+	width: 156px;
+	height: 156px;
+	margin:10px auto;
+}
+.circle-text{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+    top: 0;
+}
+.circle-text p:first-child{
+	font-size: 16px;
+	color: #999999;
+	text-align: center;
+	padding-top: 50px;
+
+}
+.circle-text p:last-child{
+	font-size: 32px;
+	color: #333333;
+	text-align: center;
+	/*padding-top: 12px;*/
+	
+}
+.circle-text p:last-child span{
+	font-size: 20px;
+}
+.examReport-quNum{
+	width: 100%;
+	margin:32px auto;
+	text-align: center;
+}
+.examReport-quNum p{
+	display: inline-block;
+	padding-right: 20px;
+}
+.examReport-detail{
+	width: 100%;
+}
+.examReport-detail-legend{
+	width: 170px;
+	margin:32px auto;
+	margin-bottom: 0;
+}
+.examReport-detail-legend p{
+	display: inline-block;
+	padding-right: 42px;
+	color: #999999;
+}
+.examReport-detail-legend p span{
+	display: inline-block;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background-color: #4fc88c;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+.examReport-detail-legend p:last-child{
+	padding-right:0;
+}
+.examReport-detail-legend p:last-child span{
+	background-color: #f5858d;
+}
+
+.examReport-detail-card{
+	width: 100%;
+	padding:18px 100px;
+}
+.examReport-detail-card li{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	font-size: 12px;
+	color: #fff;
+	display: inline-block;
+	background-color: #4ac989;
+	border-radius: 5px;  
+	margin:5px 10px 10px 0;
+	cursor: pointer;
+}
+.examReport-detail-card .card-cut{
+	width: 270px;
+	display: inline-block;
+}
+.examReport-detail-card li.card-error{
+	background-color: #ff8891;
+}
+.examReport-knowledge{
+	width: 100%;
+	margin-top:10px;
+	padding: 26px 80px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+.examReport-knowledge ul li:hover{
+	background-color: #f7f7f7;
+}
+.examReport-back-nav{
+	width: 300px;
+	overflow: hidden;
+	margin: 20px auto;
+}
+.examReport-back{
+	float: left;
+	display: inline-block;
+	width: 120px;
+	height: 36px;
+	text-align: center;
+	line-height: 36px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #ff366d;
+	border-radius: 5px;
+}
+.examReport-back-right{
+	margin-left: 60px;
+}
+

@@ -1,0 +1,7 @@
+<script id="template-course-study-d3-stack" type="text/template">
+		<ul class="courseStudy-d3Stack-ul">
+			<% _.each(data, function(element, index){ %>
+				<li class="courseStudy-d3Stack-li courseStudy-d3Stack-<%= element.status %>"><span class="courseStudy-d3Stack-tag"></span><%= element.title %><span class="courseStudy-d3Stack-num"><%= element.total %></span></li>
+			<% }) %>
+		</ul>
+</script>

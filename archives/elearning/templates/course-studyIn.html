@@ -1,0 +1,227 @@
+<script id="template-course-studyIn" type="text/template">
+<div class="course">
+	
+	<div class="course-content">
+		<!-- <div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller"> -->
+					<div class="loader-box"><div class="loader">加载中。。。</div></div>
+				<!-- </div>
+			</div> -->
+		</div>
+	</div>
+<div id="courseIntro" class="courseIntro" style="display: none">
+  <div class="courseIntro-header">
+  	<h3 class="courseIntro-title">课程介绍</h3>
+  	<a  class="courseIntro-close" href="javascript:;">关闭</a>
+  </div>
+  <div class="courseIntro-body">
+  	<div contenteditable="true" class="courseIntro-content" readonly="readonly">
+    <p class="courseIntro-content-p">双语卓越班CFA课程，由中博-财萃全国独家引入Wiley集团CFA教学解决方案，<strong>采用wiley官方CFA学习平台</strong>。课程服务由财萃网提供，如有疑问请咨询财萃网：400-602-6018</p>
+
+	  <p class="courseIntro-content-p">Wiley 高效学习系统鼓励专注和高效学习：在较短时间内进行完整的学习。</p>
+	 
+	  <p class="courseIntro-content-p">许多课程往往采用长时间课堂教学模式，涵盖过多主题，缺乏学生互动，只有中期测试和学习结束后的总结性考试来测试所有的知识点。 而围绕更小且更集中的主题，学习并随之评估学习成果，可以适应繁忙的日程安排和各种学习方式，这是一个更加高效的方法。鉴于此，Wiley CFA 将学习内容融入到“高效学习模块课程之中。” </p>
+
+	  <p class="courseIntro-content-p">高效学习模块涵盖了学习者的所有需求，通过以下三个步骤，即可掌握所学知识：<br>
+
+	  <p class="courseIntro-content-p">1、<strong>学习</strong> 学习步骤是学习者准备的基础，包括观看综合知识点讲座和阅读学习指南。</p>
+
+	  <p class="courseIntro-content-p">2、<strong>评估</strong> 我们喜欢测验！除了频繁测验，没有更好的方法来确认掌握情况或发现学习者知识中的薄弱环节。我们在学习者课程中设置了多种多样的测验。</p>
+
+	  <p class="courseIntro-content-p">3、<strong>沟通交流</strong>  在这段旅程中，你并不是一个人孤军奋战，与专家和同伴保持联系是一个非常重要的方式，有助于解疑答惑，保持学习动力，并与志同道合的伙伴在社区进行互动。我们因此提供的工具将允许学生与课程专家直接 就学习内容进行互动。 </p>
+
+	  <p class="courseIntro-content-p">4、<strong>复习</strong> 在完成主要课程的学习之后，考前冲刺课程将为你提供考前强化视频讲座，更多的模拟考试题，以及 wiley 著名的考前冲刺学习指南。考前冲刺课程旨在进一步提炼和强化最重要和最具挑战性的考试要点，是帮助总结和强化之前学习的最佳方式。</p>
+	</div>
+  </div>
+  <!-- <div class="courseIntro-email-content">
+  	
+  </div> -->
+  <div class="courseIntro-footer">
+  	<div class="courseIntro-block">
+  		<p class="courseIntro-time hidden">课程到期时间 <span class="courseIntro-time-span">2017-01-17</span></p>
+  		<p class="courseIntro-tips">点击开始学习进入wiley官方学习平台</p>
+  	</div>
+  	<div class="courseIntro-block">
+  		<div class="courseIntro-mt-10">
+  			<!-- <p class="courseIntro-nextShow-box">
+  				<a class="courseIntro-nextShow-btn" href="javascript:;">
+  					<span class="courseIntro-nextShow-border"><i class="courseIntro-nextShow-icon"></i></span>下次不显示</a>
+  			</p> -->
+  			<p class="courseIntro-email">系统监测到您的<span class="courseIntro-email-info">邮箱含有中文</span>，请前往【<a class="courseIntro-email-a" href="<%= window.zbgedu.home %>" target="_blank">会员中心</a>】修改</p>
+  		</div>
+  		<a class="courseIntro-btn courseIntro-default" href="javascript:;">开始学习</a>
+  		</div>
+  </div>
+</div>
+
+<div id="updateCourse" class="updateCourse" style="display: none">
+	<div class="loader-box hidden"><div class="loader">加载中。。。</div></div>
+  <div class="updateCourse-header">
+  	<h3 class="updateCourse-title">课程变更</h3>
+  	<a  class="updateCourse-close" href="javascript:;">关闭</a>
+  </div>
+  <div class="updateCourse-body">
+  	<div contenteditable="true" class="updateCourse-content" readonly="readonly"></div>
+  </div>
+  <div class="updateCourse-footer">
+  	<div class="updateCourse-block">
+  		<a class="updateCourse-btn updateCourse-disabled" href="javascript:;">暂不更新</a>
+  		<a class="updateCourse-btn updateCourse-default" href="javascript:;">立即变更</a>
+  	</div>
+  </div>
+</div>
+
+<div id="courseIntroLoading" class="courseIntroLoading" style="display: none">
+	<div class="courseIntroLoading-loading">
+		正在登录WileyCFA平台，请稍等
+	</div>
+	<div class="courseIntroLoading-fail">
+		<p class="courseIntroLoading-p">登录失败，原因：账号认证失败</p>
+		<p class="courseIntroLoading-p">请<span class="courseIntroLoading-time">5</span>秒后重试</p>
+	</div>
+</div>
+</script>
+<script id="template-course-wiley-iframe" type="text/template">
+	<div class="wiley-iframe-container">
+		<div class="wiley-iframe-header">
+			<p class="wiley-iframe-title"><img class="wiley-iframe-logo" src="http://static.caicui.com/studycenterskin/images/wiley-logo.png" alt="财萃-wiley" title="财萃-wiley"><%= title %></p>
+			<a href="javascript:;" class="js-wiley-iframe-close"><img class="wiley-iframe-close" src="http://static.caicui.com/studycenterskin/images/wiley-close.png"  alt="关闭-财萃-wiley" title="关闭-财萃-wiley"></a>
+		</div>
+		<iframe class="wiley-iframe" src="<%= wileyUrl %>" width="100%" height="100%" frameborder="0"></iframe>
+	</div>
+</script>
+
+<script id="template-course-studyIn-list" type="text/template">
+	<% if(data.courseLists.length && data.courseListNav.length){ %>
+		<div class="container container-list">
+			<div class="studyin"> 
+				<ul class="studyin-header clearfloat">
+					<% _.each(data.courseLists,function(element, index, list){ %>
+						<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+							<a href="javascript:;"><%= element.categoryName %></a>
+						</li>
+					<% }) %>
+				</ul>
+				<div class="studyin-body">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+				<div class="studyin-content">
+					<% _.each(data.courseLists,function(element, index, list){ %>
+					<div class="studyin-contents <%= index ? '' : 'active' %>">
+						<% _.each(element.newList,function(element, index, list){ %>
+
+						<div class="studyin-contents-list">
+							<div class="studyin-content-header clearfloat">
+								<div class="subject-type-lf">
+									<span class="subject-name"><%= element.subjectName %></span>
+									<% if(element.isU == 2){ %>
+										<span class="u-icon"></span>
+									<% } %>
+								</div>
+								<div class="subject-type-rt stop">
+									<a class="u-icon" href="javascript:;"></a>
+								</div>
+							</div>
+							<ul class="studyin-content-subject clearfloat" >
+								<% _.each(element.list,function(element, index, list){ %>
+									<li class="studyin-content-subjects">
+									<% if(element.lock_status == "0"){ %>
+										<% if(element.courseSource == "wiley"){ %>
+											<a class="js-coursestudy" data-courseName="<%= element.courseName %>" data-courseSource="<%= element.courseSource %>" data-href="#courseStudy/<%= element.courseId %>" data-courseId="<%= element.courseId %>" data-orderItemId="<%= element.orderID_item_id %>" data-expirationTime="<%= element.expirationTime %>" href="javascript:;">
+										<% }else{ %>
+											<a href="#courseStudy/<%= element.courseId %>">
+										<% } %>
+									<% }else{ %>
+										<a href="javascript:;" class="js-locking-tipsPop">
+									<% } %>
+									
+
+											<div class="subject-lf">
+												<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+												
+												<!-- <% if(element.isU == 2){ %>
+													<span class="subject-u"><span class="subject-u-text">U+</span></span>
+												<% } %> -->
+												<% if(element.lock_status == "0"){ %>
+													<div class="subject-mask">
+														<span class="mask-lf">
+															继续学习
+														</span>
+														<!-- <span class="mask-rt">
+															→
+														</span> -->
+														<span class="subject-time">有效期至：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></span>
+													</div>
+												<% }else{ %>
+													<div class="subject-mask subject-mask-locking">
+														<span class="mask-lf">
+															课程锁定
+														</span>
+														<!-- <span class="mask-rt-locking"></span> -->
+														<span class="subject-time">有效期至：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></span>
+														<p class="subject-mask-text">分期付款未完成<span class="subject-mask-radiusIcon">...</span></p>
+													</div>
+												<% } %>
+												
+
+											</div>
+											<div class="subject-rt">
+												<h3><%= element.courseName %></h3>
+												<span class="last-study-chapter">上次学到：知识点1 战略规划概述</span>
+												<p class="extendName">
+													<% if(element.shopCategoryExtendName){ %>
+														<% if(element.isU == 2){ %>
+															<i class="icon icon-extendName-isu"></i>
+														<% }else{ %>
+															<i class="icon icon-extendName"></i>
+														<% } %>
+														<span class="extendName-text"><%= element.shopCategoryExtendName %></span>
+													<% } %>
+												</p>
+												<div class="subject-progress">
+												<% if(element.courseSource == 'wiley'){ %>
+													课程学习进度以wiley平台为准
+												<% }else{ %>
+													<% 
+														var percentage = CAICUI.iGlobal.getPercentage(element.courseProgress,element.taskTotal,'bar');
+													%>
+													<div class="total-progress">
+														<div class="current-progress" data-progress="<%= percentage %>"></div>
+													</div>
+													<span>%</span>
+													<span> <%= percentage %> </span>
+												
+
+												<% } %>
+												</div>
+											</div>
+										</a>
+									</li>
+								<% }) %>
+							</ul>
+							</div>
+						<% }) %>
+					</div>
+					<% }) %>
+				</div>
+				</div>
+				</div>
+				</div>
+			</div>
+
+			
+		</div>
+	<% }else{ %>
+		<div class="studyin-nodata">
+				<div class="studyin-nodata-img u-icon"></div>
+				<div class="studyin-nodata-des">
+					您还未有购买课程
+				</div>
+				<div class="studyin-nodata-btn">
+					<a class="studycenter-buy" href="<%= window.zbgedu.origin %>" target="_blank">
+						选课购买
+					</a>
+				</div>
+			</div>
+	<% } %>
+</script>

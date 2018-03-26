@@ -1,0 +1,268 @@
+<script id="template-classCourseTree" type="text/template">
+	<div class="classCourseTree-main classCourse-tree">
+		<h3 class="classCourseTree-header-title"><i class="icon icon-course-title"></i>任务列表</h3>
+		<% 
+			_.each(classCourseTree, function(element, index){ 
+				var listMaxLevel = _.max(element.list, function(stooge){ return stooge.level; }).level;
+				var chapter = element.newList[0];
+				console.log(chapter)
+		%>
+			<div class="classCourseTree-week classCourseTree-week-<%= listMaxLevel.level %>">
+				<p class="classCourseTree-week-title"><%= element.weekName %></p>
+				<p class="classCourseTree-chapter-title"><%= chapter.title %></p>
+				<% if(chapter.children && chapter.children.length){ %>
+					<% _.each(chapter.children, function(element, index){ 
+						var chapterId = element.chapterId;
+					%>
+						<ul class="ul chapter-ul">
+							<li class="li chapter-li">
+								<div class="div chapter-div">
+									<p class="title chapter-title"><%= element.title %></p>
+								</div>
+								<ul class="ul section-ul">
+									<% if(element.children && element.children.length){ %>
+										<% _.each(element.children, function(element, index){ 
+											var chapterId = element.chapterId;
+										%>
+										<li class="li section-li section-li-notlast">
+											<div class="div section-div">
+												<p class="title chapter-title">
+												<% if(element.taskType == "examReport"){ %>
+													<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+												<% }else{ %>
+													<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+												<% } %>
+													<%= element.title %>
+												</p>
+											</div>
+										<% if(element.tasks && element.tasks.length){ %>
+											<ul class="ul task-ul">
+													<% _.each(element.tasks, function(element, index){ 
+													var taskId = element.taskId;
+
+													%>
+														<li class="li task-li">
+															<div class="div task-div">
+																<a class="title task-title js-classCourse-task" data-index="<%= index %>" data-chapterid="<%= chapterId %>" data-taskid="<%= taskId %>"  href="javascript:;">
+																	<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+																	<span class="task-title-text"><%= element.title %></span>
+																</a>
+															</div>
+														</li>
+													<% }) %>
+											</ul>
+
+										<% }else{ %>
+
+											
+										<% } %>
+										</li>
+									<%	}) } %>
+									<% if(element.tasks && element.tasks.length){
+										var tasksLength = element.tasks.length;
+										_.each(element.tasks, function(element, index){ 
+										var taskId = element.taskId;
+										if(index == tasksLength-1){
+									%>
+									<li class="li section-li section-li-notlast week-task-li">
+										<div class="div section-div">
+											<div class="week-task-div">
+												<a class="title task-title js-classCourse-task" data-index="<%= index %>" data-chapterid="<%= chapterId %>" data-taskid="<%= taskId %>" href="javascript:;">
+												<% if(element.taskType == "exam" && element.taskLevel == "core"){ %>
+													<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+												<% }else{ %>
+													<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+												<% } %>
+												</a>
+												<div class="week-task-name"><span class="task-name-triangle"></span><span class="task-name-text">名师错题答疑 2018年02月22日 20：00开始</span></div>
+											</div>
+										</div>
+									</li>
+									<%	}else{ %>
+										<li class="li section-li section-li-notlast week-task-li">
+											<div class="div section-div">
+												<div class="week-task-div">
+													<a class="title task-title js-task-exam js-classCourse-task" data-index="<%= index %>" data-chapterid="<%= chapterId %>" data-taskid="<%= taskId %>" href="javascript:;">
+													<% if(element.taskType == "exam" && element.taskLevel == "core"){ %>
+														<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+													<% }else{ %>
+														<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+													<% } %>
+													</a>
+												</div>
+											</div>
+										</li>
+										
+									<%	} %>
+											
+									<%	})
+									} %>
+
+								</ul>
+
+							</li>
+						</ul>
+					<% }) %>
+				<% }else{ %>
+						
+				<% } %>
+
+				<!-- <% if(chapter.tasks && chapter.tasks.length){
+					_.each(chapter.tasks, function(element, index){ %>
+						<li class="li section-li section-li-notlast hidden">
+							<div class="div section-div">
+								<p class="title task-title">
+								<% if(element.taskType == "exam" && element.taskLevel == "core"){ %>
+									<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+								<% }else{ %>
+									<i class="icon-learning-plan icon-learning-plan-<%= element.taskType %>-hover"></i>
+								<% } %>
+									<%= element.title %>
+								</p>
+							</div>
+						</li>
+				<%	})
+				} %> -->
+			</div>
+		<% }) %>
+
+	<div class="classCourse-weekList">
+			<p class="weekList-title">WEEK1</p>
+
+			<ul class="weekList-ul">
+				<li class="weekList-li weekList-li-chapter">
+					<div class="weekList-item weekList-chapter">
+						<p class="weekList-item-content chapter-content">章标题章标题章标题章标题章标题章</p>
+					</div>
+
+				</li>
+
+				<li class="weekList-li weekList-li-section">
+					<div class="weekList-item weekList-section">
+						<a class="weekList-item-content section-content" href="javascript:;">
+							<span class="section-content-bg" style="width: 100%;"></span>
+							<div class="section-info">
+								<span class="section-title">节标题</span>
+								<span class="section-time">
+									<i class="icon-teachingPlan icon-teachingPlan-time"></i>
+									1.5h
+								</span>
+							</div>
+							
+						</a>
+					</div>
+				</li>
+				<li class="weekList-li weekList-li-section">
+					<div class="weekList-item weekList-section">
+						<a class="weekList-item-content section-content" href="javascript:;">
+							<span class="section-content-bg" style="width: 80%;"></span>
+							<div class="section-info">
+								<span class="section-title">节标题节标题节标题节</span>
+								<span class="section-time">
+									<i class="icon-teachingPlan icon-teachingPlan-time"></i>
+									1.5h
+								</span>
+							</div>
+						</a>
+					</div>
+				</li>
+				<li class="weekList-li weekList-li-section">
+					<div class="weekList-item weekList-section">
+						<a class="weekList-item-content section-content" href="javascript:;">
+							<span class="section-content-bg" style="width: 40%;"></span>
+							<div class="section-info">
+								<span class="section-title">节标题</span>
+								<span class="section-time">
+									<i class="icon-teachingPlan icon-teachingPlan-time"></i>
+									1.5h
+								</span>
+							</div>
+						</a>
+					</div>
+				</li>
+
+				<li class="weekList-li weekList-li-task">
+					<div class="weekList-task">
+						<a class="task-content" href="javascript:;">
+							<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+						</a>
+					</div>
+				</li>
+
+				<li class="weekList-li weekList-li-task">
+					<a class="task-content" href="javascript:;">
+						<i class="icon-learning-plan icon-learning-plan-openCourse"></i>
+					</a>
+					<div class="task-name"><span class="task-name-triangle"></span><span class="task-name-text">名师错题答疑 2018年02月22日 20：00开始</span></div>
+				</li>
+			</ul>
+			<ul class="weekList-ul">
+				<li class="weekList-li weekList-li-chapter">
+					<div class="weekList-item weekList-chapter">
+						<p class="weekList-item-content chapter-content">章标题章标题章标题章标题章标题章</p>
+					</div>
+
+				</li>
+
+				<li class="weekList-li weekList-li-section">
+					<div class="weekList-item weekList-section">
+						<a class="weekList-item-content section-content" href="javascript:;">
+							<span class="section-content-bg" style="width: 100%;"></span>
+							<div class="section-info">
+								<span class="section-title">节标题</span>
+								<span class="section-time">
+									<i class="icon-teachingPlan icon-teachingPlan-time"></i>
+									1.5h
+								</span>
+							</div>
+							
+						</a>
+					</div>
+				</li>
+				<li class="weekList-li weekList-li-section">
+					<div class="weekList-item weekList-section">
+						<a class="weekList-item-content section-content" href="javascript:;">
+							<span class="section-content-bg" style="width: 80%;"></span>
+							<div class="section-info">
+								<span class="section-title">节标题节标题节标题节</span>
+								<span class="section-time">
+									<i class="icon-teachingPlan icon-teachingPlan-time"></i>
+									1.5h
+								</span>
+							</div>
+						</a>
+					</div>
+				</li>
+				<li class="weekList-li weekList-li-section">
+					<div class="weekList-item weekList-section">
+						<a class="weekList-item-content section-content" href="javascript:;">
+							<span class="section-content-bg" style="width: 40%;"></span>
+							<div class="section-info">
+								<span class="section-title">节标题</span>
+								<span class="section-time">
+									<i class="icon-teachingPlan icon-teachingPlan-time"></i>
+									1.5h
+								</span>
+							</div>
+						</a>
+					</div>
+				</li>
+
+				<li class="weekList-li weekList-li-task">
+					<div class="weekList-task">
+						<a class="task-content" href="javascript:;">
+							<i class="icon-teachingPlan icon-teachingPlan-testing"></i>
+						</a>
+					</div>
+				</li>
+
+				<li class="weekList-li weekList-li-task">
+					<a class="task-content" href="javascript:;">
+						<i class="icon-learning-plan icon-learning-plan-openCourse"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+</script>

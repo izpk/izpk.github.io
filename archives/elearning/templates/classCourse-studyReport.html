@@ -1,0 +1,303 @@
+<script id="template-studyReport" type="text/template">
+	<div class="studyReport">
+			<ul class="studyReport-menu">
+				<span class="text-loader-content"><span class="text-loader"></span></span>
+			</ul>
+			<div class="studyReport-content">
+				<div class="studyReport-content-title">
+					<h2>
+						学习周报告
+					</h2>
+					<nav class="teachingPlan-course-nav">
+						<span class="text-loader-content"><span class="text-loader"></span></span>
+					</nav>
+					<a class="studyReport-content-all hidden" href="javascript:;">整体学习报告</a>
+				</div>
+				<div class="studyReport-content-main">
+					<div class="loader-box"><div class="loader">加载中。。。</div></div>
+				</div>
+			</div>
+	</div>
+	
+</script>
+<script id="template-studyReport-class-nav" type="text/template">
+	<%
+		_.each(classCourseList,function(element, index){ 
+	%>
+		<li class="js-studyReport-menu-li <%= index == classIndex ? 'active' : '' %>"><%= element.className %></li>
+	<% }) %>
+</script>
+<script id="template-studyReport-course-nav" type="text/template">
+	<% _.each(classCourseList[classIndex].classCourse,function(element, index){ %>
+		<a class="teachingPlan-course-a <%= index == classCourseIndex ? 'active' : '' %>" href="javascript:;"><%= element.courseName %></a>
+	<% }) %>
+	
+</script>
+<script id="template-studyReport-main" type="text/template">
+	<ul class="studyReport-content-left">
+		
+	</ul>
+	<div class="studyReport-content-right">
+		
+	</div>
+</script>
+<script id="template-studyReport-content-left" type="text/template">
+		<div id="wrapper-week-nav" class="wrapper">
+			<div class="scroller">
+				<% _.each(data.planInfo, function(element, index){ %>
+					<li class="studyReportWeek <%= data.weekIngNum == index ? 'active' : '' %>">第<%= index+1 %>周</li>
+				<% }) %>
+				
+			</div>
+		</div>
+</script>
+<script id="template-studyReport-content-right" type="text/template">
+		<h3><%= weekIngInfo.startDate %>-<%= weekIngInfo.endDate %></h3>
+		<ul class="studyReport-content-list">
+			<li class="studyReportType active">班级排名</li>
+			<li class="studyReportType">知识点掌握</li>
+			<li class="studyReportType">学习活动</li>
+			<li class="studyReportType">评测结果</li>
+		</ul>
+		<div class="studyReport-content-detail">
+			<div id="wrapper-week-content" class="wrapper">
+			<div class="scroller">
+			<!-- 班级排名 -->
+			<div class="studyReport-type studyReport-content-classRanking active">
+				<ul class="classRanking-left">
+					<li><p>测试成绩：</p><span>86</span><br><strong>统计第一次成绩</strong></li><li><p>成绩排名（<em>40</em>人）：</p><span>第3名</span></li>	
+					<li><p>排名变化（<em>40</em>人）：</p><span><b class="ranking-up">↑&nbsp;7</b><b class="ranking-down">↓&nbsp;3</b></span></li>	
+					<li><p>活跃度排名（<em>40</em>人）：</p><span>第6名</span></li>	
+				</ul>
+				<div class="classRanking-right">
+					名次变化图
+				</div>
+			</div>
+			<!-- 知识点掌握 -->
+			<div class="studyReport-type studyReport-content-knowledge">
+				<ul class="knowledge-left">
+					<li><p>本周新增知识点：</p><span>7</span></li>	
+					<li><p>已掌握知识点：</p><span>2</span></li>	
+					<li><p>待加强知识点：</p><span>5</span></li>	
+				</ul>
+				<div class="knowledge-right">
+					<div class="knowledge-master">
+						<p><img src="../images/master.png" alt="">已掌握知识点</p>
+						<ul class="">
+							<li>F1-课程介绍</li>
+							<li>01-Definition and purposes</li>
+						</ul>
+					</div>
+					<div class="knowledge-strengthen">
+						<p><img src="../images/strengthen.png" alt="">待加强知识点</p>
+						<ul class="">
+							<li><i class="icon-learning-plan icon-learning-plan-video"></i>02-Types I:Profit vs Non-profit I</li>
+							<li><i class="icon-learning-plan icon-learning-plan-video"></i>03-Types I:Profit vs Non-profit II</li>
+							<li><i class="icon-learning-plan icon-learning-plan-video"></i>Planning</li>
+							<li><i class="icon-learning-plan icon-learning-plan-video"></i>Decision making&Control</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- 学习活动 -->
+			<div class="studyReport-type studyReport-content-learnActivity">
+				<ul class="learnActivity-left">
+					<li>
+						<p>课程视频：</p>
+						<div class="activity-progress">
+							<div class="activity-total-progress">
+								<div class="activity-current-progress active" data-progress="<%= weekIngInfo.videoProgress %>"></div>
+							</div>
+							<div class="activity-progress-text"><%= weekIngInfo.videoCompleted %>/<%= weekIngInfo.videoTotal %></div>
+						</div>
+					</li>	
+					<li>
+						<p>作业习题：</p>
+						<div class="activity-progress">
+							<div class="activity-total-progress">
+								<div class="activity-current-progress active" data-progress="<%= weekIngInfo.examProgress %>"></div>
+							</div>
+							<div class="activity-progress-text"><%= weekIngInfo.examCompleted %>/<%= weekIngInfo.examTotal %></div>
+						</div>
+					</li>
+					<li>
+						<p>学习完成度：</p>
+						<div class="activity-progress">
+							<div class="activity-total-progress">
+								<div class="activity-current-progress active" data-progress="<%= weekIngInfo.weekProgress %>"></div>
+							</div>
+							<div class="activity-progress-text"><%= weekIngInfo.weekProgress %>%</div>
+						</div>
+					</li>
+					<li class="progress-padding"><p>直播视频：</p><span><%= weekIngInfo.liveStatusText %></span></li>
+
+					<li><p>观看视频用时：</p><span><%= weekIngInfo.videoTime %></span></li>	
+					<li><p>作业用时：</p><span><%= weekIngInfo.examTime %></span></li>	
+					<li><p>测试用时：</p><span><%= weekIngInfo.evaluationTime %></span></li>	
+					<li><p>其他：</p><span><%= weekIngInfo.totalTime %></span></li>	
+					<li><p>本周总学习用时：</p><span><%= weekIngInfo.studyTime %></span></li>	
+				</ul>
+				<div class="learnActivity-right">
+					学习用时占比
+				</div>
+			</div>
+			<!-- 测评结果 -->
+			<div class="studyReport-type studyReport-content-assessmentResult">
+				<ul class="assessmentResult-left">
+					<li><p>测试得分（总分100）：</p><span>72</span><br><strong>第一次测试成绩</strong></li>
+					<li><p>45道题中，正确34道，错误11道</p></li>	
+					<li><p>测试用时：</p><span>1.5h</span></li>	
+					<li><p>答题卡</p></li>	
+					<ul class="studyReport-card">
+						<div class="card-cut">
+							<li>1</li>
+							<li>2</li>
+							<li>3</li>
+							<li class="card-error">4</li>
+							<li>5</li>
+						</div>
+						<div class="card-cut">
+							<li>6</li>
+							<li class="card-error">7</li>
+							<li class="card-error">8</li>
+							<li>9</li>
+							<li>10</li>
+						</div>
+						<div class="card-cut">
+							<li>11</li>
+							<li>12</li>
+							<li>13</li>
+							<li>14</li>
+							<li>15</li>
+						</div>
+						<div class="card-cut">
+							<li>16</li>
+							<li>17</li>
+							<li>18</li>
+							<li>19</li>
+							<li>20</li>
+						</div>
+						<div class="card-cut">
+							<li>21</li>
+						</div>
+						
+					</ul>
+					<div class="result-btn">
+						<p class="assessment-analysis">全部解析</p>
+						<p class="wrong-note">错题本</p>
+					</div>
+				</ul>
+			</div>
+
+		</div>
+		</div>
+
+		</div>
+</script>
+
+<!-- 整体学习报告弹窗 -->
+<script id="studyReport-all" type="text/template">
+	<div class="studyReport-all">
+		<div class="studyReport-all-mask"></div>
+		<div class="studyReport-all-box">
+			<h2>整体学习报告<a href="javascript:;" class="box-close"><img src="../images/box-close.png" alt=""></a></h2>
+			<div id="wrapper2" class="wrapper">
+				<div id="scroller2"  class="studyReport-all-content scroller">
+					<div class="studyReport-all-userInfo">
+						<p>ACCA-F1全景通关课  1班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;张昊同学</p>
+						<p>您的课学时间：2017年11月1日-2018年1月7日</p>
+					</div>
+					<div class="studyReport-all-classRanking">
+						<h3>班级排名</h3>
+						<ul>
+							<li><p>测试成绩：</p><span>86</span><br><strong>统计第一次成绩</strong></li><li><p>成绩排名（<em>40</em>人）：</p><span>第3名</span></li>	
+							<li><p>排名变化（<em>40</em>人）：</p><span><b class="ranking-up">↑&nbsp;7</b><b class="ranking-down">↓&nbsp;3</b></span></li>	
+							<li><p>活跃度排名（<em>40</em>人）：</p><span>第6名</span></li>	
+						</ul>
+						<div class="classRanking-echart">
+							名次变化图
+						</div>
+					</div>
+					<div class="studyReport-all-knowledge">
+						<h3>知识点掌握</h3>
+						<ul>
+							<li><p>本周新增知识点：</p><span>7</span></li>	
+							<li><p>已掌握知识点：</p><span>2</span></li>	
+							<li><p>待加强知识点：</p><span>5</span></li>
+						</ul>
+					</div>
+					<div class="studyReport-all-learnActivity">
+						<h3>学习活动</h3>
+						<ul>
+							<li>
+								<p>课程视频：</p>
+								<div class="activity-progress">
+									<div class="activity-total-progress">
+										<div class="activity-current-progress active" data-progress="1" style="width: 90%;"></div>
+									</div>
+									<div class="activity-progress-text">14/15</div>
+								</div>
+							</li>	
+							<li>
+								<p>作业习题：</p>
+								<div class="activity-progress">
+									<div class="activity-total-progress">
+										<div class="activity-current-progress active" data-progress="1" style="width: 60%;"></div>
+									</div>
+									<div class="activity-progress-text">19/30</div>
+								</div>
+							</li>
+							<li>
+								<p>学习完成度：</p>
+								<div class="activity-progress">
+									<div class="activity-total-progress">
+										<div class="activity-current-progress active" data-progress="1" style="width: 69%;"></div>
+									</div>
+									<div class="activity-progress-text">69%</div>
+								</div>
+							</li>
+							<li class="progress-padding"><p>直播视频：</p><span>已完成</span></li>
+
+							<li><p>观看视频用时：</p><span>17h</span></li>	
+							<li><p>作业用时：</p><span>2h</span></li>	
+							<li><p>测试用时：</p><span>0.5h</span></li>	
+							<li><p>其他：</p><span>0.5h</span></li>	
+							<li><p>本周总学习用时：</p><span>20h</span></li>
+						</ul>
+						<div class="learnActivity-echart">
+							学习用时占比
+						</div>
+					</div>
+					<div class="studyReport-all-assessmentResult">
+						<h3>评测结果</h3>
+						<table class="result-table">
+							<tr>
+								<td>第1周</td>
+								<td>第2周</td>
+								<td>第3周</td>
+								<td>第4周</td>
+								<td>第5周</td>
+								<td>第6周</td>
+								<td>第7周</td>
+								<td>第8周</td>
+								<td>综合平均得分</td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>22</td>
+								<td>90</td>
+								<td>90</td>
+								<td>89</td>
+								<td>90</td>
+								<td>66</td>
+								<td>68</td>
+								<td>1234</td>
+							</tr>
+						</table>
+					</div>
+					<div class="clearTop"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

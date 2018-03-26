@@ -1,0 +1,237 @@
+<script id="template-course-activated" type="text/template">
+<div class="course">
+	<!-- <ul class="course-ul">
+		<li class="course-li ">
+			<a class="course-a" href="#myCourse/studyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#myCourse/notActivated">
+				<span class="course-text">未激活</span>
+			</a>
+		</li>
+		<li class="course-li active">
+			<a class="course-a" href="#myCourse/activated">
+				<span class="course-text">已过期</span>
+			</a>
+		</li>
+	</ul> -->
+	<div class="course-content">
+		<!-- <div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller"> -->
+				<div class="loader-box"><div class="loader">加载中。。。</div></div>
+				
+			<!-- </div>
+		</div> -->
+	</div>
+</div>
+<div id="courseActivated-pop" class="courseActivated-pop" style="display:none;">
+	<a href="javascript:;" class="courseActivated-pop-close"></a>
+	<h3 class="courseActivated-pop-title">申请重听</h3>
+	<div class="courseActivated-pop-item">
+		<div class="courseActivated-pop-label">考试状态</div>
+		<select name="" id="" class="courseActivated-pop-select courseActivated-pop-select1">
+			<option value="1" class="courseActivated-pop-option">考试未通过</option>
+			<option value="2" class="courseActivated-pop-option">报名未考试</option>
+		</select>
+	</div>
+	<div class="courseActivated-pop-item">
+		<div class="courseActivated-pop-label">考试时间</div>
+		<input class="courseActivated-pop-select courseActivated-pop-select2" type="text" name="" placeholder="请选择未通过考试时间" data-date-format="yyyy/mm/dd">
+
+		<!-- <select name="" id="" class="courseActivated-pop-select courseActivated-pop-select2">
+			<option value="" class="courseActivated-pop-option">请选择未通过考试时间</option>
+			</select> -->
+	</div>
+	<div class="courseActivated-pop-item">
+		<div class="courseActivated-pop-label">分数</div>
+		<input class="courseActivated-pop-select courseActivated-pop-select3" type="number" name="" placeholder="请输入您的考试分数">
+		<!-- <select name="" id="" class="courseActivated-pop-select courseActivated-pop-select3">
+			<option value="" class="courseActivated-pop-option">输入您的考试分数</option></select> -->
+	</div>
+	<div class="courseActivated-pop-item">
+		<div class="courseActivated-pop-label">下次考试时间</div>
+		<select name="" id="" class="courseActivated-pop-select courseActivated-pop-select4">
+			<option class="courseActivated-pop-option">请选择下次考试的时间</option>
+		</select>
+	</div>
+	<div class="courseActivated-pop-upload add-photo-box">
+		<!-- <span class="courseActivated-pop-upload-img"></span> -->
+		<form id="uploadForm" class="add-photo-form" enctype="multipart/form-data"> 
+		    <input type="hidden" name="filename" value= "upfile"/>
+		    <input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+		    <input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+		    <!-- <i class="icon icon-add-photo"></i> -->
+		    <span class="courseActivated-pop-upload-img"></span>
+		</form>
+		<div class="add-photo-show hidden">
+			<img class="add-photo-img" src="">
+			<a class="add-photo-remove" href="javascript:;"><i class="icon icon-add-photo-remove"></i></a>
+		</div>
+		<div class="add-photo-no hidden"></div>
+	</div>
+	<!-- <span class="courseActivated-pop-view hidden">查看扫描件上传须知?  
+		<span class="courseActivated-pop-info">
+			1.请务必上传官网成绩查询页面截图或官方发的短信、邮件截图，不得涂改。需要能显示姓名，会员号，科目，分数或缺考信息。<br>
+			2.ACCA证书请务必上传ACCA官网成绩查询页面截图或官方发的短信、邮件截图；需要能显示姓名，ACCA会员号，科目，分数或缺考信息。<br>
+			3.CFA证书、CMA证书、CIMA证书、FRM证书CPA证书请务必上传官方下载的截图或官方发的短信、邮件截图。
+		</span>
+	</span> -->
+	<span class="courseActivated-noExaminationDate">
+		1.请务必上传官网成绩查询页面截图或官方发的短信、邮件截图，不得涂改。需要能显示姓名，会员号，科目，分数或缺考信息。<br>
+		2.ACCA证书请务必上传ACCA官网成绩查询页面截图或官方发的短信、邮件截图；需要能显示姓名，ACCA会员号，科目，分数或缺考信息。<br>
+		3.CFA证书、CMA证书、CIMA证书、FRM证书CPA证书请务必上传官方下载的截图或官方发的短信、邮件截图。<br>
+		如果没有找到您要选择的考试时间，请与学服联系 QQ：2222026018 电话：10101716
+	</span>
+	<a href="javascript:;" class="courseActivated-pop-button active">提交申请</a>
+</div>
+</script>
+<script id="template-course-activated-list" type="text/template">
+	<% if(expirationcourse.courseLists.length && expirationcourse.courseListNav.length){ %>
+		<div class="container container-list">
+			<div class="studyin">
+				<ul class="studyin-header clearfloat">
+					<% _.each(expirationcourse.courseLists,function(element, index, list){ %>
+						<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+							<a href="javascript:;"><%= element.categoryName %></a>
+						</li>
+					<% }) %>
+				</ul>
+	<div class="studyin-body">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+				<div class="studyin-content">
+					<% _.each(expirationcourse.courseLists,function(element, index, list){ %>
+							<div class="studyin-contents <%= index ? '' : 'active' %>">
+								<% _.each(element.newList,function(element, index, list){ 
+									var auditState = 2;
+									var auditClass = "";
+
+									_.each(applyrestudylist, function(applyrestudylistElement, index){
+											if(applyrestudylistElement.courseCategoryId == element.courseCategoryId){
+												auditState = applyrestudylistElement.auditState;
+												auditClass = "auditState"+auditState;
+											}
+									})
+									if(auditState !== 1){
+								%>
+								<div id="courseActivated-<%= element.courseCategoryId %>" class="studyin-contents-list <%= auditClass %>">
+									<div class="studyin-content-header clearfloat">
+										<div class="subject-type-lf">
+											<span class="subject-name"><%= element.subjectName %></span>
+											<% if(element.isU==2){ %>
+												<span class="u-icon"></span>
+											<% } %>
+										</div>
+										<div class="subject-type-rt stop">
+											<a class="u-icon" href="javascript:;"></a>
+										</div>
+									</div>
+									<ul class="studyin-content-subject clearfloat" >
+										<% _.each(element.list,function(element, index, list){ 
+											var link = '';
+											var linkText = '';
+											var linkClass = "";
+											
+												if(element.isU==2){
+													if(auditState == 0){
+														linkText = '审核中';
+														linkClass = "";
+													}else{
+														link = window.zbgedu.origin;
+														linkText = '申请重听';
+														linkClass = "js-apply-hearing";
+													}
+												}else{
+													link = window.zbgedu.origin;
+													linkText = '重新购买';
+													linkClass = "js-apply-hearing";
+												}
+											
+											
+											%>
+											<li class="studyin-content-subjects">
+												<% if(element.isU==2){ %>
+													<a href="javascript:;" class="<%= linkClass %>" data-categoryId="<%= element.categoryId %>" data-subjectid="<%= element.subjectID %>" data-orderitemid="<%= element.orderID_item_id %>">
+												<% }else{ %>
+													<a href="<%= window.zbgedu.origin %>" target="_blank">
+												<% } %>
+													<div class="subject-lf">
+														<%
+															var courseBkImageSrc = '';
+															if(element.courseBkImage.substr(0,4) === "http"){
+																courseBkImageSrc = element.courseBkImage;
+															}else{
+																courseBkImageSrc = CAICUI.Common.host.img + element.courseBkImage;
+															}
+														%>
+														<img src="<%= courseBkImageSrc %>" alt="课程图片">
+														<!-- <% if(element.isU == 2){ %>
+															<span class="subject-u"><span class="subject-u-text">U+</span></span>
+														<% } %> -->
+														<div class="subject-mask">
+															<span class="mask-lf">
+																<%= linkText %>
+															</span>
+															<!-- <span class="mask-rt">
+															→
+														</span> -->
+														<span class="subject-time">有效期至：<%= CAICUI.iGlobal.getDate(element.expirationTime) %></span>
+														</div>
+													</div>
+													<div class="subject-rt">
+														<h3><%= element.courseName %></h3>
+														<span class="last-study-chapter">上次学到：知识点1 战略规划概述</span>
+														<p class="extendName">
+													<% if(element.shopCategoryExtendName){ %>
+														<% if(element.isU == 2){ %>
+															<i class="icon icon-extendName-isu"></i>
+														<% }else{ %>
+															<i class="icon icon-extendName"></i>
+														<% } %>
+														<span class="extendName-text"><%= element.shopCategoryExtendName %></span>
+													<% } %>
+												</p>
+														<div class="subject-progress">
+															<% 
+																var percentage = CAICUI.iGlobal.getPercentage(element.courseProgress,element.taskTotal,'bar');
+															%>
+															<div class="total-progress">
+																<div class="current-progress" data-progress=<%= percentage %>></div>
+															</div>
+															<span>%</span>
+															<span> <%= percentage %> </span>
+														</div>
+													</div>
+												</a>
+											</li>
+										<% }) %>
+									</ul>
+								</div>
+
+								<% }
+								}) %>
+							</div>
+							<% }) %>
+				</div>
+				</div>
+				</div>
+			</div>
+			</div>
+
+		</div>
+	<% }else{ %>
+		<div class="studyin-nodata">
+				<div class="studyin-nodata-img u-icon"></div>
+				<div class="studyin-nodata-des">
+					您还未有购买课程
+				</div>
+				<div class="studyin-nodata-btn">
+					<a class="studycenter-buy" href="<%= window.zbgedu.origin %>" target="_blank">
+						选课购买
+					</a>
+				</div>
+			</div>
+	<% } %>
+</script>

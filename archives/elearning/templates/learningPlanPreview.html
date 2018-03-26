@@ -1,0 +1,60 @@
+<script id="template-learning-plan-preview" type="text/template">
+	<div class="learning-plan-preview">
+		<div class="learning-plan-preview-header">
+			<h3 class="learning-plan-preview-h3">计划预览</h3>
+			<p class="learning-plan-preview-info">  根据你的之前的设置，生成的计划如下日历所示，请仔细查看，如需修改可以点击“编辑计划”按钮返回到前面的设置页面。</p>
+			<a href="javascript:;" class="icon-close learning-plan-preview-close js-learning-plan-preview-close"></a>
+		</div>
+		<div class="learning-plan-preview-body">
+			<div class="learning-plan-preview-left">
+				<div class="learning-plan-preview-left-content">
+					<p class="learning-plan-preview-time"><span class="learning-plan-preview-timeText">课程总时长</span><span class="learning-plan-preview-timeNumber learning-plan-preview-courseTimeTotalNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></p>
+					<p class="learning-plan-preview-time"><span class="learning-plan-preview-timeText">课程任务数</span><span class="learning-plan-preview-timeNumber learning-plan-preview-courseTasksTotalNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></p>
+					<p class="learning-plan-preview-time"><span class="learning-plan-preview-timeText">计划总时长</span><span class="learning-plan-preview-timeNumber"><%= CAICUI.render.learningPlanTimeTotal %>h</span></p>
+					<p class="learning-plan-preview-time"><span class="learning-plan-preview-timeText">到期时间</span><span class="learning-plan-preview-timeNumber"><%= CAICUI.iGlobal.getDate(plansData[0].examinationDate) %></span></p>
+					<p class="learning-plan-preview-time"><span class="learning-plan-preview-timeText">考试时间</span><span class="learning-plan-preview-timeNumber"><%= CAICUI.iGlobal.getDate(plansData[0].activeTime) %></span></p>
+					<a href="javascript:;" class="learning-plan-preview-return js-learning-plan-preview-close">返回</a>
+				</div>
+			</div>
+			<div class="learning-plan-preview-right">
+				<div class="learning-plan-preview-right-content">
+					<div id="wrapper-learning-plan-Preview" class="wrapper">
+						<div id="scroller-learning-plan-Preview" class="scroller scroller-learning-plan-preview">
+							<!-- <nav class="learning-plan-preview-nav learning-plan-preview-nav-one">
+								<a href="javascript:;" class="learning-plan-preview-nav-a learning-plan-preview-nav-a-one">前导课</a>
+							</nav>
+							<nav class="learning-plan-preview-nav learning-plan-preview-nav-two">
+								<a href="javascript:;" class="learning-plan-preview-nav-a learning-plan-preview-nav-a-one active">前导课</a>
+								<a href="javascript:;" class="learning-plan-preview-nav-a learning-plan-preview-nav-a-two">基础课</a>
+							</nav> -->
+							<% 
+								var navNum = plansData.length;
+							%>
+							<nav class="learning-plan-preview-nav learning-plan-preview-nav-<%= navNum %>">
+								<% _.each(plansData,function(element, index){ %>
+									<a href="javascript:;" class="learning-plan-preview-nav-a learning-plan-preview-nav-a-<%= index+1 %> <%= index ? '' : 'active' %>" title="<%= element.courseName %>"><%= element.courseName %></a>
+								<% }) %>
+								
+							</nav>
+							<% _.each(plansData,function(element, index){ %>
+								<div class="learning-plan-preview-item learning-plan-preview-item-<%= index+1 %> <%= index ? '' : 'active' %>">
+									<div class="loader-content"><div class="loader-box"><div class="loader">加载中。。。</div></div></div>
+								</div>
+							<% }) %>
+
+							<!-- <div class="learning-plan-preview-item learning-plan-preview-item-one active">
+								前导课
+							</div>
+							<div class="learning-plan-preview-item learning-plan-preview-item-two">
+								基础课
+							</div>
+							<div class="learning-plan-preview-item learning-plan-preview-item-three">
+								串讲课
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

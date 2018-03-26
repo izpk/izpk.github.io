@@ -1,0 +1,209 @@
+<script id="template-course-notActivated" type="text/template">
+<div class="course">
+	<!-- <ul class="course-ul">
+		<li class="course-li">
+			<a class="course-a" href="#myCourse/studyIn">
+				<span class="course-text">在学课程</span>
+			</a>
+		</li>
+		<li class="course-li active">
+			<a class="course-a" href="#myCourse/notActivated">
+				<span class="course-text">未激活</span>
+			</a>
+		</li>
+		<li class="course-li">
+			<a class="course-a" href="#myCourse/activated">
+				<span class="course-text">已过期</span>
+			</a>
+		</li>
+	</ul> -->
+	<div class="course-content">
+		<!-- <div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller"> -->
+					<div class="loader-box"><div class="loader">加载中。。。</div></div>
+				
+			<!-- </div>
+		</div> -->
+	</div>
+</div>
+
+</script>
+<script id="template-course-courseActivation" type="text/template">
+	<div id="courseActivation" class="courseActivation" style="display:none;">
+		<h3 class="courseActivation-title">激活</h3>
+		<p class="courseActivation-item courseActivation-course">您正在激活在线课程&nbsp;<span class="courseActivation-courseName">&nbsp;复习串讲 - ACCA复习串讲 - ACCA复习串讲 - ACCA复习串讲 - ACCA复习串讲 - ACCA复习串讲 - ACCA</span></p>
+		<% if(!CAICUI.render.isCoursePlan && !CAICUI.render.isCourseModel){ %>
+		<div class="courseActivation-item courseActivation-time">
+			<span class="courseActivation-time-span">考试时间</span>
+			<div class="courseActivation-select-time">
+				<span class="text-loader-content"><span class="text-loader"></span></span>
+				<!-- <select class="courseActivation-select">
+					<option class="courseActivation-option">请选择考试时间</option>
+					<option class="courseActivation-option">2017/10/10</option>
+				</select> -->
+			</div>
+			
+		</div>
+		<% } %>
+		<p class="courseActivation-item courseActivation-info">激活课程后即可正常学习，请注意，激活动作无法撤销，此课程一旦激活将在<span class="courseActivation-effectiveDay">180</span>天后失效,失效后将无法继续学习。请在有效期内合理安排学习进度。</p>
+		<p class="courseActivation-span courseActivation-notes hidden">注：会激活&nbsp;<span class="courseActivation-subjectName">&nbsp;复习串讲 - ACCA</span>中的全部课程。</p>
+		<div class="courseActivation-btn-box">
+			<% if(CAICUI.render.isCoursePlan){ %>
+				<a href="javascript:;" class="course-activation-acca-btn">选择学习计划</a>
+			<% }else{ %>
+				<a href="javascript:;" class="courseActivation-btn courseActivation-btn-action js-course-activation">马上激活</a>
+			<% } %>
+			<span class="courseActivation-btn js-course-activationing hidden">正在激活</span>
+			<a href="javascript:;" class="courseActivation-btn courseActivation-close">暂不激活</a>
+		</div>
+
+	  <!-- <h3 class="ca-h3">您正在激活在线课程&nbsp;<font>&nbsp;复习串讲 - ACCA</font></h3>
+	  <p class="ca-p">激活课程后即可正常学习，请注意，激活动作无法撤销，此课程一旦激活将在<span class="effectiveDay">180</span>天后失效,失效后将无法继续学习。请在有效期内合理安排学习进度。</p>
+	  <p class="ca-isu hidden">注：会激活&nbsp;<font>&nbsp;复习串讲 - ACCA</font>中的全部课程。</p>
+	  <form class="form-horizontal courseActivation-form">
+
+	      <div class="ca-select">
+	          <select class="form-control input-sm">
+	          </select>
+	      </div>
+	      <div class="checkbox ca-checkbox">
+	          <label>
+	              <input type="checkbox">确定激活此课程
+	          </label>
+	          <p class="courseIntro-email">系统监测到您的<span class="courseIntro-email-info">邮箱含有中文</span>，为避免影响学习服务，请前往【<a class="courseIntro-email-a" href="<%= window.zbgedu.home %>" target="_blank">会员中心</a>】修改</p>
+	      </div>
+
+	      <div class="ca-btn-div">
+	          <button type="button" class="btn ca-btn-ok js-course-activation">&nbsp;激活&nbsp;</button>
+	          <button type="button" class="btn ca-btn-no hidden js-course-activationing">正在激活</button>
+	          <button type="button" class="btn ca-btn-no">以后在说</button>
+	      </div>
+	  </form> -->
+	</div>
+</script>
+<script id="template-course-notActivated-list" type="text/template">
+	<% if(data.courseLists.length && data.courseListNav.length){ %>
+		<div class="container container-list">
+			<div class="studyin">
+				<ul class="studyin-header clearfloat">
+					<% _.each(data.courseLists,function(element, index, list){ %>
+						<li class="studyin-type certicify-lf <%= index ? '':'active' %> ">
+							<a href="javascript:;"><%= element.categoryName %></a>
+						</li>
+					<% }) %>
+				</ul>
+				<div class="studyin-body">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+				<div class="studyin-content">
+					<% _.each(data.courseLists,function(element, index, list){
+					%>
+					<div class="studyin-contents <%= index ? '' : 'active' %>" >
+						<% _.each(element.newList,function(element, index, list){ %>
+
+						<div class="studyin-contents-list">
+							<div class="studyin-content-header clearfloat">
+								<div class="subject-type-lf">
+									<span class="subject-name"><%= element.subjectName %></span>
+									<% if(element.isU==2){ %>
+										<span class="u-icon"></span>
+									<% } %>
+								</div>
+								<div class="subject-type-rt stop">
+									<a class="u-icon" href="javascript:;"></a>
+								</div>
+							</div>
+							<ul class="studyin-content-subject clearfloat" >
+								<% 
+									_.each(element.list,function(element, index, list){ 
+								%>
+									<li class="studyin-content-subjects" data-courseid="<%= element.courseId %>">
+										<% if(element.lock_status=="0"){ %>
+											<a class="js-course-notActivated" href="javascript:;" data-courseGroupId="<%= element.courseGroupId %>" data-categoryName="<%= element.categoryName %>" data-subjectID="<%= element.subjectID %>" data-courseid="<%= element.courseId %>" data-courseName="<%= element.courseName %>" data-isu="<%= element.isU %>" data-courseSource="<%= element.courseSource %>" data-orderitemid="<%= element.orderID_item_id %>" data-actimode="<%= element.actimode %>" data-title="<%= element.courseName %>" data-effectiveday="<%= element.expirationDate %>" data-expirationDate="<%= element.expirationDate %>" data-subjectName="<%= element.subjectName %>">
+										<% }else{ %>
+											<a href="javascript:;" class="js-locking-tipsPop">
+										<% } %>
+										
+											<div class="subject-lf">
+												<% if(element.courseBkImage){ %>
+												<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+												<% } %>
+												<!-- <% if(element.isU == 2){ %>
+													<span class="subject-u"><span class="subject-u-text">U+</span></span>
+												<% } %> -->
+												<% if(element.lock_status=="0"){ %>
+													<div class="subject-mask">
+														<span class="mask-lf">
+															马上激活
+														</span>
+														<!-- <span class="mask-rt">
+															→
+														</span> -->
+													</div>
+												<% }else{ %>
+													<div class="subject-mask subject-mask-locking">
+														<span class="mask-lf">
+															课程锁定
+														</span>
+														<!-- <span class="mask-rt-locking"></span> -->
+														<p class="subject-mask-text">分期付款未完成<span class="subject-mask-radiusIcon">...</span></p>
+													</div>
+												<% } %>
+											</div>
+											<div class="subject-rt subject-rt-notactived">
+												<% if(element.courseId == 'ff8080814db86d41014dc1a141b70400'){
+													console.log(element)
+													console.log(element.shopCategoryExtendName)
+												} %>
+												<h3><%= element.courseName %></h3>
+												<span class="last-study-chapter">上次学到：知识点1 战略规划概述</span>
+												<p class="extendName">
+													<% if(element.shopCategoryExtendName){ %>
+														<% if(element.isU == 2){ %>
+															<i class="icon icon-extendName-isu"></i>
+														<% }else{ %>
+															<i class="icon icon-extendName"></i>
+														<% } %>
+														<span class="extendName-text"><%= element.shopCategoryExtendName %></span>
+													<% } %>
+												</p>
+												<div class="subject-progress">
+													课程有效期：<%= element.expirationDate %>天
+												</div>
+											</div>
+										</a>
+									</li>
+									
+									
+								<% }) %>
+							</ul>
+						</div>
+						<% }) %>
+					</div>
+					<% }) %>
+
+
+
+
+					
+					
+				</div>
+			</div>
+			</div>
+			</div>
+			</div>
+		</div>
+	<% }else{ %>
+		<div class="studyin-nodata">
+				<div class="studyin-nodata-img u-icon"></div>
+				<div class="studyin-nodata-des">
+					您还未有购买课程
+				</div>
+				<div class="studyin-nodata-btn">
+					<a class="studycenter-buy" href="<%= window.zbgedu.origin %>" target="_blank">
+						选课购买
+					</a>
+				</div>
+			</div>
+	<% } %>
+</script>

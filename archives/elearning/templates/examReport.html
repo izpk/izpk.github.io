@@ -1,0 +1,74 @@
+<script id="template-examReport" type="text/template">
+	<div class="examReport">
+		<div class="header">
+			<div class="header-content">
+				<a href="javascript:;" class="tuichu"><img src="../images/tuichu.png" alt=""><span>退出</span></a>
+				<h1>测评成绩报告</h1>
+			</div>
+		</div>
+		<div class="examReport-body">
+			<div class="examReport-main">
+				<div id="wrapper" class="wrapper">
+					<div id="scroller" class="scroller">
+						<div class="examReport-content">
+							<h3 class="examReport-content-title"><%= examReportData.exercise.title %></h3>
+							<div class="examReport-content-circle">
+								<div class="circle">
+									<div class="circle-text">
+										<p>成绩</p>
+										<p><strong><%= examReportData.exercise.score %></strong><span>分</span></p>
+									</div>
+								</div>
+							</div>
+							<div class="examReport-quNum">
+								<p>题目数：<%= examReportData.exercise.total %></p>
+								<p>正确：<%= examReportData.exercise.right %></p>
+								<p>错误：<%= examReportData.exercise.error %></p>
+							</div>
+							<div class="examReport-detail">
+								<div class="examReport-detail-legend">
+									<p><span></span>正确</p>
+									<p><span></span>错误</p>
+								</div>
+								<ul class="examReport-detail-card">
+									<% _.each(examReportData.exercise.list,function(elem,index){ %>
+										<% if(elem.status == 2){ %>
+											<li class="card-error"><%= index+1 %></li>
+										<% }else{ %>
+											<li><%= index+1 %></li>
+										<% } %>
+									<% }) %>
+								</ul>
+							</div>
+						</div>
+						<div class="examReport-knowledge">
+							<div class="knowledge-master">
+								<p><img src="../images/master.png" alt="">已掌握知识点</p>
+								<ul class="">
+									<% _.each(examReportData.knowledgePoint.alreadyMastered,function(elem,index){ %>
+										<li><%= elem.name %></li>
+									<% }) %>
+								</ul>
+							</div>
+							<div class="knowledge-strengthen">
+								<p><img src="../images/strengthen.png" alt="">待加强知识点</p>
+								<ul class="">
+									<% _.each(examReportData.knowledgePoint.alreadyMastered,function(elem,index){ %>
+										<li><i class="icon-learning-plan icon-learning-plan-video"></i><%= elem.name %></li>
+									<% }) %>
+								</ul>
+							</div>
+						</div>
+						<div class="examReport-back-nav">
+							<% if(parseInt(examReportData.exercise.score) >= 75){ %>
+								<a href="javascript:;" class="examReport-back examReport-back-left">查看解析</a>
+							<% } %>
+							<a href="javascript:;" class="examReport-back examReport-back-right">返回学习</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</script>

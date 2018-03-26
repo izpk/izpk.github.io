@@ -1,0 +1,81 @@
+<script id="template-live" type="text/template">
+		<div class="studycenter-video layout" style="padding-top: 0;">
+			<!-- <div class="studycenter-video-header layout">
+		    <div class="studycenter-video-title">
+		    	<%= title %>
+		    </div>
+		    
+		    
+			</div> -->
+			<a class="studycenter-video-close video-icon video-icon-task-close js-live-close" href="javascript:;" style="display:none;top:-2px;z-index: 99;"></a>
+			<div id="studycenter-video-main" class="studycenter-video-main live-main">
+      	<div class="loader-content live-loader">
+          <div class="loader-box"><div class="loader">加载中。。。</div></div>
+        </div>
+        <!-- <iframe width="100%" height="100%" id="" src="liveIframe.html"></iframe> -->
+			</div>
+			<div class="live-gift-giving">
+				<ul class="live-gift-ul">
+					<%
+						var liveGift = [1,2,5,10];
+						_.each(liveGift,function(element, index){
+						var index = index+1;
+					%>
+						<li class="live-gift-li">
+							<a class="live-gift-a js-live-gift" data-index="<%= index %>" data-gift="<%= element %>" href="javascript:;">
+								<img class="live-gift-img <%= index %>" src="http://cdnstatic.caicui.com/studycenterskin/images/live-gift-<%= index %>.png" alt="礼物">
+								<p class="live-gift-p"><i class="icon icon-gold-small"></i><span class="live-gift-span"><%= element %></span></p>
+							</a>
+						</li>
+					<%
+						})
+					%>
+				</ul>
+				<p class="live-gift-gold"><i class="icon icon-gold-big"></i><span class="live-gift-span live-gift-Total-span"> X <%= giftTotal %></span></p>
+			</div>
+			<div id="live-gift-show-content">
+				
+			</div>
+		</div>
+</script>
+<script id="template-live-gift" type="text/template">
+	<div id="live-gift-show-<%= liveGiftIndex %>" class="live-gift-show" data-id="<%= liveGiftIndex %>" data-number="<%= liveGiftNumber %>" data-time="<%= liveGiftTime %>">
+		<p class="live-gift-show-title"><%= CAICUI.User.nickname %>：赠送</p>
+		<img class="live-gift-show-img" src="http://cdnstatic.caicui.com/studycenterskin/images/live-gift-<%= liveGiftIndex %>.png"  alt="礼物">  <span class="live-gift-show-span">X <%= liveGiftNumber %></span>
+	</div>
+</script>
+<script id="template-live-pay" type="text/template">
+	<div class="live-pay">
+		<div class="live-pay-main">
+			<div class="live-pay-content">
+				<div class="live-pay-left">
+					<p class="live-pay-msg">试听结束，继续学习请购买直播课程</p>
+					<%
+						console.log(openCourse)
+						var certificate = openCourse.certificate.split(',');
+
+						var openCourseTime = '';
+						var openCourseStartTime = CAICUI.iGlobal.getOpenCourseTime(openCourse.startTime);
+						var openCourseEndTime = CAICUI.iGlobal.getOpenCourseTime(openCourse.endTime);
+						openCourseTime = openCourseStartTime.split(' ')[0] + ' ' +openCourseStartTime.split(' ')[1]+'-'+ openCourseEndTime.split(' ')[1]
+
+					%>
+					<p class="live-pay-course">直播课  <%= certificate[0]+'-'+ certificate[1] %>  <%= openCourse.teacherName %></p>
+
+					<p class="live-pay-time"><%= openCourseTime %></p>
+					<p class="live-pay-price">¥<%= price %></p>
+					<p class="live-pay-protocol"><input class="live-pay-checkbox" type="checkbox" name="" checked="true"><a class="live-pay-span" href="<%= window.zbgedu.origin %>" target="_blank">我已经阅读并同意《中博教育用户注册及服务协议》</a></p>
+				</div>
+				<div class="live-pay-right">
+					<p class="live-pay-title">支付宝扫码付款</p>
+					<div id="live-pay-QRcode" class="live-pay-QRcode">
+						<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						<!-- <img class="live-pay-QRcode-img" src="http://cdnstatic.caicui.com/studycenterskin/images/twoimg.jpg" /> -->
+					</div>
+					
+					<div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

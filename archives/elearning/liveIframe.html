@@ -1,0 +1,79 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>学习中心</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style type="text/css">
+    	html,body{
+    		width: 100%;
+    		height: 100%;
+    		margin: 0;
+        padding: 0;
+    	}
+      
+    </style>
+  </head>
+  <body>
+      <form action="https://view.csslcloud.net/api/view/login" id="viewerForm" style="opacity: 0;" method="post">
+        <div class="mt1">
+          <input type="text" maxlength="20" placeholder="用户昵称" id="viewername" name="viewername">
+        </div>
+        
+        <div>
+          <input type="text" placeholder="直播密码" id="viewertoken" name="viewertoken">
+        </div>
+        
+        <div>
+          <input type="submit" id="viewerSubmit" class="btn btn-large btn-info" value="进入直播">
+        </div>
+        <input type="hidden" id="roomid" name="roomid" value="">
+        <input type="hidden" id="userid" name="userid" value="">
+      </form>
+      <script type="text/javascript" src="http://cdnlibjs.caicui.com/libjs/jquery/2.0.3/jquery.min.js"></script>
+      <script type="text/javascript">
+        var roomid = GetQueryString('roomid');
+        var userid = GetQueryString('userid');
+        // var user = JSON.parse(getCookie('User'));
+        var user = '';
+
+        if(getCookie('loginInfo')){
+          user = JSON.parse(getCookie('loginInfo'));
+        }else if(getCookie('User')){
+          user = JSON.parse(getCookie('User'));
+        }
+
+
+        var viewername = user.memberId;
+        var viewertoken = user.token;
+        
+        // console.log(viewername);
+        // console.log(viewertoken);
+        //dmeo
+        // roomid = 'FD9878C7F1462B8F9C33DC5901307461';
+        // userid = '5A5317CD18F546D7';
+
+        document.getElementById('viewername').value = viewername;
+        document.getElementById('viewertoken').value = viewertoken;
+        document.getElementById('roomid').value = roomid;
+        document.getElementById('userid').value = userid;
+        document.getElementById('viewerSubmit').click();
+        
+        function GetQueryString(name){
+          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if(r!=null)return  unescape(r[2]); return null;
+        }
+        function getCookie(name) { 
+          var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+          if(arr=document.cookie.match(reg)){
+            return unescape(arr[2]); 
+          }else{
+            return null;
+          }
+        }
+      </script>
+  </body>
+</html>

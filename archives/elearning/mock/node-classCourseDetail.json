@@ -1,0 +1,17 @@
+{
+	"state" : "success",
+	"msg" : "",
+	"classCourseDetail" : {
+		"weekTime" : "2018.3.7-2018.3.11",
+		"taskTotal" : "22",
+		"videoTotal" : "19",
+		"videoCompleted" : "9",
+		"videoOngoing" : "9",
+		"examTotal" : "19",
+		"examCompleted" : "9",
+		"examOngoing" : "9",
+		"evaluationStatus" : "1",
+		"liveStatus" : "0",
+		"liveTime" : "2018年1月30日开讲"
+	}
+}

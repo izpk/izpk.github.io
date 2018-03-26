@@ -1,0 +1,123 @@
+<script id="template-course-resources" type="text/template">
+	<div class="courseIndex">
+		<ul class="option-ul course-change-ul">
+		</ul>
+		<div class="courseIndex-header">
+			<div class="courseIndex-header-left">
+				<a class="course-change js-course-resources-change" href="javascript:;">
+					<span class="course-name"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+					<i class="icon-triangle"></i>
+				</a>
+			</div>
+			<div class="courseIndex-header-right">
+			</div>
+		</div>
+		<div class="courseResources">
+			<div class="courseResources-left">
+				<div class="courseResources-left-top">
+					<i class="icon icon-courseResources-midden"></i>资源列表
+				</div>
+				<div class="courseResources-left-content">
+					<div id="wrapper" class="wrapper">
+						<div id="scroller" class="scroller">
+						<div class="loader-content mt-50">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="courseResources-right">
+				
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="template-course-resources-list" type="text/template">
+	<%
+		 if(data && data.length){ %>
+		<ul class="courseResources-ul">
+			<% _.each(data,function(element, index){ %>
+				<li class="courseResources-li"><a href="javascript:;" class="courseResources-a">
+						<p class="courseResources-p"><%= element.title %></p>
+						<span class="courseResources-span"><i class="icon icon-courseResources-small"></i>X<span class="courseResources-a-num"><%= element.countAccessory %></span></span>
+					</a></li>
+			<% }) %>
+		</ul>
+	<% }else{ %>
+		<div class="no-data">
+			<i class="icon icon-no-data-resources"></i>
+			<p class="no-data-p">暂无数据</p>
+		</div>
+	<% } %>
+	
+	
+</script>
+<script id="template-course-resources-content" type="text/template">
+	<% if(data && data.length){ 
+		var content = data[0];
+	%>
+		
+				<div class="courseResources-right-top">
+					<div class="courseResources-detail-title">
+						<h3 class="courseResources-detail-h3"><%= content.title %></h3>
+						<span class="courseResources-detail-time"><%= CAICUI.iGlobal.getLocalTime(content.createDate) %></span>
+					</div>
+				</div>
+				<div class="courseResources-right-box">
+				<div id="course-resources-wrapper" class="wrapper">
+						<div id="course-resources-scroller" class="scroller">
+				<div class="courseResources-right-content">
+					
+					<div class="courseResources-detail-content">
+						<pre><%= content.introduce %></pre>
+					</div>
+					<% if(content.accessoryList && content.accessoryList.length){ %>
+
+					
+					<p class="courseResources-detail-p">附件</p>
+					<ul class="courseResources-detail-ul">
+						<% _.each(content.accessoryList,function(element,index){
+							var link = '';
+							var fileName = '';
+							var fileSize = '';
+							if(element.accessoryType == 'outer_link'){
+								link = element.accessoryPath;
+
+						%>
+							<li class="courseResources-detail-li">
+								<a href="<%= link %>" class="courseResources-detail-a" target="_blank">
+									<%= element.accessoryTitle %>
+								</a>
+
+							</li>
+						<%}else{
+								link = 'http://www.caicui.com'+element.accessoryPath;
+								var filePathArray = element.accessoryPath.split('/');
+								fileName = filePathArray[filePathArray.length-1];
+								if(element.accessorySize){
+								fileSize = CAICUI.iGlobal.bytesToSize(element.accessorySize);
+								}
+						%>
+							<li class="courseResources-detail-li">
+								<a href="<%= link %>" class="courseResources-detail-a" target="_blank">
+									<%= element.accessoryTitle %>
+									<span>(<%= fileName %>,<%= fileSize %>)</span>	
+								</a>
+
+							</li>
+						<% } %>
+							
+						<% }) %>
+					</ul>
+					<% } %>
+					</div>
+					</div>
+					</div>
+				</div>
+		
+	<% } %>
+	
+</script>

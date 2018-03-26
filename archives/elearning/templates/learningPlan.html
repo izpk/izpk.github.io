@@ -1,0 +1,156 @@
+<script id="template-learning-plan" type="text/template">
+	<div class="learning-plan">
+		<div class="learning-plan-header">
+			<h3 class="learning-plan-title">创建你的学习计划</h3>
+			<p class="learning-plan-info">
+				你需要<span class="learning-plan-time"><span class="text-loader-content"><span class="text-loader"></span></span></span>小时才能完成 <%= CAICUI.render.courseName %> 的学习，想要通过考试需要付出比较多的时间和精力。<br>
+				使用我们的学习计划，可以帮您安排一个实际可行有效的时间表，帮助您在考试之前完成准备。<br>
+				现在通过下面的三个步骤来定制你的计划吧，觉得实际不可行也没关系，你可以随时修改你的学习计划。
+			</p>
+			<a href="javascript:;" class="icon-close learning-plan-close js-learning-plan-close"></a>
+		</div>
+		<div class="learning-plan-body">
+			<div class="learning-plan-left">
+				<div class="learning-plan-left-content">
+					<div id="wrapper-learning-plan-step1" class="wrapper">
+						<div id="scroller-learning-plan-step1" class="scroller scroller-learning-plan-step">
+					<p class="learning-plan-step">
+						<i class="icon-learning-plan icon-learning-plan-step"></i>第一步
+					</p>
+					<p class="learning-plan-info">制定你的学习计划</p>
+					<div class="learning-plan-startTime">
+						<span class="learning-plan-startTime-span">开始时间</span>
+						<input id="learning-plan-startTime-input" type="text" class="learning-plan-startTime-input" placeholder="请选择时间" data-date-format="yyyy/mm/dd" name="startTime">
+						<i class="icon-learning-plan icon-learning-plan-startTime"></i>
+					</div>
+					
+					<div class="learning-plan-step-main learning-plan-step1-main">
+						<div class="loader-content"><div class="loader-box"><div class="loader">加载中。。。</div></div></div>
+					</div>
+					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="learning-plan-middle">
+				<div class="learning-plan-middle-content">
+					
+					<div id="wrapper-learning-plan-step2" class="wrapper">
+						<div id="scroller-learning-plan-step2" class="scroller scroller-learning-plan-step">
+							<p class="learning-plan-step">
+								<i class="icon-learning-plan icon-learning-plan-step"></i>第二步
+							</p>
+							<div class="learning-plan-step-main learning-plan-step2-main">
+								<div class="loader-content"><div class="loader-box"><div class="loader">加载中。。。</div></div></div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="learning-plan-right">
+				<div class="learning-plan-right-content">
+					<div id="wrapper-learning-plan-step3" class="wrapper">
+						<div id="scroller-learning-plan-step3" class="scroller scroller-learning-plan-step">
+							<p class="learning-plan-step">
+								<i class="icon-learning-plan icon-learning-plan-step"></i>第三步
+							</p>
+							<div class="learning-plan-step-main learning-plan-step3-main">
+								<p class="learning-plan-info">根据您制定计划的课程和周期，为您推荐适合考试时间</p>
+								<div class="learning-plan-examTime">
+									<span class="learning-plan-examTime-span">考试时间</span>
+									<!-- <input type="text" class="learning-plan-examTime-input" placeholder="请选择考试时间"> -->
+									<select class="learning-plan-examTime-input">
+										<option value="default">请选择考试时间</option>
+										
+									</select>
+								</div>
+								<div class="learning-plan-box-btn">
+									<a href="javascript:;" class="learning-plan-btn learning-plan-activation">确认激活</a>
+									<span class="learning-plan-btn learning-plan-activationing hidden">正在激活</span>
+									<a href="javascript:;" class="learning-plan-btn learning-plan-noactivation js-learning-plan-close">暂不激活</a>
+								</div>
+							</div>
+					
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</script>
+<script id="template-learning-plan-step1-main" type="text/template">
+	<p class="learning-plan-select-p">请选择制定学习计划的课程</p>
+	<div class="learning-plan-select-course">
+		<% _.each(courselist,function(element,index){ %>
+			<a href="javascript:;" class="learning-plan-select-checkbox active">
+				<i class="icon-learning-plan-checkbox"></i><%= element.title %>
+			</a>
+		<% }) %>
+		<!-- <a href="javascript:;" class="learning-plan-select-checkbox active">
+			<i class="icon-learning-plan-checkbox"></i>CMA中文前导课
+		</a>
+		<a href="javascript:;" class="learning-plan-select-checkbox active">
+			<i class="icon-learning-plan-checkbox"></i>CMA基础课
+		</a>
+		<a href="javascript:;" class="learning-plan-select-checkbox active">
+			<i class="icon-learning-plan-checkbox"></i>CMA串讲课
+		</a> -->
+	</div>
+</script>
+<script id="template-learning-plan-step2-main" type="text/template">
+	<p class="learning-plan-info">设置你的学习计划周期</p>
+
+	<a href="javascript:;" class="learning-plan-preview-open <%= hasPlanList ? 'active' : '' %>">预览</a>
+	<% if(hasPlanList){ %>
+	<div class="learning-plan-course">
+		<% _.each(planList,function(courseElement,courseIndex){ 
+				if(courseElement.planList.length){
+		%>
+			<div class="learning-plan-course-item active">
+				<p class="learning-plan-course-title">— — <%= courseElement.title %> — —</p>
+				<ul class="learning-plan-course-ul">
+					<% 
+						_.each(courseElement.planList,function(element,planIndex){ 
+					%>
+						<li class="learning-plan-course-li <%= planIndex ? '' : 'active' %>" data-node="<%= courseIndex+'-'+planIndex %>">
+							<a href="javascript:;" class="learning-plan-course-a">
+								<i class="icon-learning-plan icon-learning-plan-course"></i>
+								<p class="learning-plan-course-type"><%= element.title %></p>
+								<p class="learning-plan-course-cycle">计划周期<span class="learning-plan-course-time"><span class="text-loader-content"><span class="text-loader"></span></span></span></p>
+							</a>
+						</li>
+					<% }) %>
+				</ul>
+			</div>
+		<% } }) %>
+	</div>
+	<% } %>
+</script>
+<script id="template-learning-plan-step3-main" type="text/template">
+	<p class="learning-plan-info">根据您制定计划的课程和周期，为您推荐适合考试时间</p>
+	<div class="learning-plan-examTime">
+		<span class="learning-plan-examTime-span">考试时间</span>
+		<!-- <input type="text" class="learning-plan-examTime-input" placeholder="请选择考试时间"> -->
+		<select class="learning-plan-examTime-input">
+			<option value="default">请选择考试时间</option>
+			
+		</select>
+	</div>
+	<div class="learning-plan-box-btn">
+		<a href="javascript:;" class="learning-plan-btn learning-plan-activation">确认激活</a>
+		<span class="learning-plan-btn learning-plan-activationing hidden">正在激活</span>
+		<a href="javascript:;" class="learning-plan-btn learning-plan-noactivation js-learning-plan-close">暂不激活</a>
+	</div>
+</script>
+<script id="template-learning-plan-examTime" type="text/template">
+	<!-- <option value="default">请选择考试时间</option> -->
+	<% if(timeList && timeList.length){ %>
+		<% _.each(timeList,function(element, index){ %>
+			<option value="<%= element.time %>" ><%= CAICUI.iGlobal.getDate(element.time) %></option>
+		<% }) %>
+	<% }else{ %>
+		<option>暂无考试时间</option>
+	<% } %>
+</script>

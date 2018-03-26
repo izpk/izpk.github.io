@@ -1,0 +1,62 @@
+<script id="template-message" type="text/template">
+	<a class="message-close" href="javascript:;"><i class="icon icon-message-close"></i></a>
+		<div class="message-left">
+			<div class="message-left-top">
+				<div class="message-notice">通知
+					<div class="message-notice-right">
+						<span class="message-notice-span">未读信息：<span class="message-noRead-number"><span class="text-loader-content"><span class="text-loader"></span></span></span>条</span>
+						<a class="message-notice-a" href="javascript:;">全部已读</a>
+					</div>
+				</div>
+				
+			</div>
+			<div class="message-left-content">
+				<div class="loader">加载中。。。</div>
+			</div>
+		</div>
+		<div class="message-right ac-content">
+
+		</div>
+</script>
+<script id="template-message-unread" type="text/template">
+	<div class="message-unread" data-id="<%= data.id %>">
+		<a class="message-unread-close" href="javascript:;"><i class="icon icon-message-close"></i></a>
+		<div class="message-unread-content">
+			<% 
+				if(messageType == 1){
+			%>
+					<p class="message-unread-title message-unread-title1"><%= data.title %></p>
+			<%
+				}else if(messageType == 2){
+			%>
+					<p class="message-unread-title message-unread-title2"><span class="message-unread-title-span">你的投诉收到了回复</span></p>
+			<%
+				}else if(messageType == 3){
+			%>
+					<p class="message-unread-title message-unread-title3"><span class="message-unread-title-span">回复了您的：</span><%= data.title %></p>
+			<%
+				}
+			%>
+			
+			
+			
+			<% 
+				var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"','#39':"'"};
+				var newContent = data.content.replace(/&(lt|gt|nbsp|amp|quot|#39);/ig,function(all,t){return arrEntities[t];});
+				var content = newContent.replace(/<[^>]+>/g,"").replace(/(^\s+)|(\s+$)/g,"").replace(/(\r)|(\n)|(\t)/g,'')
+			%>
+			<p class="message-unread-desc"><%= content %>...</p>
+			<div class="message-unread-info">
+				<img class="message-unread-avatar" src="<%= data.headImg ? CAICUI.Common.host.img + data.headImg : 'images/avatar.jpg' %>">
+				<span class="message-unread-name"><%= data.sender %></span>
+				<span class="message-unread-time"><%= CAICUI.iGlobal.stringData(data.sentTime) %></span>
+			</div>
+			
+		</div>
+		<div class="message-unread-foot">
+			<a class="message-unread-btn message-unread-number" href="javascript:;">全部消息（<%= CAICUI.render.isNoReadNum %>）</a>
+			<a class="message-unread-btn message-read-all" href="javascript:;">全部已读</a>
+		</div>
+		
+	</div>
+</script>

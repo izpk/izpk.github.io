@@ -1,0 +1,284 @@
+<script id="template-studycenterIndex" type="text/template">
+	<div class="index">
+		<div class="index-top">
+			<div class="index-top-left">
+				<img class="index-top-avatar" src="<%= CAICUI.Common.host.img + CAICUI.User.avatar %>">
+				<p class="index-top-p index-top-title"><%= CAICUI.User.nickName %></p>
+				<p class="index-top-p index-top-desc">
+					上次登录：<span class="loginloglist"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+				</p>
+				<p class="index-top-p index-top-desc">
+					近期考试：<span class="getExamDate"><span class="text-loader-content"><span class="text-loader"></span></span></span>
+				</p>
+			</div>
+			<div class="index-top-right">
+				<span class="index-top-right-text">笔记</span>
+				<span class="index-top-right-span"><span class="nodeNum">
+					<span class="text-loader-content"><span class="text-loader"></span></span>
+				</span></span>
+				<span class="index-top-right-text">交流</span>
+				<span class="index-top-right-span"><span class="acNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></span>
+				<!-- <span class="index-top-right-text">做题</span>
+				<span class="index-top-right-span"><span class="examNum"><span class="text-loader-content"><span class="text-loader"></span></span></span></span> -->
+			</div>
+		</div>
+
+		<div class="index-content">
+			<div id="wrapper" class="wrapper">
+				<div id="scroller" class="scroller">
+					<div class="index-teachingPlan">
+
+					</div>
+					<div class="index-course">
+						<p class="index-course-title">最近所学课程</p>
+						<ul class="index-course-ul loader-content">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</ul>
+					</div>
+					<% if(false){ %>
+						<div class="index-experience">
+							<p class="index-experience-title">最近试听</p>
+							<ul class="studyin-content-subject clearfloat loader-content" >
+								<div class="loader-box"><div class="loader">加载中。。。</div></div>
+							</ul>
+						</div>
+					<% } %>
+					<div class="index-activity">
+						<p class="index-activity-title">中博活动</p>
+						<ul class="index-activity-ul loader-content">
+							<div class="loader-box"><div class="loader">加载中。。。</div></div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="courseIntro" class="courseIntro" style="display: none">
+	  <div class="courseIntro-header">
+	  	<h3 class="courseIntro-title">课程介绍</h3>
+	  	<a  class="courseIntro-close" href="javascript:;">关闭</a>
+	  </div>
+	  <div class="courseIntro-body">
+	  	<div contenteditable="true" class="courseIntro-content" readonly="readonly">
+	  <p class="courseIntro-content-p">双语卓越班CFA课程，由中博-财萃全国独家引入Wiley集团CFA教学解决方案，<strong>采用wiley官方CFA学习平台</strong>。课程服务由财萃网提供，如有疑问请咨询财萃网：400-602-6018</p>
+
+	  <p class="courseIntro-content-p">Wiley 高效学习系统鼓励专注和高效学习：在较短时间内进行完整的学习。</p>
+	 
+	  <p class="courseIntro-content-p">许多课程往往采用长时间课堂教学模式，涵盖过多主题，缺乏学生互动，只有中期测试和学习结束后的总结性考试来测试所有的知识点。 而围绕更小且更集中的主题，学习并随之评估学习成果，可以适应繁忙的日程安排和各种学习方式，这是一个更加高效的方法。鉴于此，Wiley CFA 将学习内容融入到“高效学习模块课程之中。” </p>
+
+	  <p class="courseIntro-content-p">高效学习模块涵盖了学习者的所有需求，通过以下三个步骤，即可掌握所学知识：<br>
+
+	  <p class="courseIntro-content-p">1、<strong>学习</strong> 学习步骤是学习者准备的基础，包括观看综合知识点讲座和阅读学习指南。</p>
+
+	  <p class="courseIntro-content-p">2、<strong>评估</strong> 我们喜欢测验！除了频繁测验，没有更好的方法来确认掌握情况或发现学习者知识中的薄弱环节。我们在学习者课程中设置了多种多样的测验。</p>
+
+	  <p class="courseIntro-content-p">3、<strong>沟通交流</strong>  在这段旅程中，你并不是一个人孤军奋战，与专家和同伴保持联系是一个非常重要的方式，有助于解疑答惑，保持学习动力，并与志同道合的伙伴在社区进行互动。我们因此提供的工具将允许学生与课程专家直接 就学习内容进行互动。 </p>
+
+	  <p class="courseIntro-content-p">4、<strong>复习</strong> 在完成主要课程的学习之后，考前冲刺课程将为你提供考前强化视频讲座，更多的模拟考试题，以及 wiley 著名的考前冲刺学习指南。考前冲刺课程旨在进一步提炼和强化最重要和最具挑战性的考试要点，是帮助总结和强化之前学习的最佳方式。</p>
+
+	  </div>
+	  </div>
+	  <!-- <div class="courseIntro-email-content">
+	  	
+	  </div> -->
+	  <div class="courseIntro-footer">
+	  	<div class="courseIntro-block">
+	  		<p class="courseIntro-time hidden">课程到期时间 <span class="courseIntro-time-span">2017-01-17</span></p>
+	  		<p class="courseIntro-tips">点击开始学习进入wiley官方学习平台</p>
+	  	</div>
+	  	<div class="courseIntro-block">
+	  		<div class="courseIntro-mt-10">
+	  			<!-- <p class="courseIntro-nextShow-box">
+	  				<a class="courseIntro-nextShow-btn" href="javascript:;">
+	  					<span class="courseIntro-nextShow-border"><i class="courseIntro-nextShow-icon"></i></span>下次不显示</a>
+	  			</p> -->
+	  			<p class="courseIntro-email">系统监测到您的<span class="courseIntro-email-info">邮箱含有中文</span>，请前往【<a class="courseIntro-email-a" href="<%= window.zbgedu.home %>" target="_blank">会员中心</a>】修改</p>
+	  		</div>
+	  		<a class="courseIntro-btn courseIntro-default" href="javascript:;">开始学习</a>
+	  		</div>
+	  </div>
+	</div>
+
+	<div id="courseIntroLoading" class="courseIntroLoading" style="display: none">
+		<div class="courseIntroLoading-loading">
+			正在登录WileyCFA平台，请稍等
+		</div>
+		<div class="courseIntroLoading-fail">
+			<p class="courseIntroLoading-p">登录失败，原因：账号认证失败</p>
+			<p class="courseIntroLoading-p">请<span class="courseIntroLoading-time">5</span>秒后重试</p>
+		</div>
+	</div>
+</script>
+<script id="template-studycenterIndex-courseList" type="text/template">
+		<% if(RecentCourse.length){ 
+			var RecentCourseNum = 0;
+			for(var i = 0;i<RecentCourse.length;i++){
+				var index = i;
+				var element = RecentCourse[index];
+				var taskprogress = element.courseProgress ? parseInt(element.courseProgress) : 0;
+				var taskTotal = element.taskTotal ? parseInt(element.taskTotal) : 0;
+				var percentage = 0;
+				var lastProgress = element.progress;
+				if(taskprogress && taskTotal){
+					var a = taskprogress/taskTotal;
+					if(a>0 && a<0.01){
+						a = 0.01
+					}
+					percentage = parseInt(a*100);
+				}else if(lastProgress){
+					percentage = 1;
+				}
+				var percentageProgress = percentage;
+				if(percentage >= 100){
+					percentageProgress = 99.99;
+					percentage = 100;
+					taskprogress = taskTotal;
+				}
+			%>
+			<li class="index-course-li ">
+				<% if(element.courseSource=="wiley"){ %>
+					<a class="index-course-a index-course-a-<%= index %> js-coursestudy" data-courseName="<%= element.courseName %>" data-courseSource="<%= element.courseSource %>" data-href="#courseStudy/<%= element.courseId %>" data-courseId="<%= element.courseId %>" data-orderItemId="<%= element.orderID_item_id %>" data-expirationTime="<%= element.expirationTime %>" href="javascript:;">
+				<% }else{ %>
+					<a class="index-course-a index-course-a-<%= index %>" href="#courseStudy/<%= element.courseId %>">
+				<% } %>
+
+
+				
+
+					<p class="index-course-title"><%= element.courseName %></p>
+					<p class="index-course-p">考试时间：
+					<% if(element.examinationDate){ %>
+						<%= CAICUI.iGlobal.getDate(element.examinationDate) %>
+					<% }else{ %>
+						暂无考试
+					<% } %>
+					</p>
+					<p class="index-course-p">课程到期： <%= CAICUI.iGlobal.getDate(element.expirationTime) %></p>
+					<% if(element.courseSource=="wiley"){ %>
+					<% }else{ %>
+						<div class="index-course-progress">
+							<div class="progress-round">
+								<span class="progress-round-border"></span>
+								<span class="progress-round-num"><%= percentage %><span class="progress-round-unit">%</span></span>
+								<canvas id="progress-round-<%= index %>" class="progress-round-canvas" width="84" height="84" data-progress=<%= percentageProgress %>></canvas>
+							</div>
+							<p class="index-course-num"><%= taskprogress %>/<%= taskTotal %></p>
+						</div>
+					<% } %>
+					
+				</a>
+			</li>
+		<% } %>
+	<% }else{ %>
+		<li class="index-course-li ">
+		<%
+			var href = '';
+			if(CAICUI.CACHE.Learningcourse && CAICUI.CACHE.Learningcourse.length){
+				href = '#courseStudyIn';
+			}else{
+				href = '#courseNotActivated';
+			}
+		%>
+				<a class="index-course-a index-course-a-none" href="<%= href %>">
+					<span class="index-course-a-none-content">开始新课程<span class="arrow-right"></span></span>
+					
+				</a>
+			</li>
+	<% } %>
+</script>
+<script id="template-studycenterIndex" type="text/template">
+	<% if(data.experience && data.experience.length){ %>
+		<% _.each(data.experience,function(element, index, list){ %>
+			<li class="studyin-content-subjects">
+				<a class="js-course-notActivated" href="#courseStudy/<%= element.courseId %>" >
+					<div class="subject-lf">
+						<img src="<%= CAICUI.Common.host.img + element.courseBkImage %>" alt="课程图片">
+						<div class="subject-mask">
+							<span class="mask-lf">
+								再次体验
+							</span>
+							<span class="mask-rt">
+								→
+							</span>
+						</div>
+					</div>
+					<div class="subject-rt subject-rt-notactived">
+						<h3><%= element.courseName %></h3>
+						<div class="subject-line"></div>
+						<div class="subject-progress">
+							<img class="index-experience-teacherAvatar" src="<%= CAICUI.Common.host.img + element.teacherAvatar %>" alt="教师头像">
+							<p class="index-experience-teacherName"><%= element.teacherName %></p>
+						</div>
+					</div>
+				</a>
+			</li>
+			
+		<% }) %>
+	<% } %>
+</script>
+<script id="template-studycenterIndex-activityList" type="text/template">
+	<% if(slideList && slideList.length){ %>
+		<% _.each(slideList,function(element, index, list){ %>
+			<li class="index-activity-li">
+				<a class="index-activity-a" href="<%= element.url ? element.url : 'javascript:;' %>" target="_blank">
+					<% var imagePath = element.imagePath ? CAICUI.Common.host.img + element.imagePath : '' %>
+					<img class="index-activity-img" src="<%= imagePath %>">
+					<p class="index-activity-name"></p>
+				</a>
+			</li>
+		<% }) %>
+	<% } %>
+</script>
+
+<!-- <script id="template-course-wiley-iframe" type="text/template">
+	<div class="wiley-iframe-container">
+		<div class="wiley-iframe-header">
+			<p class="wiley-iframe-title"><img class="wiley-iframe-logo" src="http://static.caicui.com/studycenterskin/images/wiley-logo.png" alt="财萃-wiley" title="财萃-wiley"><%= title %></p>
+			<a href="javascript:;" class="js-wiley-iframe-close"><img class="wiley-iframe-close" src="http://static.caicui.com/studycenterskin/images/wiley-close.png"  alt="关闭-财萃-wiley" title="关闭-财萃-wiley"></a>
+		</div>
+		<iframe class="wiley-iframe" src="<%= wileyUrl %>" width="100%" height="100%" frameborder="0"></iframe>
+	</div>
+</script> -->
+<script id="template-index-live" type="text/template">
+	<a class="index-live js-index-live" href="javascript:;">
+		<div class="index-live-left"><i class="icon icon-live"></i></div>
+		<div class="index-live-right">
+			<% 
+			  var time = '';
+			  var startTime = CAICUI.iGlobal.getOpenCourseTime(data.startTime);
+			  var endTime = CAICUI.iGlobal.getOpenCourseTime(data.endTime);
+			  time = startTime.split(' ')[1]+'-'+ endTime.split(' ')[1];
+			%>
+			<p class="index-live-p index-live-title">今天  <%= time %></p>
+			<p class="index-live-p"><%= data.title %></p>
+			<%
+				var certificate = data.certificate.split(',');
+			%>
+			<p class="index-live-p"><%= data.teacherName %> | <%= certificate[0]+'-'+ certificate[1] %></p>
+		</div>
+		<div class="no-index-live">
+			直播尚未开始
+		</div>
+	</a>
+</script>
+
+<script id="template-teachingPlan-nav" type="text/template">
+	<div class="index-teachingPlan-nav">
+		<nav class="teachingPlan-nav">
+			<%
+				_.each(classCourseList,function(element, index){ 
+			%>
+				<a class="teachingPlan-a <%= index == classIndex ? 'active' : '' %>" href="javascript:;"><%= element.className %></a>
+			<% }) %>
+		</nav>
+		<nav class="teachingPlan-course-nav">
+			<% _.each(classCourseList[classIndex].classCourse,function(element, index){ %>
+				<a class="teachingPlan-course-a <%= index == classCourseIndex ? 'active' : '' %>" href="javascript:;"><%= element.courseName %></a>
+			<% }) %>
+		</nav>
+	</div>
+	<div class="index-teachingPlan-info loader-content">
+		<div class="loader-box"><div class="loader">加载中。。。</div></div>
+	</div>
+</script>

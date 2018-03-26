@@ -1,0 +1,483 @@
+<script id="template-video-dom" type="text/template">
+  <div id="studycenter-video" class="studycenter-video layout">
+    <div class="studycenter-video-header layout">
+      <div class="studycenter-video-task-content">
+        <span class="text-loader-content studycenter-video-loader-text"><span class="text-loader"></span></span>
+      </div>
+      <a class="studycenter-video-close video-icon video-icon-task-close video-icon-task-courselist js-studycenter-video-close" link="<%= CAICUI.iGlobal.getUrlPara('return_link') %>" href="javascript:;">
+        </a>
+    </div>
+    <div class="studycenter-video-main layout">
+      <div class="studycenter-video-main-left layout">
+        <div class="studycenter-video-play-center layout">
+          <div class="loader-content studycenter-video-loader">
+            <div class="loader-box"><div class="loader">加载中。。。</div></div>
+          </div>
+        </div>
+        <div class="studycenter-video-periphery layout">
+        </div>
+      </div>
+      
+      <div class="studycenter-video-main-right layout">
+
+      </div>
+    </div>
+  </div>
+</script>
+
+<script id="video" type="text/template">
+<!-- <div id="studycenter-video" class="studycenter-video layout"> -->
+    <div class="studycenter-video-header layout">
+      <a class="studycenter-video-return video-icon-task-courselist" link="<%= CAICUI.iGlobal.getUrlPara('return_link') %>" href="javascript:;">
+        </a>
+        <% console.log(taskData) %>
+        <div class="studycenter-video-title">
+            <%= taskData.chapterTitle %>
+        </div>
+        <% 
+          var tasksNum = 0;
+          var tasksToggle = false;
+          var tasksToggleClass = '';
+          _.each(taskData.tasks,function(element, index){
+            if(element.taskType=="video" || element.taskType=="exam" || element.taskType=="openCourse" || element.taskType=="knowledgePointExercise"){
+              tasksNum++;
+            }
+          });
+          if(tasksNum >= 6){
+            tasksToggle = true;
+            tasksToggleClass = 'video-task-active';
+          } 
+        %>
+        <div class="studycenter-video-task-content">
+          <div class="studycenter-video-task <%= tasksToggleClass %>">
+            <div id="task-tips" class="task-tips">
+              <span class="video-icon task-tips-icon-triangle task-tips-triangle"></span>
+              <span class="task-tips-icon task-tips-icon-ing"></span>
+              <span class="task-tips-title">标题</span>
+              <span class="task-tips-number">234</span>
+            </div>
+              <% 
+              var nexttaskid='';
+              var taskNum=0;
+              _.each(taskData.tasks,function(element, index){
+                var active = '';
+                var tipsNumber = '';
+                var tipsIcon = "no";
+                var showIcon = false;
+                if(index == taskIndex){
+                  active = 'active';
+                  nexttaskid = taskData.tasks[index].taskId;
+                }
+                if(index == taskIndex+1){
+                  nexttaskid = taskData.tasks[index].taskId;
+                }
+                if(element.taskType=="video"){
+                  showIcon = true;
+                  tipsNumber = element.videoTime;
+                  if(element.state == "0"){
+                    tipsIcon = "ing";
+                  }else if(element.state == "1"){
+                    tipsIcon = "end";
+                  }
+                }else if(element.taskType=="exam"){
+                  showIcon = true;
+                  tipsNumber = element.totalCount;
+                }else if(element.taskType=="openCourse"){
+                  showIcon = true;
+                  tipsNumber = '';
+                }else if(element.taskType=="knowledgePointExercise"){
+                  showIcon = true;
+                  tipsNumber = '';
+                }
+                if(showIcon){
+              %>
+                <a href="javascript:;" id="<%= element.taskId %>" data-index="<%= index %>" class="studycenter-video-task-a icon-task icon-task-<%= element.taskType %> <%= active %>">
+                    <span class="studycenter-video-task-number"></span>
+                    <!-- <em class="studycenter-video-task-triangle"></em> -->
+                </a>
+                
+                
+              <% }}) %>
+              <!-- <div class="video-task-item"> -->
+                <a data-index="<%= taskNum %>" class="video-icon video-icon-task-bg-end js-studycenter-video-task-end" href="javascript:;">
+                    <!-- <span class="studycenter-video-task-end"></span> -->
+                    <!-- <em class="studycenter-video-task-triangle"></em> -->
+                </a>
+              <!-- </div> -->
+              <div class="video-task-item video-task-item-arrow">
+                <a class="video-icon video-icon-task-bg-arrowDown" href="javascript:;">  
+                    <!-- <em class="studycenter-video-task-triangle"></em> -->
+                </a>
+              </div>
+              <div class="video-task-item video-task-item-arrow">
+                <a class="video-icon video-icon-task-bg-arrowUp" href="javascript:;">  
+                    <!-- <em class="studycenter-video-task-triangle"></em> -->
+                </a>
+              </div>
+              
+          </div>
+
+          <a class="studycenter-video-task-next video-icon video-icon-task-next" href="javascript:;"></a>
+        </div>
+        <a class="studycenter-video-close video-icon video-icon-task-close video-icon-task-courselist" link="<%= CAICUI.iGlobal.getUrlPara('return_link') %>" href="javascript:;">
+        </a>
+    </div>
+    <div class="studycenter-video-tasks-center layout hidden">
+        <div class="studycenter-video-tasks-end-center layout studycenter-video-tasks-unfinished hidden">
+            <img class="studycenter-video-tasks-unfinished" src="images/tasks-unfinished.jpg">
+            <a class="studycenter-video-tasks-end-center-a video-icon-task-courselist" link="#courseStudy/<%= courseId %>" href="javascript:;">返回课程列表</a>
+            <a class="studycenter-video-tasks-end-center-button video-icon-task-continue" href="javascript:;">继续完成任务</a>
+        </div>
+        <div class="studycenter-video-tasks-end-center layout studycenter-video-tasks-finished hidden">
+            <img class="studycenter-video-tasks-finished" src="images/tasks-finished.jpg">
+            <img class="studycenter-video-tasks-master-degree" src="images/tasks-master-degree.jpg">
+            <div class="studycenter-video-tasks-stars-list">
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars active" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars" href="javascript:;"></a>
+                <a class="studycenter-video-tasks-stars" href="javascript:;"></a>
+            </div>
+            <a class="studycenter-video-tasks-end-center-a" href="javascript:;" style="cursor:text;">好样的！请继续加油</a>
+            <a class="studycenter-video-tasks-end-center-button video-icon-task-courselist" link="#courseStudy/<%= courseId %>" href="javascript:;">返回课程列表</a>
+        </div>
+    </div>
+    <div class="studycenter-task-openCourse hidden" style="overflow: hidden;">
+      <div class="loader-box" style="margin:-20px;background-color: #000;"><div class="loader">加载中。。。</div></div>
+      <div class="openCourse-main js-openCourse-main">
+        <div class="openCourse-title"><%= taskData.tasks[taskIndex].title %></div>
+        <% 
+          var openCourseTime = '';
+          var openCourseStartTime = iMobile.getOpenCourseTime(taskData.tasks[taskIndex].openCourseStartTime);
+          var openCourseEndTime = iMobile.getOpenCourseTime(taskData.tasks[taskIndex].openCourseEndTime);
+          openCourseTime = openCourseStartTime.split(' ')[0] + ' ' +openCourseStartTime.split(' ')[1]+'--'+ openCourseEndTime.split(' ')[1]
+        %>
+        <div class="openCourse-time">直播时间：<%= openCourseTime %></div>
+        <% 
+          if(taskData.tasks[taskIndex].openCourseContent && taskData.tasks[taskIndex].openCourseContent.length){
+
+          var content = taskData.tasks[taskIndex].openCourseContent;
+          <!-- content = "&lt;p style=&quot;font-size:11px;font-family:Menlo;&quot;&gt;CMA一步通关直播课2017年4月-7月共计16次以上。&lt;/p&gt;" -->
+          var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"','#39':"'"};
+          var newContent = content.replace(/&(lt|gt|nbsp|amp|quot|#39);/ig,function(all,t){return arrEntities[t];});
+          console.log(newContent)
+        %>
+        <div class="openCourse-content"><pre><%= newContent %></pre></div>
+        <% } %>
+        
+        <!-- <a href="javascript:;" class="openCourse-reservation-btn">预约报名</a> -->
+        <span class="openCourse-reservation-state">
+          <span class="text-loader-content" style="width:100%;"><span class="text-loader"></span></span>
+        </span>
+        <a href="javascript:;" class="openCourse-return">返回章节列表</a>
+      </div>
+      <iframe id="openCourse-iframe" calss="openCourse-iframe hidden" frameborder="0" height="100%"  width="100%" src=""></iframe>
+
+    </div>
+    <div class="studycenter-video-main layout">
+        <div class="studycenter-video-main-left layout">
+            <div class="studycenter-video-play-center layout">
+                <!-- 视频DIV -->
+                <div class="video-play" style="display: block;height:100%;padding-bottom:38px;">
+                    <div class="dummy" style="height:0px;overflow:hidden;">load</div>
+                    <div class="content" style="height:100%;padding:10px;">
+                        <h3 style="display:block;color:#FFF;margin:20px;">正在加载课程信息...</h3>
+                        <h1>视频播放</h1>
+                    </div>
+                </div>
+                <!-- 试题 DIV -->
+                <div class="myExercises" style="display: block;height:100%;padding-bottom:32px;padding-bottom: 42px;padding-top:10px;width: 75%;margin: auto;" style="display: none">
+                    <div class="dummy" style="height:0px;overflow:hidden;"></div>
+                    <div class="content" style="height:100%;border-top:1px solid #000;border-bottom:1px solid #000;background-color:#FFF;">
+                        <iframe data-analysis="" frameborder="0" height="100%"  width="100%" id="exercisText" src=""></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="studycenter-video-periphery layout">
+                <!-- 控制条 -->
+                <div class="videoPeriphery">
+                    <div class="viosController">
+                        <!--提问列表-->
+                        <div class="ctrRight" style="width:240px;">
+                            <span class="ctrOption js-correction" control="correction">
+                                <i class="navios c5"></i><i class="iosText">纠错</i>
+                            </span>
+                            <span class="ctrOption js-open-sidebar js-questions" control="quiz">
+                                <i class="navios c1"></i><i class="iosText">提问</i>
+                            </span>
+                            <span class="ctrOption js-open-sidebar js-node" control="note">
+                                <i class="navios c2"></i><i class="iosText">笔记</i>
+                            </span>
+                            <!-- <span class="ctrOption js-open-sidebar js-handout" control="handout">
+                                <i class="navios c3"></i><i class="iosText">讲义</i>
+                            </span> -->
+                            <span class="ctrOption js-handout-down-video" control="handout-down">
+                                <i class="navios c3"></i><i class="iosText">讲义</i>
+                            </span>
+                            <a id="handoutDown-video" class="hidden"></a>
+                            <!--<span class="js-close-sidebar">
+                                <i class="navios c4"></i>
+                            </span>-->
+                        </div>
+                        <div class="ctrLefts" style="margin-right:1px;">
+                            <!--视频控制栏-->
+                            <div class="ctrLeft1">
+                                <div class="playSpeeds">
+                                    <span class="waiSpeed">
+                                        <!--<small class="playSpeed">1X</i></small>-->
+                                    </span>
+                                    <div class="soundCtr">
+                                        <span class="soundIos"><i class="glyphicon glyphicon-volume-down"></i></span>
+                                        <div class="volumeCtr">
+                                            <div id="volumeCtrly"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="playBefore">
+                                    <span><i class="glyphicon glyphicon-pause plays"></i></span>
+                                    <div class="ControlBar">
+                                        <span class="beforeTime">0</span>
+                                        <span class="afterTime">100</span>
+                                        <div class="centralCtr">
+                                            <div id="playCtr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 试题 -->
+                            <div class="ctrLeft2" style="padding: 4px;">
+                                <!--<div class="frontBack">-->
+                                <!--<span class="prevs"><i class="prevIocn"></i>上一题</span>-->
+                                <!--<span class="nexts">下一题<i class="nextIocn"></i></span>-->
+                                <!--<span class="saveTest">交 卷</span>-->
+                                <!--</div>-->
+                                <div class="ctrIocn">
+                                  <% 
+                                    var express =  taskData.tasks[taskIndex].express;
+                                    var analysis = '1';
+                                    var isAnalysis = 'analysis-click';
+                                    if(express){
+                                      analysis = JSON.parse(express).analysis;
+                                      if(analysis != '1'){
+                                        isAnalysis = '';
+                                      }
+                                    }
+                                  %>
+                                    <span class="analysis <%= isAnalysis %>"><i class="navios c5"></i><i class="iosText">解析</i></span>
+                                    <div class="leftController">
+                                        <span class="prev disableBut"><i class="glyphicon glyphicon-chevron-left"></i>上一题</span>
+                                        <span class="next readyBut">下一题<i class="glyphicon glyphicon-chevron-right"></i></span>
+                                        <div class="spanIocn">
+                                            <div class="spans" style="width: 560px; left: 0px;">
+                                                <span class="active">1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="studycenter-video-main-right layout">
+            <div class="studycenter-video-right studycenter-video-correction hidden">
+              
+            </div>
+            <div class="studycenter-video-right studycenter-video-questions hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    提问
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="right-header">
+                        <div class="right-time-icon pull-left video-icon video-icon-time">
+                            <span class="right-time">234:13</span>
+                        </div>
+                        <a class="right-other pull-right studycenter-video-close1 video-icon-task-courselist" href="#courseAc/<%= courseId %>">
+                            查看他人提问
+                        </a>
+                      
+                    </div>
+                    <div class="right-main">
+                      <iframe id="ac-new-video" scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="" ></iframe>
+                    </div>
+                    
+                    <!-- 
+                    <div class="right-content right-row">
+                        <textarea class="right-content-textarea form-control" placeholder="内容描述"></textarea> 
+                    </div>
+                    <div class="imgUpLoad">
+                        <span class="selectBut"><i class="glyphicon glyphicon-picture"></i>图片上传</span>
+                        <div id="imgUpLoadQuiz" class="demo"></div>
+                    </div>
+                    -->
+                    
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-node hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    笔记
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="right-header">
+                        <div class="right-time-icon pull-left video-icon video-icon-time">
+                            <span class="right-time">234:13</span>
+                        </div>
+                        <a class="right-other pull-right studycenter-video-close1 video-icon-task-courselist" href="#courseNote/<%= courseId %>">
+                            查看他人笔记
+                        </a>
+                    </div>
+                    <div class="right-main-courseNode">
+
+                      <div class="node-content node-editor-content">
+                        <div class="node-editor-top">
+                          <div class="node-editor-top-left">
+                            <p class="node-editor-time">
+                                <span class="node-editor-time-text"><%= CAICUI.iGlobal.getLocalTime(new Date().getTime()) %></span>
+                            </p>
+                            <p class="node-editor-isOpen">
+                              <span class="node-editor-isOpen-text">私有</span>
+                              <a class="node-editor-isOpen-button" href="javascript:;">
+                                <i class="icon icon-open"></i><i class="icon icon-private"></i>
+                              </a>
+                            </p>
+                            
+                          </div>
+                          <div class="node-editor-top-middle">
+                            <textarea class="node-editor-textarea" id="node-editor-textarea" placeholder="请输入您的内容..."></textarea>
+                          </div>
+                          <div class="node-editor-top-bottom">
+                            <div class="node-editor-button">
+                              <a class="node-editor-cancel" href="javascript:;">取消</a>
+                              <a class="node-editor-confirm" href="javascript:;">发布</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="node-editor-bottom">
+                          <div class="add-photo-box">
+                            <form id="uploadForm" class="add-photo-form" enctype="multipart/form-data"> 
+                                <input type="hidden" name="filename" value= "upfile"/>
+                                <input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+                                <input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+                                <i class="icon icon-add-photo"></i>
+                            </form> 
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- <div class="right-title right-row">
+                        <input class="right-title-input form-control" type="text" placeholder="输入标题">
+                    </div> 
+                    <div class="right-content right-row">
+                        <textarea class="right-content-textarea form-control" placeholder="内容描述"></textarea>
+                    </div>
+                    <div class="imgUpLoad">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="notesOpens2" name="dxuan1" checked="true">
+                            <label for="notesOpens2" class="checked">公开笔记</label>
+                        </div>
+                        <span class="selectBut"><i class="glyphicon glyphicon-picture"></i>图片上传</span>
+                        <div id="imgUpLoadNote" class="demo"></div>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit js-save-note">完成</button>
+                    </div>-->
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-handout hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    讲义
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class=" thrHandouts">
+                        <div class="scanImg" id="scanImg">
+                            <img src="images/twoimg.jpg" />
+                        </div>
+                        <h3>扫描二维码在移动设备上打开</h3>
+                        <ul class="downloadList">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit">完成</button>
+                    </div>
+                </div>
+            </div>
+            <div class="studycenter-video-right studycenter-video-handout hidden">
+                <p class="studycenter-video-right-title">
+                    <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+                        <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+                    </a>
+                    设置
+                </p>
+                <div class="studycenter-video-right-content contentText">
+                    <div class="videoSetting">
+                            <div class="soundCtr">
+                <span>音量：</span>
+                                <span id="volumeCtrly" style="width:80%;margin-top:6px;"></span>
+            </div>
+            <div class="speedCtr" style="width:100%;clear:both;">
+                <span>倍速：</span>
+                                <span class="speedCtrBtn active" data-speed="4">1 X</span>
+                <span class="speedCtrBtn" data-speed="5">1.5 X</span>
+                <span class="speedCtrBtn" data-speed="6">2 X</span>
+                <span class="speedCtrBtn" data-speed="7">3 X</span>
+                <span class="speedCtrBtn" data-speed="8">4 X</span>
+                            </div>
+                    </div>
+                    <div class="right-button right-row">
+                        <button class="right-button-submit js-close-sidebar">完成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </div> -->
+</script>
+<script id="template-feedback-video" type="text/template">
+  <div id="help-feedback-pop" class="help-feedback-pop">
+    <span class="pop-shadow"></span>
+    <div class="pop-html pop-html-video">
+      <div class="pop-header">视频纠错</div>
+      <div class="pop-body">
+        <div class="pop-radios">
+          <% _.each(feedbackType,function(element,item){ %>
+            <a class="pop-radio-label <%=!item ? 'active' : '' %>" href="javascript:;">
+              <span class="pop-radio"><span class="pop-radio-round"></span></span>
+              <span class="pop-radio-span"><%= element %></span>
+            </a>
+          <% }) %>
+        </div>
+        <div class="pop-textarea-content">
+          <textarea class="pop-textarea" placeholder="<%= CAICUI.Common.correctionPlaceholder %>"></textarea>
+        </div>
+        <div class="pop-video-info">
+          <div class="right-time-icon pull-left video-icon video-icon-time">
+              <span class="right-time"><%= CAICUI.iGlobal.formatSeconds(currentTask.progress) %></span>
+          </div>
+          <p class="pop-video-info-title"><%= currentTask.title %></p>
+        </div>
+      </div>
+      <div class="pop-footer">
+        <div class="pop-tel">
+          联系方式
+          <input class="pop-input-tel" type="text">
+        </div>
+        <div class="pop-button">
+          <a class="pop-button-cancel" href="javascript:;">取消</a>
+          <a class="pop-button-confirm" href="javascript:;">提交</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</script>

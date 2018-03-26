@@ -1,0 +1,131 @@
+<script id="template-my-note" type="text/template">
+	<div class="node-main my-node-main">
+		<div class="node-left">
+			<div class="loader-box"><div class="loader">加载中。。。</div></div>
+		</div>
+		<div class="node-right">
+		</div>
+	</div>
+	<div id="remove-load" class="remove-load">
+    <div class="remove-load-body">
+        <p class="remove-load-title">您确定删除该笔记吗？</p>
+    </div>
+    <div class="remove-load-footer">
+        <a class="remove-load-btn remove-load-cancel" href="javascript:;">取消</a>
+        <a class="remove-load-btn remove-load-confirm" href="javascript:;">确认</a>
+    </div>
+  </div>
+</script>
+<script id="template-my-note-content" type="text/template">
+	<div class="node-top">
+		<div class="node-top-left">
+			我的笔记
+		</div>
+		<% 
+		console.log(data)
+		if(data && data.myNoteCourseList.length){ %>
+			<div class="node-top-middle">
+				<div class="node-select-box">
+					<a class="node-select-a" href="javascript:;"><span class="node-select-text">全部</span><span class="node-select-triangle"></span></a>
+					<ul class="option-ul">
+						<li class="option-li active"><a class="option-a" href="javascript:;">全部</a></li>
+						<% _.each(data.myNoteCourseList,function(element, index, list){ %>
+							<li class="option-li"><a class="option-a" href="javascript:;" data-courseid="<%= element.courseId %>"><%= element.courseName %></a></li>
+						<% }) %>
+					</ul>
+				</div>
+			</div>
+			<a class="node-top-right node-lately" href="javascript:;">
+				查看最近笔记<span class="node-top-right-triangle"></span>
+			</a>
+		<% } %>
+	</div>
+	<div class="node-content">
+		<div id="wrapper" class="wrapper">
+			<div id="scroller" class="scroller">
+				<% if(data.nodelist.data.length){ %>
+					<div class="node-list">
+						<% 
+						var totalNode = 0;
+						_.each(data.nodelist.data,function(element, index, list){ 
+							totalNode += element.nodeNum;
+						}) %>
+						<p class="node-total">笔记共有：<span class="node-total-num"><%= totalNode %></span>处</p>
+						<ul class="node-list-one-ul">
+							<% _.each(data.nodelist.data,function(element, index, list){ 
+								if(element.nodeNum){
+								var courseId = element.id;
+							%>
+								<li class="node-list-one-li" id="node-list-<%= element.id %>">
+									<a class="node-list-title-a" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %></a>
+										<% if(element.children && element.children.length){ %>
+											<ul class="node-list-two-ul">
+												<% _.each(element.children,function(element, index, list){ 
+													if(element.nodeNum){
+												%>
+													<li>
+														<% if(element.children && element.children.length){ %>
+															<a class="node-list-title-a node-list-title-three-a" data-nodenum="<%= element.nodeNum %>" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></a>
+															<ul class="node-list-three-ul">
+																<% _.each(element.children,function(element, index, list){ 
+																	if(element.nodeNum){
+																	var  nodeNum = 0;
+																	if(element.nodeNum){
+																		nodeNum = element.nodeNum
+																	}
+																%>
+																<li>
+																	<% if(element.children && element.children.length){ %>
+																		<a class="node-list-title-a node-list-title-four-a" data-nodenum="<%= nodeNum %>" href="javascript:;"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-bottom"></i><%= element.title %><span class="node-list-num">[<%= nodeNum %>]</span></a>
+																		<ul class="node-list-four-ul">
+																			<% _.each(element.children,function(element, index, list){ 
+																				if(element.nodeNum){
+																				var  nodeNum = 0;
+																				if(element.nodeNum){
+																					nodeNum = element.nodeNum
+																				}
+																			%>
+																				<li>
+																					<a class="node-list-link" data-courseid = "<%= courseId %>" data-chapterId="<%= element.chapterId %>" data-chapterName="<%= element.chapterTitle %>" data-title="<%= element.title %>" data-nodenum="<%= nodeNum %>" href="javascript:;">
+																						<span class="node-list-desc"><%= element.chapterTitle %><span class="node-list-num">[<%= nodeNum %>]</span></span>
+																					</a>
+																				</li>
+																				<% } %>
+																			<% }) %>
+																		</ul>
+																	<% }else{ %>
+																		<a class="node-list-link" data-courseid = "<%= courseId %>" data-chapterId="<%= element.id %>" data-chapterName="<%= element.title %>" data-title="<%= element.title %>" data-nodenum="<%= nodeNum %>" href="javascript:;">
+																			<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= nodeNum %>]</span></span>
+																		</a>
+																	<% } %>
+																</li>
+																<% } %>
+																<% }) %>
+															</ul>
+														<% }else{ %>
+															<a class="node-list-link" data-courseid = "<%= courseId %>" data-chapterId="<%= element.id %>" data-chapterName="<%= element.title %>" data-title="<%= element.title %>" data-nodenum="<%= element.nodeNum %>" href="javascript:;">
+																<span class="node-list-desc"><%= element.title %><span class="node-list-num">[<%= element.nodeNum %>]</span></span>
+															</a>
+
+														<% } %>
+													</li>
+													<% } %>
+												<% }) %>
+											</ul>
+										<% } %>
+									</a>
+								</li>
+								<% } %>
+							<% }) %>
+						</ul>
+					</div>
+				<% }else{ %>
+					<div class="no-data">
+						<i class="icon icon-no-data-node"></i>
+						<p class="no-data-p">做笔记可是好习惯哦</p>
+					</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</script>

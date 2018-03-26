@@ -1,0 +1,262 @@
+<script id="template-questions-realImitate-loader-content" type="text/template">
+	<div class="loader-content questions-loader-content">
+		<div class="loader-box"><div class="loader">加载中。。。</div></div>
+	</div>
+</script>
+<script id="template-questions-realImitate" type="text/template">
+	<div class="questions">
+		<div class="questions-container">
+			<div class="questions-header">
+				<h3 class="questions-title"><%= CAICUI.render.chapterName %></h3>
+
+				<div class="questions-progress">
+					进度
+					<span class="questions-progress-box">
+						<span class="questions-progress-show" data-questions-progress="0" style="width: 0%;">
+							<i class="icon icon-questions-progress"></i>
+						</span>
+						<i class="icon icon-questions-no-progress"></i>
+					</span>
+					<span class="questions-percentage">0</span>%
+				</div>
+				<span class="questions-times">00:00:00</span>
+				<div class="questions-header-button">
+					<a href="javascript:;" class="questions-card-button">
+						<i class="questions-card-icon"></i>
+						<span class="questions-card-span">展开答题卡</span>
+						<span class="questions-card-triangle"></span>
+					</a>
+					<a href="javascript:;" class="questions-exit">退出</a>
+				</div>
+				
+			</div>
+			<div class="questions-body-context">
+				<div class="questions-body">
+					<div id="wrapper" class="wrapper">
+						<div id="scroller" class="scroller">
+							<div class="loader-content questions-loader-content">
+								<div class="loader-box"><div class="loader">加载中。。。</div></div>
+							</div>
+
+						</div><!-- scroller -->
+					</div><!-- wrapper -->
+					
+				</div>
+				<div class="studycenter-video-main-right layout">
+				    <div class="questions-type-quiz studycenter-video-right studycenter-video-questions hidden">
+				        <p class="studycenter-video-right-title">
+				            <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+				                <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+				            </a>
+				            提问
+				        </p>
+				        <div class="studycenter-video-right-content contentText">
+				            <div class="right-header">
+				                <div class="right-time-icon pull-left video-icon video-icon-questions">
+				                    <span class="right-questions-item"><span class="right-questions-item-count">1</span><span class="right-questions-text">题</span></span>
+				                </div>
+				                <a class="right-other view-other-btn pull-right" link="#courseAc/<%= CAICUI.render.courseId %>" href="javascript:;">
+				                    查看他人提问
+				                </a>
+				            </div>
+				            <div class="right-main">
+				              <iframe id="ac-new-video" scrolling="auto" allowtransparency="true" id="editor" class="editor" style="width:100%;height:100%;" name= "editor" frameborder="0" src="" ></iframe>
+				            </div>
+				        </div>
+				    </div>
+				    <div class="questions-type-note studycenter-video-right studycenter-video-node hidden">
+				        <p class="studycenter-video-right-title">
+				            <a href="javascript:;" class="studycenter-video-right-close-sidebar js-close-sidebar">
+				                <span class="studycenter-video-right-arrow video-icon video-icon-left-arrow"></span>
+				            </a>
+				            笔记
+				        </p>
+				        <div class="studycenter-video-right-content contentText">
+				            <div class="right-header">
+				                <div class="right-time-icon pull-left video-icon video-icon-questions">
+				                    <span class="right-questions-item"><span class="right-questions-item-count">1</span><span class="right-questions-text">题</span></span>
+				                </div>
+				                <a class="right-other view-other-btn pull-right" link="#courseNote/<%= CAICUI.render.courseId %>" href="javascript:;">
+				                    查看他人笔记
+				                </a>
+				                
+				            </div>
+				            <div class="right-main-courseNode">
+
+				              <div class="node-content node-editor-content">
+				                <div class="node-editor-top">
+				                  <div class="node-editor-top-left">
+				                    <p class="node-editor-time">
+				                        <span class="node-editor-time-text"><%= CAICUI.iGlobal.getLocalTime(new Date().getTime()) %></span>
+				                    </p>
+				                    <p class="node-editor-isOpen">
+				                      <span class="node-editor-isOpen-text">私有</span>
+				                      <a class="node-editor-isOpen-button" href="javascript:;">
+				                        <i class="icon icon-open"></i><i class="icon icon-private"></i>
+				                      </a>
+				                    </p>
+				                  </div>
+				                  <div class="node-editor-top-middle">
+				                    <textarea class="node-editor-textarea" id="node-editor-textarea" placeholder="请输入您的内容..."></textarea>
+				                  </div>
+				                  <div class="node-editor-top-bottom">
+				                    <div class="node-editor-button">
+				                      <a class="node-editor-cancel js-close-sidebar" href="javascript:;">取消</a>
+				                      <a class="node-editor-confirm" href="javascript:;">发布</a>
+				                    </div>
+				                  </div>
+				                </div>
+				                <div class="node-editor-bottom">
+				                  <div class="add-photo-box">
+				                    <form id="uploadForm" class="add-photo-form" enctype="multipart/form-data"> 
+				                        <input type="hidden" name="filename" value= "upfile"/>
+				                        <input type="hidden" id="uploadForm-token" name="token" value= "<%= CAICUI.User.token %>"/>
+				                        <input type="file" id="uploadForm-file" class="uploadForm-file" name="file" accept="image/gif,image/png,image/jpg,image/jpeg"/>
+				                        <i class="icon icon-add-photo"></i>
+				                    </form> 
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+				        </div>
+				    </div>
+				    
+				</div>
+			</div>
+			<div class="questions-footer">
+				<div class="questions-btn questions-btn-prev js-questions-btn-prev"><i class="questions-btn-prev-icon"></i>上一题</div>
+				
+				<div class="questions-btn questions-btn-box">
+					<a class="questions-correction-btn" href="javascript:;"><i class="questions-correction-btn-icon"></i>纠错</a>
+					<a class="questions-analysis-btn" href="javascript:;"><i class="questions-analysis-btn-icon"></i>解析</a>
+					<!-- <a class="questions-note-btn js-open-sidebar" href="javascript:;" data-control="note"><i class="questions-note-btn-icon"></i>笔记</a>
+					<a class="questions-question-btn js-open-sidebar" href="javascript:;" data-control="quiz"><i class="questions-question-btn-icon"></i>问答</a> -->
+				</div>
+
+				<!-- <div class="questions-btn questions-btn-next js-questions-btn-next">下一题<i class="questions-btn-next-icon"></i></div> -->
+				<div class="questions-btn questions-btn-next js-questions-btn-next questions-btn-done"><span class="questions-btn-next-text">下一题<i class="questions-btn-next-icon"></i></span><span class="questions-btn-done-text">交卷</span></div>
+			</div>
+		</div>
+		
+
+
+	</div>
+</script>
+<script id="template-questions-realImitate-cards" type="text/template">
+	<div class="questions-cards">
+		<span class="questions-card-box-triangle"></span>
+		<div class="questions-cards-left">
+			<p class="questions-cards-left-p">已做/总数</p>
+			<p class="questions-cards-left-p"><span class="exercise-done-count"></span>/<span class="exercise-count"></span></p>
+			<% if(CAICUI.render.isFinish != "0" && CAICUI.render.examExpress != "0"){ %>
+			<p class="questions-cards-left-p">正确率</p>
+			<div class="questions-progress-round progress-round">
+				<span class="progress-round-border"></span>
+				<span class="progress-round-num"><span class="progress-round-count"></span><span class="progress-round-unit">%</span></span>
+				<canvas id="progress-round-question" class="progress-round-canvas" width="84" height="84" data-progress="0"></canvas>
+			</div>
+			<% } %>
+		</div>
+		<div class="questions-cards-right">
+			<ul class="questions-cards-desc-ul">
+				<% if(CAICUI.render.isFinish == "0" && CAICUI.render.examExpress == "0"){ %>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-active" disabled="disabled"></span>当前</li>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-done" disabled="disabled"></span>已做</li>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-info" disabled="disabled"></span>未做</li>
+				<% }else{ %>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-active" disabled="disabled"></span>当前</li>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-success" disabled="disabled"></span>正确</li>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-danger" disabled="disabled"></span>错误</li>
+					<li class="questions-cards-desc-li"><span class="questions-cards-desc-btn questions-cards-info" disabled="disabled"></span>未做</li>
+				<% } %>
+				
+			</ul>
+			<div class="questions-cards-ul-box">
+			<div id="wrapper-cards" class="wrapper">
+				<div id="scroller-cards" class="scroller">
+				<ul class="questions-cards-ul">
+					<%
+						var isAnalysis = '';
+						if(CAICUI.render.isFinish == "0" && CAICUI.render.examExpress == "0"){
+							isAnalysis = 'analysis';
+						}
+						_.each(data,function(element,index){
+							if(0){
+								if(CAICUI.render.lastExerciseNid==element.nid){
+									CAICUI.render.exerciseId = element.exercise_id
+								}
+								var btnClass = 'btn-info';
+								if(element.status=='1'){
+									btnClass = 'btn-success';
+								}else if(element.status=='2'){
+									btnClass = 'btn-danger';
+								}
+							}
+					%>
+							<li class="questions-cards-li <%= isAnalysis %>"><a id="questions-card-<%= element.id %>" href="javascript:;"  class="js-card-btn questions-cards-info questions-cards-btn " data-index="<%= index %>" data-exerciseid="<%= element.id %>"><%= index+1 %></a></li>
+					<% }) %>
+						</ul>
+				</div><!-- scroller -->
+			</div><!-- wrapper -->
+				</div>
+			
+		</div>
+	</div>
+</script>
+<script id="template-questions-realImitate-content" type="text/template">
+		<div class="questions-content questions-content-<%= item.questionTypes %>" data-id="<%= item.id %>">
+			<div class="questions-question-content">
+				<p class="questions-index">第<%= +CAICUI.render.lastExerciseNid+1 %>题</p>
+				<div class="questions-title"><%= item.title %></div>
+				<div class="questions-background"><%= item.background %></div>
+
+				<div class="questions-options questions-options-<%= item.questionTypes %>">
+					<%= CAICUI.render.this.questions(item.questionTypes,item.context,item.answerResolution) %>
+				</div><!-- questions-options -->
+			</div>
+			<div class="questions-answerResolution <%= CAICUI.render.isDone ? 'active':'' %> ">
+				<%= CAICUI.render.this.questionsResolution(item.questionTypes, item.context, item.answerResolution) %>
+				<div class="questions-grasp">
+						<a href="javascript:;" class="questions-grasp-a questions-grasp-left">懂了</a>
+						<a href="javascript:;" class="questions-grasp-a questions-grasp-right">暂时不懂</a>
+					</div>
+			</div>
+
+			
+		</div><!-- questions-content -->
+</script>
+<script id="template-questions-realImitate-guide" type="text/template">
+	<div id="questions-guide" class="questions-guide">
+		<div class="questions-guide-shadow"></div>
+		<div id="questions-guide-content" class="questions-guide-step-1">
+			<div class="questions-guide-header">
+				<i class="questions-guide-icon questions-guide-icon-stepDesc5"></i>
+			</div>
+			<div class="questions-guide-body">
+				<i class="questions-guide-icon questions-guide-step-btn"></i>
+				<ul class="questions-guide-step-ul">
+					<li class="questions-guide-step-li"><i class="questions-guide-icon questions-guide-icon-step1"></i></li>
+					<li class="questions-guide-step-li"><i class="questions-guide-icon questions-guide-icon-step2"></i></li>
+					<li class="questions-guide-step-li"><i class="questions-guide-icon questions-guide-icon-step3"></i></li>
+					<li class="questions-guide-step-li"><i class="questions-guide-icon questions-guide-icon-step4"></i></li>
+					<li class="questions-guide-step-li"><i class="questions-guide-icon questions-guide-icon-step5"></i></li>
+				</ul>
+			</div>
+			<div class="questions-guide-footer">
+				<div class="questions-guide-btn-prev">
+					<i class="questions-guide-icon questions-guide-icon-stepDesc1-prev"></i>
+				</div>
+
+				<div class="questions-guide-btn-box">
+					<span class="questions-guide-btn-box-span"><i class="questions-guide-icon questions-guide-icon-stepDesc2"></i></span>
+					<span class="questions-guide-btn-box-span"><i class="questions-guide-icon questions-guide-icon-stepDesc3"></i></span>
+					<span class="questions-guide-btn-box-span"><i class="questions-guide-icon questions-guide-icon-stepDesc4"></i></span>
+				</div>
+
+				<div class="questions-guide-btn-next">
+					<i class="questions-guide-icon questions-guide-icon-stepDesc1-next"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

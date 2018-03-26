@@ -1,0 +1,72 @@
+<script id="template-course-nav" type="text/template">
+	<nav class="nav-course">
+		<% if(courseType == 'classCourse'){ %>
+			<a href="#teachingPlan/<%= courseId %>" class="nav-course-a">教学计划</a>
+			
+		<% }else{ %>
+			
+		<% } %>
+		<a href="#<%= courseType +'Study/'+ courseId %>" class="nav-course-a <%= type == 'study' ? 'active' : '' %>">学习</a>
+		<a href="#<%= courseType +'Ac/'+ courseId %>" class="nav-course-a <%= type == 'ac' ? 'active' : '' %>">交流</a>
+		<a href="#<%= courseType +'Resources/'+ courseId %>" class="nav-course-a <%= type == 'resources' ? 'active' : '' %>">资源</a>
+		<a href="#<%= courseType +'Note/'+ courseId %>" class="nav-course-a <%= type == 'note' ? 'active' : '' %>">笔记</a>
+	</nav>
+	<!-- 
+	<ul class="courseIndex-ul">
+		<li class="courseIndex-li <%= courseType == 'courseStudy' ? 'active hover' : '' %>">
+			<a class="courseIndex-a" href="#courseStudy/<%= courseId %>">
+				<i class="icon icon-courseStudy"></i>
+			</a>
+			<div class="courseIndex-active-box">
+				<div class="courseStudy-box js-courseIndex-nav-box">
+					<a class="courseIndex-a-active" href="#courseStudy/<%= courseId %>">
+						<i class="icon icon-courseStudy-active"></i>
+					</a>
+				</div>
+			</div>
+		</li>
+		<li class="courseIndex-li <%= courseType=='courseAc' ? 'active hover' : '' %>">
+			<a class="courseIndex-a" href="#courseAc/<%= courseId %>">
+				<i class="icon icon-courseAc"></i>
+			</a>
+			<div class="courseIndex-active-box">
+				<div class="courseAc-box js-courseIndex-nav-box">
+					<a class="courseIndex-a-active" href="#courseAc/<%= courseId %>">
+						<i class="icon icon-courseAc-active"></i>
+					</a>
+				</div>
+			</div>
+		</li>
+		<li class=" courseIndex-li <%= courseType=='courseResources' ? 'active hover' : '' %>">
+			<a class="courseIndex-a courseIndex-courseResources-a" href="#courseResources/<%= courseId %>">
+				<i class="icon icon-courseResources-big"></i>资源
+			</a>
+			<div class="courseIndex-active-box courseIndex-courseResources-active-box">
+				<div class="courseAc-box js-courseIndex-nav-box">
+					<a class="courseIndex-a-active" href="#courseResources/<%= courseId %>">
+						<i class="icon icon-courseResources-big-active"></i>资源
+					</a>
+				</div>
+			</div>
+		</li>
+		<li class="courseIndex-li <%= courseType=='courseNote' ? 'active hover' : '' %>">
+			<a class="courseIndex-a" href="#courseNote/<%= courseId %>">
+				<i class="icon icon-courseNote"></i>
+			</a>
+			<div class="courseIndex-active-box">
+				<div class="courseNote-box js-courseIndex-nav-box">
+					<a class="courseIndex-a-active" href="#courseNote/<%= courseId %>">
+						<i class="icon icon-courseNote-active"></i>
+					</a>
+				</div>
+			</div>
+		</li>
+	</ul>
+	 -->
+</script>
+
+<script id="template-courseStudy-courseList" type="text/template">
+	<% _.each(courseNameArray,function(element, index, list){ %>
+		<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseStudy/<%= element.courseId %>"><%= element.courseName %></a></li>
+	<% }) %>
+</script>

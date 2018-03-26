@@ -1,0 +1,437 @@
+<script id="template-my-exam" type="text/template">
+
+<!-- <div class="myExam-content">
+	<div class="myExam-left">
+		<span class="myExam-shadow"></span>
+		<ul class="myExam-nav-ul">
+			<li class="myExam-nav-li <%= data.type ? '' : 'active' %>">
+				<a class="myExam-nav-a" href="javascript:;">做题记录</a>
+			</li>
+			<li class="myExam-nav-li <%= data.type ? 'active' : '' %>">
+				<a class="myExam-nav-a" href="javascript:;">错题本</a>
+			</li>
+		</ul>
+		<div class="myExam-left-content">
+			<div id="wrapper" class="wrapper">
+				<div id="scroller" class="scroller">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="myExam-right">
+
+	</div>
+</div> -->
+<div class="myExam-content">
+	<div class="myExam-header">
+		<span class="myExam-shadow"></span>
+		<ul class="myExam-nav-ul">
+			<li class="myExam-nav-li <%= CAICUI.render.navType ? '' : 'active' %>">
+				<a class="myExam-nav-a" href="javascript:;">做题记录</a>
+			</li>
+			<li class="myExam-nav-li <%= CAICUI.render.navType ? 'active' : '' %>">
+				<a class="myExam-nav-a" href="javascript:;">错题本</a>
+			</li>
+		</ul>
+	</div>
+	<div class="myExam-body">
+		<div class="myExam-left">
+			<div class="myExam-left-content">
+				<div id="wrapper" class="wrapper">
+					<div id="scroller" class="scroller">
+						<div class="loader-box"><div class="loader">加载中。。。</div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="myExam-right">
+			<div id="wrapper-myExam-desc" class="wrapper">
+				<div id="scroller-myExam-desc" class="scroller">
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+</div>
+</script>
+
+<script id="template-myExam-doRecord" type="text/template">
+	<% 
+	if(data.examList && data.examList.length){ %>
+	<div class="myExam-doRecord">
+		<ul class="myExam-doRecord-ul">
+			<% _.each(data.examList,function(element, index, list){ %>
+				<li class="option-li"><a class="option-a" data-courseid="<%= element.courseId %>" href="#courseStudy/<%= element.courseId %>"><%= element.courseName %></a></li>
+			
+				<li class="myExam-doRecord-li">
+					<p class="myExam-doRecord-time"><%= element.create_year_date %></p>
+					<ul class="doRecord-chapter-ul">
+						<% _.each(element.list, function(element, index, list){ %>
+							<li class="doRecord-chapter-li" data-examen_type="<%= element.examen_type %>" data-knowledge_point_id="<%= element.knowledge_point_id %>" data-examennum="<%= element.examenNum %>" data-examen_name="<%= element.examen_name %>" data-examen_total_num="<%= element.examen_total_num %>" data-is_finish="<%= element.is_finish %>" data-error_num="<%= element.error_num %>" data-course_id="<%= element.course_id %>" data-chapter_id="<%= element.chapter_id %>" data-task_id="<%= element.task_id %>" data-last_exercise_nid="<%= element.last_exercise_nid %>" data-correct_num="<%= element.correct_num %>">
+									<div class="doRecord-chapter-left">
+										<p class="doRecord-chapter-title"><%= element.examen_name %></p>
+										<div class="doRecord-chapter-info">
+											<span class="doRecord-chapter-info-span">
+												<%= CAICUI.iGlobal.stringData(element.create_date_tmp) %>
+											</span>
+											<span class="doRecord-chapter-info-span">
+												题目：<%= element.examen_total_num %>道
+											</span>
+											
+											<% if(element.is_finish == "1"){ %>
+												<span class="doRecord-chapter-info-span">
+													错题：<%= element.error_num %>道
+												</span>
+												<span class="doRecord-chapter-info-span">
+													正确率：<%= element.examen_total_num ? ((element.correct_num/element.examen_total_num)*100).toFixed(0) : 0 %>%
+												</span>
+											<% }else{
+												var error_num = element.error_num ? parseInt(element.error_num) : 0;
+												var correct_num = element.correct_num ? parseInt(element.correct_num) : 0;
+												var done = error_num + correct_num;
+											%>
+												<span class="doRecord-chapter-info-span">
+													已做：<%= done %>道
+												</span>
+											<% } %>
+										</div>
+									</div>
+									<div class="doRecord-chapter-right">
+										<%
+											var isFinish = '';
+											if(element.is_finish == '1'){
+												isFinish = '已完成';
+											}else{
+												isFinish = '未完成';
+											}
+										%>
+										<span class="doRecord-chapter-state"><%= isFinish %></span>
+										<a id="doRecord-chapter-del-<%= element.knowledge_point_id %>-<%= element.task_id %>" href="javascript:;" class="doRecord-chapter-del">
+											<i class="icon icon-del doRecord-chapter-icon-del"></i>
+											<span class="doRecord-chapter-del-sapn">删除记录</span>
+										</a>
+									</div>
+							</li>
+						<% }) %>
+					</ul>
+				</li>
+			<% }) %>
+		</ul>
+
+	</div>
+	<div class="pagination-box">
+		<ul class="pagination">
+			<% 
+				var pageTotal = Math.ceil(data.totalCount/+data.pageSize);
+				var pageStart = +data.pageNo;
+				var pagePrevs = 4;
+				var pageNexts = 4;
+				var pageStartI = 1;
+				var pageForNum = pageStartI+pagePrevs+pageNexts;
+				var pageNum = 0;
+				if(pageTotal>pageForNum){
+					if(pageStart<=pagePrevs){
+						pageStartI = 1;
+						pageForNum = pageForNum;
+					}else if(pageStart<pagePrevs+pageNexts){
+						pageForNum = pageForNum+2;
+						pageStartI = pagePrevs-pageStartI;
+					}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+						pageForNum = pageStart+pageNexts;
+						pageStartI = pageStart-pagePrevs;
+					}else if(pageStart>pageTotal-pageNexts){
+						pageForNum = pageTotal;
+						pageStartI = pageTotal-pagePrevs-pagePrevs;
+					}
+				}else{
+					pageForNum = pageTotal;
+					pageStartI = pageStartI;
+				}
+				if(+pageForNum>+pageTotal){
+					pageForNum = pageTotal;
+				}
+			%>
+			<% if(pageStart>1){ %>
+				<li class="pagination-li js-pagination-prev">
+				  <a class="pagination-a pagination-prev" href="javascript:;">
+				  &lt;
+				  </a>
+				</li>
+			<% } %>
+			
+			<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+				<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+			<% } %>
+
+			<% if(data.totalCount>data.pageSize){ %>
+				<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+					<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+				<% } %>
+			<% } %>
+
+			<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+				<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+			<% } %>
+
+			<% if(pageStart<pageTotal){ %>
+				<li class="pagination-li js-pagination-next">
+				  <a class="pagination-a pagination-next" href="javascript:;">
+				  &gt;
+				  </a>
+				</li>
+			<% } %>
+	  </ul>
+	</div>
+	<% }else{ %>
+		<div class="no-data">
+			<i class="icon icon-no-data-node"></i>
+			<p class="no-data-p">你还一道题都没做过呢</p>
+		</div>
+	<% } %>
+</script>
+
+<script id="template-myExam-doRecord-desc" type="text/template">
+	<div class="myExam-desc">
+		<p class="myExam-desc-title">
+			<%
+				var isFinish = '';
+				if(myExamDescData.is_finish == '1'){
+					isFinish = '已完成';
+				}else{
+					isFinish = '未完成';
+				}
+				var nodone = 0;
+				if(parseInt(myExamDescData.examen_total_num)>data.length){
+					nodone = parseInt(myExamDescData.examen_total_num)-data.length;
+				}
+			%>
+			<span class="myExam-desc-undone"><%= isFinish %></span>
+			<%= myExamDescData.examen_name %>
+		</p>
+		<div class="myExam-desc-info">
+			<div class="myExam-desc-info-left">
+				<p class="myExam-desc-info-p">已做/未做</p>
+
+				<span class="myExam-desc-info-span"><%= data.length %>/<%= nodone %></span>
+			</div>
+			<% if(myExamDescData.is_finish == '1'){ %>
+				<div class="myExam-desc-info-right">
+					<p class="myExam-desc-info-p">正确率</p>
+					<span class="myExam-desc-info-span"><%= myExamDescData.examen_total_num ? ((myExamDescData.correct_num/myExamDescData.examen_total_num)*100).toFixed(0) : 0 %>%</span>
+				</div>
+			<% } %>
+		</div>
+		<div class="myExam-desc-tips">
+			
+			<% if(myExamDescData.examen_type == "chapter" && myExamDescData.is_finish == "0"){ %>
+				<div class="myExam-desc-tips-block">
+					<span class="myExam-desc-tips-state myExam-desc-tips-done"></span>
+					<span class="myExam-desc-tips-text">已做</span>
+				</div>
+				<div class="myExam-desc-tips-block">
+					<span class="myExam-desc-tips-state myExam-desc-tips-notDone"></span>
+					<span class="myExam-desc-tips-text">未做</span>
+				</div>
+			<% }else{ %>
+				<div class="myExam-desc-tips-block">
+					<span class="myExam-desc-tips-state myExam-desc-tips-right"></span>
+					<span class="myExam-desc-tips-text">正确</span>
+				</div>
+				<div class="myExam-desc-tips-block">
+					<span class="myExam-desc-tips-state myExam-desc-tips-error"></span>
+					<span class="myExam-desc-tips-text">错误</span>
+				</div>
+				<div class="myExam-desc-tips-block">
+					<span class="myExam-desc-tips-state myExam-desc-tips-notDone"></span>
+					<span class="myExam-desc-tips-text">未做</span>
+				</div>
+			<% } %>
+
+		</div>
+		<ul class="myExam-desc-ul">
+		<%	
+			for(var i=0;i<+myExamDescData.examen_total_num;i++){
+				var elementData = '';
+				_.each(data, function(element, index){
+					if(i == element.sort){
+						elementData = element;
+					}
+				})
+				var myExamDescStatus = '';
+				if(myExamDescData.examen_type == 'chapter' && myExamDescData.is_finish == '0'){
+					if(parseInt(elementData.status) == 1){
+						myExamDescStatus = 'myExam-desc-li-done';
+					}else if(parseInt(elementData.status) == 2){
+						myExamDescStatus = 'myExam-desc-li-done';
+					}else{
+						myExamDescStatus = 'myExam-desc-li-notDone';
+					}
+				}else{
+					if(parseInt(elementData.status) == 1){
+						myExamDescStatus = 'myExam-desc-li-right';
+					}else if(parseInt(elementData.status) == 2){
+						myExamDescStatus = 'myExam-desc-li-error';
+					}else{
+						myExamDescStatus = 'myExam-desc-li-notDone';
+					}
+				}
+				
+				if(myExamDescStatus){ 
+			%>
+					<li class="myExam-desc-li <%= myExamDescStatus %>"><%= i+1 %></li>
+			<% }} %>
+			
+
+			
+		</ul>
+		<div class="myExam-desc-footer">
+			<div class="myExam-desc-btns">
+				<% 
+					
+					var link = '';
+					if(myExamDescData.examen_type=="testSite"){
+						link = '#questionsTestSite/'+myExamDescData.examen_type+'/'+myExamDescData.knowledge_point_id+'?return_link=myExam'+'&return_hash=on';
+					}else if(myExamDescData.examen_type=="realImitate"){
+						link = '#questionsRealImitate/'+myExamDescData.examen_type+'/'+myExamDescData.knowledge_point_id+'?return_link=myExam'+'&return_hash=on';
+					}else{
+						link = '#video/'+myExamDescData.course_id+'/'+myExamDescData.chapter_id+'/'+myExamDescData.task_id+'?return_link=myExam'+'&return_hash=on';
+					}
+					
+					
+					//link = '#video/'+myExamDescData.course_id+'/'+myExamDescData.chapter_id+'/'+myExamDescData.task_id+'?return_link=myExam'+'&return_hash=on';
+					if(parseInt(myExamDescData.is_finish) == '0'){ 
+				%>
+					<a class="myExam-desc-btn myExam-desc-continue" data-link="<%= link %>" href="javascript:;">继续做题</a>
+				<% } %>
+				<% if(myExamDescData.is_finish == '1'){ %>
+					<a class="myExam-desc-btn myExam-desc-view" data-link="<%= link %>" href="javascript:;">查看解析</a>
+				<% } %>
+
+				<a class="myExam-desc-btn myExam-desc-reset" data-link="<%= link %>" href="javascript:;">重新做题</a>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="template-my-wrong-title" type="text/template">
+	<% if(data.myWrongTitle && data.myWrongTitle.length){
+		_.each(data.myWrongTitle,function(element, index){ %>
+			<div class="myWrong-title">
+				<p class="myWrong-title-title"><%= element.examen_name %></p>
+				<ul class="myWrong-title-ul">
+					<% _.each(element.exercise_list, function(element2, index){ %>
+						<li id="myWrong-<%= element2.exerciseid %>" class="myWrong-title-li" data-examen_id="<%= element2.examen_id %>" data-exercise_name="<%= element2.exercise_name %>" data-exerciseid="<%= element2.exerciseid %>" data-sort="<%= element2.sort %>"><%= +element2.sort+1 %> <%= element2.exercise_name %></li>
+					<% }) %>
+				</ul>
+			</div>
+		<%	}) %>
+		<div class="pagination-box">
+			<ul class="pagination">
+				<% 
+					var pageTotal = Math.ceil(+data.totalCount/+data.pageSize);
+					var pageStart = +data.pageNo;
+					var pagePrevs = 4;
+					var pageNexts = 4;
+					var pageStartI = 1;
+					var pageForNum = pageStartI+pagePrevs+pageNexts;
+					var pageNum = 0;
+					if(pageTotal>pageForNum){
+						if(pageStart<=pagePrevs){
+							pageStartI = 1;
+							pageForNum = pageForNum;
+						}else if(pageStart<pagePrevs+pageNexts){
+							pageForNum = pageForNum+2;
+							pageStartI = pagePrevs-pageStartI;
+						}else if(pageStart>=pagePrevs+pageNexts && pageStart<=pageTotal-pageNexts){
+							pageForNum = pageStart+pageNexts;
+							pageStartI = pageStart-pagePrevs;
+						}else if(pageStart>pageTotal-pageNexts){
+							pageForNum = pageTotal;
+							pageStartI = pageTotal-pagePrevs-pagePrevs;
+						}
+					}else{
+						pageForNum = pageTotal;
+						pageStartI = pageStartI;
+					}
+					if(+pageForNum>+pageTotal){
+						pageForNum = pageTotal;
+					}
+				%>
+				<% if(pageStart>1){ %>
+					<li class="pagination-li js-pagination-prev">
+					  <a class="pagination-a pagination-prev" href="javascript:;">
+					  &lt;
+					  </a>
+					</li>
+				<% } %>
+				
+				<% if(pageStart>pagePrevs && pageStartI > 1){ %>
+					<li class="pagination-li js-pagination-li" data-pageno="1"><a class="pagination-a" href="javascript:;">1...</a></li>
+				<% } %>
+
+				<% if(data.totalCount>data.pageSize){ %>
+					<% for(var i=pageStartI;i<=pageForNum;i++){ %>
+						<li class="pagination-li js-pagination-li <%= i==data.pageNo ? 'active' : '' %> " data-pageno="<%= i %>"><a class="pagination-a" href="javascript:;"><%=i%></a></li>
+					<% } %>
+				<% } %>
+
+				<% if(pageForNum != pageTotal && pageTotal-pageStart>pageNexts){ %>
+					<li class="pagination-li js-pagination-li" data-pageno="<%= pageTotal %>"><a class="pagination-a" href="javascript:;"><%= pageTotal %>...</a></li>
+				<% } %>
+
+				<% if(pageStart<pageTotal){ %>
+					<li class="pagination-li js-pagination-next">
+					  <a class="pagination-a pagination-next" href="javascript:;">
+					  &gt;
+					  </a>
+					</li>
+				<% } %>
+		  </ul>
+		</div>
+	<% }else{ %>
+		<div class="no-data">
+			<i class="icon icon-no-data-node"></i>
+			<p class="no-data-p">你还一道题都没做错过呢</p>
+		</div>
+	<% } %>
+	<!-- <div class="myWrong-title">
+		<p class="myWrong-title-title">章节练习</p>
+		<ul class="myWrong-title-ul">
+			<li class="myWrong-title-li">01 when we.sdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxll</li>
+			<li class="myWrong-title-li">01 when we.sdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxll</li>
+			<li class="myWrong-title-li">01 when we.sdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxll</li>
+		</ul>
+	</div>
+	<div class="myWrong-title">
+		<p class="myWrong-title-title">章节练习</p>
+		<ul class="myWrong-title-ul">
+			<li class="myWrong-title-li">01 when we.sdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxll</li>
+			<li class="myWrong-title-li">01 when we.sdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxll</li>
+			<li class="myWrong-title-li">01 when we.sdjfojxllsdjfojxllsdjfojxllsdjfojxllsdjfojxldjfojxll</li>
+		</ul>
+	</div> -->
+</script>
+
+<script id="template-questions-myWrong-content" type="text/template">
+	<div class="questions-content questions-content-<%= item.questionTypes %>" data-id="<%= item.id %>">
+		<div class="questions-question-content">
+			<p class="questions-index">第<%= +myWrongExerciseData.sort+1 %>题</p>
+			<div class="questions-title"><%= item.title %></div>
+			<div class="questions-background"><%= item.background %></div>
+			<div class="questions-options questions-options-<%= item.questionTypes %>">
+				<%= CAICUI.render.this.questions(item.questionTypes,item.context,item.answerResolution) %>
+			</div>
+		</div>
+		<div class="myWrong-answerResolution">
+			<a class="myWrong-answerResolution-btn" href="javascript:;">查看解析</a>
+			<span class="myWrong-answerResolution-span">查看解析后，回答正确既可以从错题本中清除错题。</span>
+		</div>
+		<div class="questions-answerResolution">
+			
+		</div>
+
+		
+	</div>
+</script>
